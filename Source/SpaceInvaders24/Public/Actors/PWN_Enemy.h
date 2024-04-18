@@ -3,11 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Pawn.h"
+#include "GameFramework/Actor.h"
 #include "PWN_Enemy.generated.h"
 
 UCLASS()
-class SPACEINVADERS24_API APWN_Enemy : public APawn
+class SPACEINVADERS24_API APWN_Enemy : public AActor
 {
 	GENERATED_BODY()
 
@@ -21,15 +21,12 @@ protected:
 
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Native Events")
-	void Animate(bool Forward) const;
+	void Animate(bool Forward, float Rate) const;
 
 
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 };
