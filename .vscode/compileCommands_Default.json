@@ -1,9 +1,1057 @@
 [
 	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\BlueprintAssist.Build.cs",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistActions\\BlueprintAssistActionsBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistActions\\BlueprintAssistBlueprintActions.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistActions\\BlueprintAssistGlobalActions.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistActions\\BlueprintAssistGraphActions.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistActions\\BlueprintAssistNodeActions.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistActions\\BlueprintAssistPinActions.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistActions\\BlueprintAssistTabActions.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistActions\\BlueprintAssistToolkitActions.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistCache.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistCommands.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistDelayedDelegate.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistEditorFeatures.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistEditorFeatures.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistFormatters\\BAFormatterUtils.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistFormatters\\BehaviorTreeGraphFormatter.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistFormatters\\BlueprintAssistCommentContainsGraph.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistFormatters\\BlueprintAssistCommentHandler.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistFormatters\\EdGraphFormatter.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistFormatters\\EdGraphParameterFormatter.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistFormatters\\GraphFormatterTypes.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistFormatters\\KnotTrack.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistFormatters\\KnotTrackCreator.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistFormatters\\SimpleFormatter.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistGlobals.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistGraphCommands.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistGraphExtender.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistGraphHandler.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistGraphPanelNodeFactory.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistInputProcessor.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistMisc\\BAMiscUtils.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistMisc\\BlueprintAssistToolbar_BlueprintImpl.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistModule.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistNodeSizeChangeData.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistObjects\\BAAssetEditorHandlerObject.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistObjects\\BABlueprintHandlerObject.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistObjects\\BARootObject.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistSettings.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistSettings_Advanced.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistSettings_EditorFeatures.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistStyle.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistStyle.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistTabHandler.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistToolbar.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistTypes.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistUtils.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistWidgets\\AddSymbolMenu.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistWidgets\\BABlueprintActionMenu.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistWidgets\\BADebugMenu.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistWidgets\\BlueprintAssistCreateAssetMenu.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistWidgets\\BlueprintAssistGraphOverlay.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistWidgets\\BlueprintAssistHotkeyMenu.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistWidgets\\BlueprintAssistKnotNode.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistWidgets\\BlueprintAssistOpenFileMenu.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistWidgets\\BlueprintAssistTabSwitcher.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistWidgets\\BlueprintAssistWorkflowModeMenu.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistWidgets\\EditDetailsMenu.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistWidgets\\FocusSearchBoxMenu.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistWidgets\\GoToSymbolMenu.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistWidgets\\LinkPinMenu.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistWidgets\\OpenWindowMenu.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistWidgets\\SBASizeProgress.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Private\\BlueprintAssistWidgets\\VariableSelectorMenu.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistActions\\BlueprintAssistActionsBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistActions\\BlueprintAssistBlueprintActions.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistActions\\BlueprintAssistGlobalActions.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistActions\\BlueprintAssistGraphActions.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistActions\\BlueprintAssistNodeActions.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistActions\\BlueprintAssistPinActions.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistActions\\BlueprintAssistTabActions.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistActions\\BlueprintAssistToolkitActions.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistCache.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistCommands.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistDelayedDelegate.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistFormatters\\BAFormatterUtils.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistFormatters\\BehaviorTreeGraphFormatter.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistFormatters\\BlueprintAssistCommentContainsGraph.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistFormatters\\BlueprintAssistCommentHandler.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistFormatters\\EdGraphFormatter.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistFormatters\\EdGraphParameterFormatter.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistFormatters\\FormatterInterface.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistFormatters\\GraphFormatterTypes.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistFormatters\\KnotTrack.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistFormatters\\KnotTrackCreator.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistFormatters\\SimpleFormatter.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistGlobals.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistGraphCommands.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistGraphExtender.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistGraphHandler.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistGraphPanelNodeFactory.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistInputProcessor.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistMisc\\BAMiscUtils.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistMisc\\BlueprintAssistToolbar_BlueprintImpl.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistModule.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistNodeSizeChangeData.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistObjects\\BAAssetEditorHandlerObject.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistObjects\\BABlueprintHandlerObject.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistObjects\\BARootObject.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistSettings.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistSettings_Advanced.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistSettings_EditorFeatures.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistStats.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistTabHandler.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistToolbar.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistTypes.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistUtils.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistWidgets\\AddSymbolMenu.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistWidgets\\BABlueprintActionMenu.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistWidgets\\BADebugMenu.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistWidgets\\BAFilteredList.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistWidgets\\BlueprintAssistCreateAssetMenu.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistWidgets\\BlueprintAssistGraphOverlay.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistWidgets\\BlueprintAssistHotkeyMenu.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistWidgets\\BlueprintAssistKnotNode.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistWidgets\\BlueprintAssistOpenFileMenu.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistWidgets\\BlueprintAssistTabSwitcher.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistWidgets\\BlueprintAssistWorkflowModeMenu.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistWidgets\\EditDetailsMenu.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistWidgets\\FocusSearchBoxMenu.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistWidgets\\GoToSymbolMenu.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistWidgets\\LinkPinMenu.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistWidgets\\OpenWindowMenu.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistWidgets\\SBASizeProgress.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Plugins\\BlueprintAssist5.2\\BlueprintAssist\\Source\\BlueprintAssist\\Public\\BlueprintAssistWidgets\\VariableSelectorMenu.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\BlueprintAssist.22.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Source\\SpaceInvaders24\\Private\\Actors\\PWN_Enemy.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\SpaceInvaders24.262.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Source\\SpaceInvaders24\\Private\\Core\\GM_SpaceInvaders24.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\SpaceInvaders24.262.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Source\\SpaceInvaders24\\Private\\Core\\GS_SpaceInvaders24.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\SpaceInvaders24.262.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Source\\SpaceInvaders24\\Public\\Actors\\PWN_Enemy.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\SpaceInvaders24.262.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Source\\SpaceInvaders24\\Public\\Core\\GM_SpaceInvaders24.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\SpaceInvaders24.262.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Source\\SpaceInvaders24\\Public\\Core\\GS_SpaceInvaders24.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\SpaceInvaders24.262.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Source\\SpaceInvaders24\\Public\\Utils\\MathUtils.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\SpaceInvaders24.262.rsp"
+		],
+		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
 		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Source\\SpaceInvaders24\\SpaceInvaders24.Build.cs",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
-			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\SpaceInvaders24.261.rsp"
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\SpaceInvaders24.262.rsp"
 		],
 		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
@@ -11,7 +1059,7 @@
 		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Source\\SpaceInvaders24\\SpaceInvaders24.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
-			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\SpaceInvaders24.261.rsp"
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\SpaceInvaders24.262.rsp"
 		],
 		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
@@ -19,23 +1067,7 @@
 		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Source\\SpaceInvaders24\\SpaceInvaders24.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
-			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\SpaceInvaders24.261.rsp"
-		],
-		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
-	},
-	{
-		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Source\\SpaceInvaders24\\SpaceInvaders24GameModeBase.cpp",
-		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
-			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\SpaceInvaders24.261.rsp"
-		],
-		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
-	},
-	{
-		"file": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\Source\\SpaceInvaders24\\SpaceInvaders24GameModeBase.h",
-		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64\\cl.exe",
-			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\SpaceInvaders24.261.rsp"
+			"@C:\\Users\\Pc\\Documents\\Unreal Projects\\SpaceInvaders24\\.vscode\\compileCommands_Default\\SpaceInvaders24.262.rsp"
 		],
 		"directory": "D:\\Epic Games\\UE_5.2\\Engine\\Source"
 	}

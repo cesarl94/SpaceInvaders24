@@ -1,7 +1,11 @@
 /.git
+/.vs
 /.vscode
 /Content
 /DerivedDataCache
 /Intermediate
+/Platforms
 /RawContent
 /Saved
+/Plugins/BlueprintAssist5.2/BlueprintAssist/Intermediate
+/Plugins/BlueprintAssist5.2/BlueprintAssist/NodeSizeCache
