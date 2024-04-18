@@ -18,6 +18,9 @@ void APWN_Enemy::BeginPlay() { Super::BeginPlay(); }
 // This function will be triggered in BP
 void APWN_Enemy::Animate_Implementation(bool Forward, float Rate) const {}
 
+// This function will be triggered in BP
+void APWN_Enemy::DieAnimation_Implementation(bool Forward, float Rate) const {}
+
 // Called every frame
 void APWN_Enemy::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);

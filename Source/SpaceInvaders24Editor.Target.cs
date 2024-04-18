@@ -10,6 +10,6 @@ public class SpaceInvaders24EditorTarget : TargetRules
 		Type = TargetType.Editor;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
 		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_1;
-		ExtraModuleNames.Add("SpaceInvaders24");
+		ExtraModuleNames.AddRange( new string[] {"SpaceInvaders24", "CustomEditor"});
 	}
 }
