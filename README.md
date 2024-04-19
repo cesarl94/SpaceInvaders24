@@ -1,4 +1,8 @@
 ## Ongoing Technical Assesment
+
+Start date: April 17th, 2024<br>
+Deadline: April 25th, 2024<br>
+
 ### Evaluation challenge details:
 
 If you are applying for a gameplay/UI role, please stay here and continue once you've completed the test below. If you are applying for another role, please continue until your corresponding section.
