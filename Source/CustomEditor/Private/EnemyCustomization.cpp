@@ -1,10 +1,11 @@
 #pragma once
-#include "PWN_EnemyCustomization.h"
+#include "EnemyCustomization.h"
 
-#include "Actors/PWN_Enemy.h"
+#include "Actors/Enemy.h"
 #include "DetailCategoryBuilder.h"
 #include "DetailLayoutBuilder.h"
 #include "DetailWidgetRow.h"
+#include "EnemyCustomization.h"
 #include "HAL/PlatformApplicationMisc.h"
 #include "IDetailChildrenBuilder.h"
 #include "IPropertyUtilities.h"
@@ -15,12 +16,12 @@
 #include "Widgets/Text/STextBlock.h"
 
 
-void FPWN_EnemyDetailsCustomization::CustomizeDetails(IDetailLayoutBuilder &DetailBuilder) { DetailBuilder.SortCategories(&SortCustomDetailsCategories); }
+void FEnemyDetailsCustomization::CustomizeDetails(IDetailLayoutBuilder &DetailBuilder) { DetailBuilder.SortCategories(&SortCustomDetailsCategories); }
 
 // Create the static instance of this detail customization needed for registering it in module startup.
-TSharedRef<IDetailCustomization> FPWN_EnemyDetailsCustomization::MakeInstance() { return MakeShareable(new FPWN_EnemyDetailsCustomization); }
+TSharedRef<IDetailCustomization> FEnemyDetailsCustomization::MakeInstance() { return MakeShareable(new FEnemyDetailsCustomization); }
 
-void FPWN_EnemyDetailsCustomization::SortCustomDetailsCategories(const TMap<FName, IDetailCategoryBuilder *> &AllCategoryMap) {
+void FEnemyDetailsCustomization::SortCustomDetailsCategories(const TMap<FName, IDetailCategoryBuilder *> &AllCategoryMap) {
 	TArray<FString> CategoriesInOrder = {"SpaceInvaders24: Enemy Stats"};
 
 	for (int32 i = 0, limit = CategoriesInOrder.Num(); i < limit; i++) {

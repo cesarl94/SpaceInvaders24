@@ -8,7 +8,7 @@
 class IPropertyHandle;
 
 // Custom Class Details Customization
-class FPWN_EnemyDetailsCustomization : public IDetailCustomization {
+class FEnemyDetailsCustomization : public IDetailCustomization {
 
 public:
 	// Function that customizes the Details Panel.

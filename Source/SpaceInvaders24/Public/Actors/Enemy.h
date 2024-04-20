@@ -2,21 +2,23 @@
 
 #pragma once
 
+#include "Components/BoxComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Math/IntPoint.h"
+#include "Math/IntVector.h"
 #include "Utils/Enums.h"
 
-#include "PWN_Enemy.generated.h"
+#include "Enemy.generated.h"
 
 
 UCLASS()
-class SPACEINVADERS24_API APWN_Enemy : public AActor {
+class SPACEINVADERS24_API AEnemy : public AActor {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this pawn's properties
-	APWN_Enemy();
+	AEnemy();
 
 private:
 	UPROPERTY()
@@ -26,12 +28,21 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	USceneComponent *SceneComponent;
+
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	USceneComponent *GraphicNodes;
+
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	UBoxComponent *Collider;
+
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemy Stats")
 	EEnemyType Type;
 
-	// Width in X, Height in Y
+	// Offset in X, offset in Y, width, height
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemy Stats")
-	FIntPoint EnemySize;
+	FIntVector4 EnemyLocalBounds;
 
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemy Stats")
 	int32 Health;
