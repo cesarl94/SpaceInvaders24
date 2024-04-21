@@ -27,8 +27,17 @@ private:
 	UPROPERTY()
 	FVector MaxRelativeLocation;
 
+	// TODO: Comentar esto
 	UPROPERTY()
 	FRotator GameObjectOrientation;
+
+	// // TODO: Comentar esto
+	// UPROPERTY()
+	// float TexelToWorldFactorOfConversion;
+
+	// // TODO: Comentar esto
+	// UPROPERTY()
+	// float WorldToTexelFactorOfConversion;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
@@ -63,6 +72,10 @@ public:
 
 	// TODO: comentar que hace esto
 	UFUNCTION(BlueprintCallable)
+	FIntPoint GetMapSize() const;
+
+	// TODO: comentar que hace esto
+	UFUNCTION(BlueprintCallable)
 	FIntPoint WorldToTexelPos(FVector WorldPos) const;
 
 	// TODO: comentar que hace esto
@@ -80,4 +93,12 @@ public:
 	// TODO: comentar que hace esto
 	UFUNCTION(BlueprintCallable)
 	FRotator GetGameObjectOrientation() const;
+
+	// // TODO: Comentar esto
+	// UFUNCTION(BlueprintCallable)
+	// float GetTexelToWorldFactorOfConversion() const;
+
+	// // TODO: Comentar esto
+	// UFUNCTION(BlueprintCallable)
+	// float GetWorldToTexelFactorOfConversion() const;
 };

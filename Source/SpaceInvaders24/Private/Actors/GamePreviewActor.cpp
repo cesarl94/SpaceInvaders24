@@ -46,6 +46,8 @@ void AGamePreviewActor::ManualInitialize() {
 	GameObjectOrientation = UKismetMathLibrary::MakeRotFromXZ(ForwardVector, UpVector);
 }
 
+FIntPoint AGamePreviewActor::GetMapSize() const { return MapSize; }
+
 FIntPoint AGamePreviewActor::WorldToTexelPos(FVector WorldPos) const {
 	FVector RelativePosition = GetActorTransform().InverseTransformPosition(WorldPos);
 	float TexelXAprox = UMathUtils::RuleOfFive(MinRelativeLocation.X, 0, MaxRelativeLocation.X, MapSize.X - 1, RelativePosition.X, false);
@@ -59,9 +61,12 @@ FVector AGamePreviewActor::TexelToWorldPos(FIntPoint TexelPos) const {
 	return GetActorTransform().TransformPosition(FVector(RelativeTexelX, RelativeTexelY, 0));
 }
 
-
 FVector AGamePreviewActor::GetForward() const { return RelativeForward->GetForwardVector(); }
 
 FVector AGamePreviewActor::GetUp() const { return RelativeUp->GetUpVector(); }
 
 FRotator AGamePreviewActor::GetGameObjectOrientation() const { return GameObjectOrientation; }
+
+// float GetTexelToWorldFactorOfConversion() const { return TexelToWorldFactorOfConversion; }
+
+// float GetWorldToTexelFactorOfConversion() const { return WorldToTexelFactorOfConversion; }

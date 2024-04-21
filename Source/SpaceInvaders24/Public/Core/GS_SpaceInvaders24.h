@@ -28,7 +28,7 @@ private:
 	TArray<class AEnemy *> Enemies;
 
 	UPROPERTY()
-	class APWN_Player *Player;
+	class ALaserTank *Player;
 
 	UPROPERTY()
 	TArray<class ABunker *> Bunkers;
@@ -52,7 +52,7 @@ protected:
 	class UGameTimeManager *GameTimeManager;
 
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Player")
-	TSubclassOf<APWN_Player> PlayerClass;
+	TSubclassOf<class ALaserTank> PlayerClass;
 
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Player")
 	FIntPoint PlayerSpawnPosition;
@@ -107,8 +107,15 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION()
+	void OnPlayerControllerConnected(class APlayerController *PC);
+
 
 #pragma region // Wrapped functions from GamePreviewActor
+	// TODO: comentar que hace esto
+	UFUNCTION(BlueprintCallable)
+	FIntPoint GetMapSize() const;
+
 	// TODO: comentar que hace esto
 	UFUNCTION(BlueprintCallable)
 	FIntPoint WorldToTexelPos(FVector WorldPos) const;

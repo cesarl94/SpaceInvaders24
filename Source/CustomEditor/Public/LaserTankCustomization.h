@@ -8,7 +8,7 @@
 class IPropertyHandle;
 
 // Custom Class Details Customization
-class FPWN_PlayerDetailsCustomization : public IDetailCustomization {
+class FLaserTankDetailsCustomization : public IDetailCustomization {
 
 public:
 	// Function that customizes the Details Panel.

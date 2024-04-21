@@ -3,8 +3,10 @@
 #include "Actors/Bunker.h"
 #include "Actors/Enemy.h"
 #include "Actors/GamePreviewActor.h"
-#include "Actors/PWN_Player.h"
+#include "Actors/LaserTank.h"
 #include "Components/GameTimeManager.h"
+#include "Core/PC_SpaceInvaders24.h"
+#include "GameFramework/PlayerState.h"
 #include "Kismet/GameplayStatics.h"
 #include "Math/IntPoint.h"
 #include "Math/Rotator.h"
@@ -47,7 +49,14 @@ void AGS_SpaceInvaders24::SpawnPlayer() {
 	ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
 	FVector PlayerWorldPosition = TexelToWorldPos(PlayerSpawnPosition);
-	Player = GetWorld()->SpawnActor<APWN_Player>(PlayerClass, PlayerWorldPosition, GetGameObjectOrientation(), ActorSpawnParams);
+	Player = GetWorld()->SpawnActor<ALaserTank>(PlayerClass, PlayerWorldPosition, GetGameObjectOrientation(), ActorSpawnParams);
+
+	if (PlayerArray.Num() > 0) {
+		APlayerController *PC = PlayerArray[0]->GetPlayerController();
+		if (PC->GetPawn() == nullptr) {
+			PC->Possess(Player);
+		}
+	}
 }
 
 void AGS_SpaceInvaders24::SpawnBunkers() {
@@ -85,7 +94,15 @@ void AGS_SpaceInvaders24::Tick(float DeltaTime) { Super::Tick(DeltaTime); }
 
 const TArray<AEnemy *> &AGS_SpaceInvaders24::GetEnemies() const { return Enemies; }
 
+void AGS_SpaceInvaders24::OnPlayerControllerConnected(APlayerController *PC) {
+	if (Player != nullptr && PC->GetPawn() == nullptr) {
+		PC->Possess(Player);
+	}
+}
+
 #pragma region // Wrapped functions from GamePreviewActor
+FIntPoint AGS_SpaceInvaders24::GetMapSize() const { return GamePreviewActor->GetMapSize(); }
+
 FIntPoint AGS_SpaceInvaders24::WorldToTexelPos(FVector WorldPos) const { return GamePreviewActor->WorldToTexelPos(WorldPos); }
 
 FVector AGS_SpaceInvaders24::TexelToWorldPos(FIntPoint TexelPos) const { return GamePreviewActor->TexelToWorldPos(TexelPos); }
