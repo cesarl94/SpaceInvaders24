@@ -7,7 +7,9 @@
 #include "Actors/MapBound.h"
 #include "BunkerCustomization.h"
 #include "Core/GS_SpaceInvaders24.h"
+#include "CustomGameplayAbilityCustomization.h"
 #include "EnemyCustomization.h"
+#include "GAS/CustomGameplayAbility.h"
 #include "GS_SpaceInvaders24Customization.h"
 #include "GamePreviewActorCustomization.h"
 #include "LaserTankCustomization.h"
@@ -24,6 +26,7 @@ void FCustomEditorModule::StartupModule() {
 	RegisterClass(AGamePreviewActor::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FGamePreviewActorDetailsCustomization::MakeInstance));
 	RegisterClass(ALaserTank::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FLaserTankDetailsCustomization::MakeInstance));
 	RegisterClass(ABunker::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FBunkerDetailsCustomization::MakeInstance));
+	RegisterClass(UCustomGameplayAbility::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FCustomGameplayAbilityDetailsCustomization::MakeInstance));
 }
 
 void FCustomEditorModule::ShutdownModule() {
@@ -35,6 +38,7 @@ void FCustomEditorModule::ShutdownModule() {
 	PropertyModule.UnregisterCustomClassLayout(AGamePreviewActor::StaticClass()->GetFName());
 	PropertyModule.UnregisterCustomClassLayout(ALaserTank::StaticClass()->GetFName());
 	PropertyModule.UnregisterCustomClassLayout(ABunker::StaticClass()->GetFName());
+	PropertyModule.UnregisterCustomClassLayout(UCustomGameplayAbility::StaticClass()->GetFName());
 }
 
 void FCustomEditorModule::RegisterClass(FName ClassName, FOnGetDetailCustomizationInstance DetailLayoutDelegate) {

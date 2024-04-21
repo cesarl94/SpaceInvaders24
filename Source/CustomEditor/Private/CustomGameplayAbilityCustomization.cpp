@@ -1,10 +1,10 @@
 #pragma once
-#include "LaserTankCustomization.h"
+#include "CustomGameplayAbilityCustomization.h"
 
-#include "Actors/LaserTank.h"
 #include "DetailCategoryBuilder.h"
 #include "DetailLayoutBuilder.h"
 #include "DetailWidgetRow.h"
+#include "GAS/CustomGameplayAbility.h"
 #include "HAL/PlatformApplicationMisc.h"
 #include "IDetailChildrenBuilder.h"
 #include "IPropertyUtilities.h"
@@ -14,14 +14,13 @@
 #include "Widgets/SWidget.h"
 #include "Widgets/Text/STextBlock.h"
 
-
-void FLaserTankDetailsCustomization::CustomizeDetails(IDetailLayoutBuilder &DetailBuilder) { DetailBuilder.SortCategories(&SortCustomDetailsCategories); }
+void FCustomGameplayAbilityDetailsCustomization::CustomizeDetails(IDetailLayoutBuilder &DetailBuilder) { DetailBuilder.SortCategories(&SortCustomDetailsCategories); }
 
 // Create the static instance of this detail customization needed for registering it in module startup.
-TSharedRef<IDetailCustomization> FLaserTankDetailsCustomization::MakeInstance() { return MakeShareable(new FLaserTankDetailsCustomization); }
+TSharedRef<IDetailCustomization> FCustomGameplayAbilityDetailsCustomization::MakeInstance() { return MakeShareable(new FCustomGameplayAbilityDetailsCustomization); }
 
-void FLaserTankDetailsCustomization::SortCustomDetailsCategories(const TMap<FName, IDetailCategoryBuilder *> &AllCategoryMap) {
-	TArray<FString> CategoriesInOrder = {"SpaceInvaders24: Laser Tank Data", "SpaceInvaders24: GAS"};
+void FCustomGameplayAbilityDetailsCustomization::SortCustomDetailsCategories(const TMap<FName, IDetailCategoryBuilder *> &AllCategoryMap) {
+	TArray<FString> CategoriesInOrder = {"SpaceInvaders24: GAS"};
 
 	for (int32 i = 0, limit = CategoriesInOrder.Num(); i < limit; i++) {
 		FName CategoryName = FName(CategoriesInOrder[i]);

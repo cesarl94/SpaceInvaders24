@@ -60,9 +60,13 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Enemies")
 	TMap<EEnemyType, TSubclassOf<AEnemy>> EnemyClasses;
 
-	// Open preview image, check the pixel of the first enemy and put here. Each level it will begin closer of the player
+	// Open preview image of the first level, check the pixel of the first enemy (plus the offset) and put here
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Enemies")
-	TArray<FIntPoint> TexelCoordOfTopLeftEnemyByLevel;
+	FIntPoint TexelCoordOfTopLeftEnemyInFirstLevel;
+
+	// Open preview image, move all enemies at the lowest level before touch the LaserTank, and check the pixel of the first enemy (plus the offset)
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Enemies")
+	FIntPoint TexelCoordOfTopLeftEnemyInLastLevel;
 
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Enemies")
 	FIntPoint SeparationBetweenEnemies;

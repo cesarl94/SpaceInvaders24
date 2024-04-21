@@ -25,7 +25,11 @@ void AGS_SpaceInvaders24::SpawnSwarm() {
 	ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	FRotator GameObjectOrientation = GetGameObjectOrientation();
 
-	FIntPoint PositionDelta = TexelCoordOfTopLeftEnemyByLevel[Level];
+	FIntPoint PositionDelta = TexelCoordOfTopLeftEnemyInFirstLevel + Level * 8;
+	if (PositionDelta.Y > TexelCoordOfTopLeftEnemyInLastLevel.Y) {
+		PositionDelta.Y = TexelCoordOfTopLeftEnemyInLastLevel.Y;
+	}
+
 
 	for (int32 i = 0; i < EnemyDispositions.Num(); i++) {
 		FEnemyRow EnemyRowData = EnemyDispositions[i];
@@ -79,6 +83,8 @@ void AGS_SpaceInvaders24::ResetGame() {
 	SpawnSwarm();
 	SpawnPlayer();
 	SpawnBunkers();
+
+	Player->StartGame();
 }
 
 void AGS_SpaceInvaders24::BeginPlay() {
