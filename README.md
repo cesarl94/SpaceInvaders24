@@ -43,3 +43,11 @@ How fast you deliver it.<br>
 How much you resolve on your own.<br>
 
 Good luck.
+
+---
+### 20/04/24 Saturday night update:
+
+The game is taking shape. I just finished the skeleton of the game, that is, the most important classes. I have a lot of things left to do, but from here everything will be built on a good foundation :) 
+![Invaders](RawContent/Invaders.gif)
+![SkeletonReady](RawContent/SkeletonReady.png)
+![SkeletonReady_vscode](RawContent/SkeletonReady_Code.png)
