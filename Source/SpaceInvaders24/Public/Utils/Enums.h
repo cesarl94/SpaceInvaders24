@@ -40,3 +40,27 @@ enum class EMapBoundType : uint8 {
 	PLAYER_BOUND UMETA(DisplayName = "Player Bound"),
 	UFO_BOUND UMETA(DisplayName = "UFO Bound"),
 };
+
+UENUM(BlueprintType, DisplayName = "Shot Type")
+enum class EShotType : uint8 {
+	SIMPLE_LINE UMETA(DisplayName = "Simple Line"),
+	ENEMY_A UMETA(DisplayName = "Enemy A"),
+	ENEMY_B UMETA(DisplayName = "Enemy B"),
+	ENEMY_C UMETA(DisplayName = "Enemy C"),
+};
+
+UENUM(BlueprintType, DisplayName = "Crystal Type")
+enum class ECrystalType : uint8 {
+	CRYSTAL_A UMETA(DisplayName = "Crystal A"),
+	CRYSTAL_B UMETA(DisplayName = "Crystal B"),
+	CRYSTAL_C UMETA(DisplayName = "Crystal C"),
+};
+
+UENUM(BlueprintType, DisplayName = "Game State")
+enum class EGameState : uint8 {
+	IN_MENU UMETA(DisplayName = "In Menu"),
+	READY_SET_GO UMETA(DisplayName = "Ready, Set, Go"),
+	PLAYING UMETA(DisplayName = "Playing"),
+	DYING UMETA(DisplayName = "Dying"),
+	GAME_OVER UMETA(DisplayName = "Game Over"),
+};

@@ -5,7 +5,6 @@
 #include "Components/BoxComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Math/IntPoint.h"
 #include "Math/IntVector.h"
 #include "Utils/Enums.h"
 
@@ -17,7 +16,6 @@ class SPACEINVADERS24_API AEnemy : public AActor {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this pawn's properties
 	AEnemy();
 
 private:
@@ -46,6 +44,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemy Stats")
 	int32 Health;
+
+	// In percentage
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemy Stats")
+	int32 CrystalDropProbability;
 
 	UFUNCTION(BlueprintNativeEvent, Category = "SpaceInvaders24: Native Events")
 	void Animate(bool Forward, float Rate) const;

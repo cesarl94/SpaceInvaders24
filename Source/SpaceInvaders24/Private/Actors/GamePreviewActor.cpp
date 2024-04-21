@@ -46,22 +46,22 @@ void AGamePreviewActor::ManualInitialize() {
 	GameObjectOrientation = UKismetMathLibrary::MakeRotFromXZ(ForwardVector, UpVector);
 }
 
-FIntPoint AGamePreviewActor::WorldToTexelPos(FVector WorldPos) {
+FIntPoint AGamePreviewActor::WorldToTexelPos(FVector WorldPos) const {
 	FVector RelativePosition = GetActorTransform().InverseTransformPosition(WorldPos);
-	float TexelXAprox = UMathUtils::RuleOfFive(MinRelativeLocation.X, 0, MaxRelativeLocation.X, MapSize.X, RelativePosition.X, false);
-	float TexelYAprox = UMathUtils::RuleOfFive(MinRelativeLocation.Y, 0, MaxRelativeLocation.Y, MapSize.Y, RelativePosition.Y, false);
+	float TexelXAprox = UMathUtils::RuleOfFive(MinRelativeLocation.X, 0, MaxRelativeLocation.X, MapSize.X - 1, RelativePosition.X, false);
+	float TexelYAprox = UMathUtils::RuleOfFive(MinRelativeLocation.Y, 0, MaxRelativeLocation.Y, MapSize.Y - 1, RelativePosition.Y, false);
 	return FIntPoint(FMath::RoundToInt(TexelXAprox), FMath::RoundToInt(TexelYAprox));
 }
 
-FVector AGamePreviewActor::TexelToWorldPos(FIntPoint TexelPos) {
-	float RelativeTexelX = UMathUtils::RuleOfFive(0, MinRelativeLocation.X, MapSize.X, MaxRelativeLocation.X, TexelPos.X, false);
-	float RelativeTexelY = UMathUtils::RuleOfFive(0, MinRelativeLocation.Y, MapSize.Y, MaxRelativeLocation.Y, TexelPos.Y, false);
+FVector AGamePreviewActor::TexelToWorldPos(FIntPoint TexelPos) const {
+	float RelativeTexelX = UMathUtils::RuleOfFive(0, MinRelativeLocation.X, MapSize.X - 1, MaxRelativeLocation.X, TexelPos.X, false);
+	float RelativeTexelY = UMathUtils::RuleOfFive(0, MinRelativeLocation.Y, MapSize.Y - 1, MaxRelativeLocation.Y, TexelPos.Y, false);
 	return GetActorTransform().TransformPosition(FVector(RelativeTexelX, RelativeTexelY, 0));
 }
 
 
-FVector AGamePreviewActor::GetForward() { return RelativeForward->GetForwardVector(); }
+FVector AGamePreviewActor::GetForward() const { return RelativeForward->GetForwardVector(); }
 
-FVector AGamePreviewActor::GetUp() { return RelativeUp->GetUpVector(); }
+FVector AGamePreviewActor::GetUp() const { return RelativeUp->GetUpVector(); }
 
-FRotator AGamePreviewActor::GetGameObjectOrientation() { return GameObjectOrientation; }
+FRotator AGamePreviewActor::GetGameObjectOrientation() const { return GameObjectOrientation; }

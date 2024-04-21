@@ -12,15 +12,18 @@
 
 #include "GamePreviewActor.generated.h"
 
+// TODO: comentar que es esta clase
 
 UCLASS()
 class SPACEINVADERS24_API AGamePreviewActor : public AActor {
 	GENERATED_BODY()
 
 private:
+	// TODO: Comentar esto
 	UPROPERTY()
 	FVector MinRelativeLocation;
 
+	// TODO: Comentar esto
 	UPROPERTY()
 	FVector MaxRelativeLocation;
 
@@ -40,9 +43,11 @@ protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	UArrowComponent *RelativeUp;
 
+	// TODO: comentar que es esto
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	USceneComponent *SceneInMinRelativePos;
 
+	// TODO: comentar que es esto
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	USceneComponent *SceneInMaxRelativePos;
 
@@ -56,18 +61,23 @@ public:
 	// Called from GameState's BeginPlay
 	void ManualInitialize();
 
+	// TODO: comentar que hace esto
 	UFUNCTION(BlueprintCallable)
-	FIntPoint WorldToTexelPos(FVector WorldPos);
+	FIntPoint WorldToTexelPos(FVector WorldPos) const;
 
+	// TODO: comentar que hace esto
 	UFUNCTION(BlueprintCallable)
-	FVector TexelToWorldPos(FIntPoint TexelPos);
+	FVector TexelToWorldPos(FIntPoint TexelPos) const;
 
+	// TODO: comentar que hace esto
 	UFUNCTION(BlueprintCallable)
-	FVector GetForward();
+	FVector GetForward() const;
 
+	// TODO: comentar que hace esto
 	UFUNCTION(BlueprintCallable)
-	FVector GetUp();
+	FVector GetUp() const;
 
+	// TODO: comentar que hace esto
 	UFUNCTION(BlueprintCallable)
-	FRotator GetGameObjectOrientation();
+	FRotator GetGameObjectOrientation() const;
 };

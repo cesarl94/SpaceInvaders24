@@ -1,5 +1,5 @@
 
-#include "Core/Components/GameTimeManager.h"
+#include "Components/GameTimeManager.h"
 
 #include "Core/GS_SpaceInvaders24.h"
 #include "Kismet/GameplayStatics.h"

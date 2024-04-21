@@ -1,4 +1,6 @@
 #pragma once
+#include "MapBoundCustomization.h"
+
 #include "Actors/MapBound.h"
 #include "DetailCategoryBuilder.h"
 #include "DetailLayoutBuilder.h"
@@ -6,13 +8,11 @@
 #include "HAL/PlatformApplicationMisc.h"
 #include "IDetailChildrenBuilder.h"
 #include "IPropertyUtilities.h"
-#include "MapBoundCustomization.h"
 #include "PropertyHandle.h"
 #include "UObject/UnrealType.h"
 #include "Widgets/Input/SButton.h"
 #include "Widgets/SWidget.h"
 #include "Widgets/Text/STextBlock.h"
-
 
 
 void FMapBoundDetailsCustomization::CustomizeDetails(IDetailLayoutBuilder &DetailBuilder) { DetailBuilder.SortCategories(&SortCustomDetailsCategories); }

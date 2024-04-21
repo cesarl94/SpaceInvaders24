@@ -3,11 +3,11 @@
 #include "CoreMinimal.h"
 #include "Utils/Enums.h"
 
-#include "EnemyLine.generated.h"
+#include "EnemyRow.generated.h"
 
 
 USTRUCT(BlueprintType)
-struct SPACEINVADERS24_API FEnemyLine {
+struct SPACEINVADERS24_API FEnemyRow {
 	GENERATED_BODY()
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
