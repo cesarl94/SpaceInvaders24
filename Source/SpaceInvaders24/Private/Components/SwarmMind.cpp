@@ -3,6 +3,9 @@
 
 #include "Components/SwarmMind.h"
 
+#include "Core/GS_SpaceInvaders24.h"
+
+
 // Sets default values for this component's properties
 USwarmMind::USwarmMind() {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
@@ -20,10 +23,4 @@ void USwarmMind::BeginPlay() {
 	// ...
 }
 
-
-// Called every frame
-void USwarmMind::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
-}
+void USwarmMind::ManualTick(float DeltaTime) { AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>(); }

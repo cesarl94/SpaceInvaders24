@@ -55,7 +55,10 @@ UENUM(BlueprintType, DisplayName = "Game State")
 enum class EGameState : uint8 {
 	IN_MENU UMETA(DisplayName = "In Menu"),
 	READY_SET_GO UMETA(DisplayName = "Ready, Set, Go"),
-	PLAYING UMETA(DisplayName = "Playing"),
+	PLAYING_FORWARD UMETA(DisplayName = "Playing Forward"),
+	PLAYING_SLOW_TIME_DOWN UMETA(DisplayName = "Playing Slow Time Down"),
+	PLAYING_PAUSED_TIME UMETA(DisplayName = "Playing Paused Time"),
+	PLAYING_REVERSE UMETA(DisplayName = "Playing Reverse"),
 	DYING UMETA(DisplayName = "Dying"),
 	GAME_OVER UMETA(DisplayName = "Game Over"),
 };

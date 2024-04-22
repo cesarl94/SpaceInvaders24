@@ -24,6 +24,14 @@ private:
 	UPROPERTY()
 	class AGamePreviewActor *GamePreviewActor;
 
+	// CAUTION: Ultra-private variable
+	// Since Unreal doesn't allow 2-dimensional-arrays, we'll use a 1D array indexed :(
+	// Use with the functions: "GetEnemyInCoordinate" and "SetEnemyInIndexed2DArray"
+	// CAUTION2: Double reference array togheter with the another array of enemies, "TArray<class AEnemy *> Enemies".
+	UPROPERTY()
+	TArray<class AEnemy *> _Enemies2D;
+
+	// TODO: comentar esto. Advertir la doble referencia
 	UPROPERTY()
 	TArray<class AEnemy *> Enemies;
 
@@ -45,12 +53,21 @@ private:
 	UFUNCTION()
 	void ResetGame();
 
+	// TODO: comentar que hace esto
+	UFUNCTION()
+	void SetEnemyInIndexed2DArray(int32 X, int32 Y, class AEnemy *Enemy);
+
 protected:
 	void BeginPlay() override;
 
+	// Components:
 	UPROPERTY(VisibleAnywhere)
 	class UGameTimeManager *GameTimeManager;
 
+	UPROPERTY(VisibleAnywhere)
+	class USwarmMind *SwarmMind;
+
+	// Serialized data:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Player")
 	TSubclassOf<class ALaserTank> PlayerClass;
 
@@ -74,6 +91,14 @@ protected:
 	// Disposition of the enemies. From top to bottom
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Enemies")
 	TArray<FEnemyRow> EnemyDispositions;
+
+	// The count of columns of aliens
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Enemies")
+	int32 EnemiesPerRow{11};
+
+	// Disposition of the enemies. From top to bottom
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Enemies")
+	TArray<EEnemyType> EnemyTypesByRow;
 
 	// It represents the speed of the entire swarm in texels per frame, but distributed among all the enemies.
 	// This causes the remaining enemies to update faster as there are fewer of them.
@@ -110,12 +135,17 @@ public:
 	EGameState GameState{EGameState::IN_MENU};
 
 	UFUNCTION()
-	const TArray<AEnemy *> &GetEnemies() const;
+	const TArray<class AEnemy *> &GetEnemies() const;
 
 	virtual void Tick(float DeltaTime) override;
 
+	// TODO: comentar que hace esto
 	UFUNCTION()
 	void OnPlayerControllerConnected(class APlayerController *PC);
+
+	// TODO: comentar que hace esto
+	UFUNCTION()
+	class AEnemy *GetEnemyInIndexed2DArray(int32 X, int32 Y) const;
 
 
 #pragma region // Wrapped functions from GamePreviewActor

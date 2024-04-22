@@ -5,6 +5,7 @@
 
 #include "Components/BoxComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Math/IntPoint.h"
 
 
 // Sets default values
@@ -22,7 +23,10 @@ AEnemy::AEnemy() {
 	GraphicNodes->SetupAttachment(SceneComponent);
 }
 
-// Called when the game starts or when spawned
+void ManualInitialize(FIntPoint CoordinateInGrid) { EnemyCoordinateInGrid = CoordinateInGrid; }
+
+FIntPoint GetEnemyCoordinateInGrid() const { return EnemyCoordinateInGrid; }
+
 void AEnemy::BeginPlay() { Super::BeginPlay(); }
 
 // This function will be triggered in BP
@@ -31,16 +35,28 @@ void AEnemy::Animate_Implementation(bool Forward, float Rate) const {}
 // This function will be triggered in BP
 void AEnemy::DieAnimation_Implementation(bool Forward, float Rate) const {}
 
+void ApplyVelocity(float DeltaTime) {
+	FVector2D PrevTexelPosition = GetFloatTexelPosition();
+	FVector2D NewTexelPosition = PrevTexelPosition + GetTexelVelocity() * DeltaTime;
+
+	SetTexelPosition(NewTexelPosition, true);
+}
+
 // Called every frame
 void AEnemy::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
-	if (UKismetSystemLibrary::GetFrameCount() % 100 == 0) {
-		if (UKismetSystemLibrary::GetFrameCount() % 200 == 0) {
+	// TODO: replace this hard-coded reference
+	if (UKismetSystemLibrary::GetFrameCount() % 50 == 0) {
+		if (UKismetSystemLibrary::GetFrameCount() % 100 == 0) {
 			Animate(true, 2);
 		} else {
-
 			Animate(false, 2);
 		}
 	}
+}
+
+void AEnemy::Die() {
+	OnDie.Broadcast(this);
+	Destroy();
 }

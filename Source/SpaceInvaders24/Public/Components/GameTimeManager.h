@@ -17,15 +17,14 @@ private:
 	UPROPERTY()
 	ETimeState TimeState{ETimeState::IDLE};
 
+	UPROPERTY()
+	float GlobalTimeAtLastStateChange{0};
 
 	UPROPERTY()
-	float NormalGameTimeSeconds{0};
+	float NormalGameTotalSeconds{0};
 
 	UPROPERTY()
-	float TimeAtLastStateChange{0};
-
-	UPROPERTY()
-	float CrystalTimeSeconds{0};
+	float CrystalTotalSeconds{0};
 
 	UPROPERTY()
 	float LastDeltaTime{0};
@@ -36,9 +35,25 @@ private:
 public:
 	UGameTimeManager();
 
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
-
+	// Called from GS_SpaceInvaders24
 	UFUNCTION()
+	void ManualTick(float DeltaTime);
+
+	UFUNCTION(BlueprintCallable)
+	ETimeState GetTimeState();
+
+	UFUNCTION(BlueprintCallable)
 	void SetNewState(ETimeState NewTimeState);
+
+	UFUNCTION(BlueprintCallable)
+	float GetNormalGameTotalSeconds();
+
+	UFUNCTION(BlueprintCallable)
+	float GetCrystalTotalSeconds();
+
+	UFUNCTION(BlueprintCallable)
+	float GetLastDeltaTime();
+
+	UFUNCTION(BlueprintCallable)
+	float GetLastCrystalDeltaTime();
 };

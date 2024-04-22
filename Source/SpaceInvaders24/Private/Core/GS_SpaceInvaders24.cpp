@@ -5,6 +5,7 @@
 #include "Actors/GamePreviewActor.h"
 #include "Actors/LaserTank.h"
 #include "Components/GameTimeManager.h"
+#include "Components/SwarmMind.h"
 #include "Core/PC_SpaceInvaders24.h"
 #include "GameFramework/PlayerState.h"
 #include "Kismet/GameplayStatics.h"
@@ -18,9 +19,12 @@ AGS_SpaceInvaders24::AGS_SpaceInvaders24() {
 	PrimaryActorTick.bCanEverTick = true;
 
 	GameTimeManager = CreateDefaultSubobject<UGameTimeManager>(TEXT("Game Time Manager"));
+	SwarmMind = CreateDefaultSubobject<USwarmMind>(TEXT("Swarm Mind"));
 }
 
 void AGS_SpaceInvaders24::SpawnSwarm() {
+	_Enemies2D.SetNumUninitialized(EnemiesPerRow * EnemyDispositions.Num());
+
 	FActorSpawnParameters ActorSpawnParams;
 	ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	FRotator GameObjectOrientation = GetGameObjectOrientation();
@@ -33,17 +37,19 @@ void AGS_SpaceInvaders24::SpawnSwarm() {
 
 	for (int32 i = 0; i < EnemyDispositions.Num(); i++) {
 		FEnemyRow EnemyRowData = EnemyDispositions[i];
-		for (int32 j = 0; j < EnemyRowData.EnemyCount; j++) {
+		for (int32 j = 0; j < EnemiesPerRow; j++) {
 			TSubclassOf<AEnemy> *EnemySubclass = EnemyClasses.Find(EnemyRowData.EnemyType);
 			if (EnemySubclass != nullptr) {
 				FVector EnemyWorldPosition = TexelToWorldPos(PositionDelta);
 				AEnemy *Enemy = GetWorld()->SpawnActor<AEnemy>(*EnemySubclass, EnemyWorldPosition, GameObjectOrientation, ActorSpawnParams);
+				Enemy.ManualInitialize(FIntPoint(j, i));
+				SetEnemyInIndexed2DArray(j, i, Enemy);
 				Enemies.Add(Enemy);
 
 				PositionDelta.X += SeparationBetweenEnemies.X;
 			}
 		}
-		PositionDelta.X -= SeparationBetweenEnemies.X * EnemyRowData.EnemyCount;
+		PositionDelta.X -= SeparationBetweenEnemies.X * EnemiesPerRow;
 		PositionDelta.Y += SeparationBetweenEnemies.Y;
 	}
 }
@@ -87,6 +93,11 @@ void AGS_SpaceInvaders24::ResetGame() {
 	Player->StartGame();
 }
 
+void AGS_SpaceInvaders24::SetEnemyInIndexed2DArray(int32 X, int32 Y, class AEnemy *Enemy) {
+	int32 Index1D = Y * EnemiesPerRow + X;
+	_Enemies2D[Index1D] = Enemy;
+}
+
 void AGS_SpaceInvaders24::BeginPlay() {
 	Super::BeginPlay();
 
@@ -96,7 +107,13 @@ void AGS_SpaceInvaders24::BeginPlay() {
 	ResetGame();
 }
 
-void AGS_SpaceInvaders24::Tick(float DeltaTime) { Super::Tick(DeltaTime); }
+void AGS_SpaceInvaders24::Tick(float DeltaTime) {
+	Super::Tick(DeltaTime);
+
+	GameTimeManager->ManualTick(DeltaTime);
+
+	SwarmMind->ManualTick(DeltaTime);
+}
 
 const TArray<AEnemy *> &AGS_SpaceInvaders24::GetEnemies() const { return Enemies; }
 
@@ -104,6 +121,11 @@ void AGS_SpaceInvaders24::OnPlayerControllerConnected(APlayerController *PC) {
 	if (Player != nullptr && PC->GetPawn() == nullptr) {
 		PC->Possess(Player);
 	}
+}
+
+AEnemy *AGS_SpaceInvaders24::GetEnemyInIndexed2DArray(int32 X, int32 Y) const {
+	int32 Index1D = Y * EnemiesPerRow + X;
+	return _Enemies2D[Index1D];
 }
 
 #pragma region // Wrapped functions from GamePreviewActor

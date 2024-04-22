@@ -4,6 +4,7 @@
 #include "Actors/Bunker.h"
 
 #include "Components/BunkerBrick.h"
+#include "Math/IntPoint.h"
 #include "Utils/MathUtils.h"
 
 

@@ -8,10 +8,8 @@
 
 UGameTimeManager::UGameTimeManager() { PrimaryComponentTick.bCanEverTick = true; }
 
-
-void UGameTimeManager::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
+void UGameTimeManager::ManualTick(float DeltaTime) {
+	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
 
 	switch (TimeState) {
 	case ETimeState::IDLE:
@@ -40,7 +38,18 @@ void UGameTimeManager::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	CrystalTimeSeconds += LastCrystalDeltaTime;
 }
 
+ETimeState UGameTimeManager::GetTimeState() { return TimeState; }
+
 void UGameTimeManager::SetNewState(ETimeState NewTimeState) {
-	AGS_SpaceInvaders24 *GameState = Cast<AGS_SpaceInvaders24>(UGameplayStatics::GetGameState(this));
+	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
+
 	// GameState->GetServerWorldTimeSeconds()
 }
+
+float UGameTimeManager::GetNormalGameTotalSeconds() { return NormalGameTotalSeconds; }
+
+float UGameTimeManager::GetCrystalTotalSeconds() { return CrystalTotalSeconds; }
+
+float UGameTimeManager::GetLastDeltaTime() { return LastDeltaTime; }
+
+float UGameTimeManager::GetLastCrystalDeltaTime() { return LastCrystalDeltaTime; }

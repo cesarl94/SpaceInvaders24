@@ -10,7 +10,7 @@
 #include "ActorInTexels.generated.h"
 
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FActorInTexelsEvent, EDirection, Direction);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTouchLimitEvent, EDirection, Direction);
 
 UCLASS()
 class SPACEINVADERS24_API AActorInTexels : public APawn {
@@ -34,27 +34,27 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Actor In Texels")
 	FIntVector4 ActorLimits;
 
-	void ApplyVelocity(float DeltaTime);
+	virtual void ApplyVelocity(float DeltaTime);
 
 public:
 	// TODO: comentar esto
-	FVector2D GetFloatTexelPosition();
+	virtual FVector2D GetFloatTexelPosition();
 
 	// TODO: comentar esto. La posición visible del actor
-	FIntPoint GetIntTexelPosition();
+	virtual FIntPoint GetIntTexelPosition();
 
 	// TODO: comentar esto
-	void SetTexelPosition(FVector2D NewTexelPosition, bool Sweep = false);
+	virtual void SetTexelPosition(FVector2D NewTexelPosition, bool Sweep = false);
 
 	// TODO: comentar esto
-	FVector2D GetTexelVelocity();
+	virtual FVector2D GetTexelVelocity();
 
 	// TODO: comentar esto
-	void SetTexelVelocity(FVector2D NewTexelVelocity);
+	virtual void SetTexelVelocity(FVector2D NewTexelVelocity);
 
 	// TODO: comentar esto
-	FIntVector4 GetIntTexelBoundingBox();
+	virtual FIntVector4 GetIntTexelBoundingBox();
 
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
-	FActorInTexelsEvent OnTouchLimit;
+	FOnTouchLimitEvent OnTouchLimit;
 };

@@ -20,7 +20,6 @@ void AActorInTexels::BeginPlay() {
 }
 
 void AActorInTexels::ApplyVelocity(float DeltaTime) {
-
 	FVector2D PrevTexelPosition = GetFloatTexelPosition();
 	FVector2D NewTexelPosition = PrevTexelPosition + GetTexelVelocity() * DeltaTime;
 

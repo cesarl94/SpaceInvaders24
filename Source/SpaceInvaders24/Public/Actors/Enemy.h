@@ -5,12 +5,17 @@
 #include "Actors/ActorInTexels.h"
 #include "Components/BoxComponent.h"
 #include "CoreMinimal.h"
+#include "Math/IntPoint.h"
 #include "Math/IntVector.h"
 #include "Math/Vector2D.h"
 #include "Utils/Enums.h"
 
 #include "Enemy.generated.h"
 
+
+class AEnemy;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEnemyDie, AEnemy *, DiedEnemy);
 
 UCLASS()
 class SPACEINVADERS24_API AEnemy : public AActorInTexels {
@@ -20,6 +25,10 @@ class SPACEINVADERS24_API AEnemy : public AActorInTexels {
 private:
 	UPROPERTY()
 	EEnemyState State{EEnemyState::IDLE};
+
+	UPROPERTY()
+	FIntPoint EnemyCoordinateInGrid;
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -40,8 +49,10 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemy Stats")
 	EEnemyType Type;
 
+	// The amount of points that this enemy could give you will be taked randomly inside of this array.
+	// E.g: A simple enemy should have only 1 element. UFO could have 3.
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemy Stats")
-	int32 Health;
+	TArray<int32> PointsThatCouldGive;
 
 	// In percentage
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemy Stats")
@@ -53,9 +64,22 @@ protected:
 	UFUNCTION(BlueprintNativeEvent, Category = "SpaceInvaders24: Native Events")
 	void DieAnimation(bool Forward, float Rate) const;
 
+	virtual void ApplyVelocity(float DeltaTime) override;
+
 
 public:
 	AEnemy();
 
+	// Called from GS_SpaceInvaders24 after create
+	void ManualInitialize(FIntPoint CoordinateInGrid);
+
+	FIntPoint GetEnemyCoordinateInGrid() const;
+
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION()
+	void Die();
+
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
+	FOnEnemyDie OnDie;
 };
