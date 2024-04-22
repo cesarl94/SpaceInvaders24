@@ -16,5 +16,5 @@ class SPACEINVADERS24_API APC_SpaceInvaders24 : public APlayerController {
 	GENERATED_BODY()
 
 protected:
-	void BeginPlay() override;
+	virtual void BeginPlay() override;
 };

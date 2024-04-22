@@ -4,10 +4,13 @@
 
 #include "Components/ActorComponent.h"
 #include "CoreMinimal.h"
+#include "Structs/TimeStateData.h"
 #include "Utils/Enums.h"
 
 #include "GameTimeManager.generated.h"
 
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FGameTimeManagerEvent);
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class SPACEINVADERS24_API UGameTimeManager : public UActorComponent {
@@ -32,12 +35,20 @@ private:
 	UPROPERTY()
 	float LastCrystalDeltaTime{0};
 
+protected:
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Time Manager")
+	TMap<ETimeState, FTimeStateData> TimeStateData;
+
 public:
 	UGameTimeManager();
 
 	// Called from GS_SpaceInvaders24
 	UFUNCTION()
 	void ManualTick(float DeltaTime);
+
+	// Returns the maximum time that we could pass in another time state (only special states count)
+	UFUNCTION()
+	float GetMaxTimeDilationDuration();
 
 	UFUNCTION(BlueprintCallable)
 	ETimeState GetTimeState();
@@ -56,4 +67,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	float GetLastCrystalDeltaTime();
+
+
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
+	FGameTimeManagerEvent OnTimeStateFinished;
 };

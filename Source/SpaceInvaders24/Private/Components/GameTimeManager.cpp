@@ -3,47 +3,61 @@
 
 #include "Core/GS_SpaceInvaders24.h"
 #include "Kismet/GameplayStatics.h"
+#include "Structs/TimeStateData.h"
 #include "Utils/Enums.h"
 
+// void UGameTimeManager::BeginPlay() {
+// 	Super::BeginPlay();
+// 	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
+// }
 
-UGameTimeManager::UGameTimeManager() { PrimaryComponentTick.bCanEverTick = true; }
+UGameTimeManager::UGameTimeManager() { PrimaryComponentTick.bCanEverTick = false; }
 
 void UGameTimeManager::ManualTick(float DeltaTime) {
-	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
+	FTimeStateData *CurrentTimeStateData = TimeStateData.Find(TimeState);
+	if (CurrentTimeStateData != nullptr) {
+		if (CurrentTimeStateData->Duration > 0) {
+			AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
+			float GlobalTimeSeconds = GameState->GetServerWorldTimeSeconds();
+			float TimeSinceLastStateChange = GlobalTimeSeconds - GlobalTimeAtLastStateChange;
 
-	switch (TimeState) {
-	case ETimeState::IDLE:
-		LastDeltaTime = 0;
-		LastCrystalDeltaTime = 0;
-		break;
-	case ETimeState::FORWARD:
+			if (TimeSinceLastStateChange > CurrentTimeStateData->Duration) {
+				// I emit this event that will be heared by the GS
+				OnTimeStateFinished.Broadcast();
+				// after emit that event, the GS calls SetNewState so now I have another state and I need to read my StateData again
+				CurrentTimeStateData = TimeStateData.Find(TimeState);
+			}
+		}
+		LastDeltaTime = DeltaTime * CurrentTimeStateData->DeltaTimeDilation;
+		LastCrystalDeltaTime = DeltaTime * CurrentTimeStateData->DeltaTimeDilationByCrystal;
+	} else {
 		LastDeltaTime = DeltaTime;
 		LastCrystalDeltaTime = DeltaTime;
-		break;
-	case ETimeState::SLOW:
-		LastDeltaTime = DeltaTime;
-		LastCrystalDeltaTime = DeltaTime * 0.5f;
-		break;
-	case ETimeState::PAUSED:
-		LastDeltaTime = DeltaTime;
-		LastCrystalDeltaTime = 0;
-		break;
-	case ETimeState::BACKWARD:
-		LastDeltaTime = DeltaTime;
-		LastCrystalDeltaTime = DeltaTime * -1.f;
-		break;
 	}
 
-	NormalGameTimeSeconds += LastDeltaTime;
-	CrystalTimeSeconds += LastCrystalDeltaTime;
+	NormalGameTotalSeconds += LastDeltaTime;
+	CrystalTotalSeconds += LastCrystalDeltaTime;
+}
+
+float UGameTimeManager::GetMaxTimeDilationDuration() {
+	float RetornedValue = -1;
+
+	for (const TPair<ETimeState, FTimeStateData> &Pair : TimeStateData) {
+		if (RetornedValue < Pair.Value.Duration) {
+			RetornedValue = Pair.Value.Duration;
+		}
+	}
+
+	return RetornedValue;
 }
 
 ETimeState UGameTimeManager::GetTimeState() { return TimeState; }
 
 void UGameTimeManager::SetNewState(ETimeState NewTimeState) {
-	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
+	TimeState = NewTimeState;
 
-	// GameState->GetServerWorldTimeSeconds()
+	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
+	GlobalTimeAtLastStateChange = GameState->GetServerWorldTimeSeconds();
 }
 
 float UGameTimeManager::GetNormalGameTotalSeconds() { return NormalGameTotalSeconds; }

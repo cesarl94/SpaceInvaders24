@@ -12,37 +12,37 @@
 #include "Math/IntPoint.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
-#include "Structs/EnemyRow.h"
 
 
 AGS_SpaceInvaders24::AGS_SpaceInvaders24() {
 	PrimaryActorTick.bCanEverTick = true;
 
 	GameTimeManager = CreateDefaultSubobject<UGameTimeManager>(TEXT("Game Time Manager"));
+	GameTimeManager->OnTimeStateFinished.AddUniqueDynamic(this, &AGS_SpaceInvaders24::OnTimeStateFinished);
+
 	SwarmMind = CreateDefaultSubobject<USwarmMind>(TEXT("Swarm Mind"));
 }
 
 void AGS_SpaceInvaders24::SpawnSwarm() {
-	_Enemies2D.SetNumUninitialized(EnemiesPerRow * EnemyDispositions.Num());
+	_Enemies2D.SetNumUninitialized(EnemiesPerRow * EnemyTypesByRow.Num());
 
 	FActorSpawnParameters ActorSpawnParams;
 	ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	FRotator GameObjectOrientation = GetGameObjectOrientation();
 
-	FIntPoint PositionDelta = TexelCoordOfTopLeftEnemyInFirstLevel + Level * 8;
+	FIntPoint PositionDelta = TexelCoordOfTopLeftEnemyInFirstLevel + Level * (SeparationBetweenEnemies.Y / 2);
 	if (PositionDelta.Y > TexelCoordOfTopLeftEnemyInLastLevel.Y) {
 		PositionDelta.Y = TexelCoordOfTopLeftEnemyInLastLevel.Y;
 	}
 
 
-	for (int32 i = 0; i < EnemyDispositions.Num(); i++) {
-		FEnemyRow EnemyRowData = EnemyDispositions[i];
+	for (int32 i = 0; i < EnemyTypesByRow.Num(); i++) {
 		for (int32 j = 0; j < EnemiesPerRow; j++) {
-			TSubclassOf<AEnemy> *EnemySubclass = EnemyClasses.Find(EnemyRowData.EnemyType);
+			TSubclassOf<AEnemy> *EnemySubclass = EnemyClasses.Find(EnemyTypesByRow[i]);
 			if (EnemySubclass != nullptr) {
 				FVector EnemyWorldPosition = TexelToWorldPos(PositionDelta);
 				AEnemy *Enemy = GetWorld()->SpawnActor<AEnemy>(*EnemySubclass, EnemyWorldPosition, GameObjectOrientation, ActorSpawnParams);
-				Enemy.ManualInitialize(FIntPoint(j, i));
+				Enemy->ManualInitialize(FIntPoint(j, i));
 				SetEnemyInIndexed2DArray(j, i, Enemy);
 				Enemies.Add(Enemy);
 
@@ -85,11 +85,11 @@ void AGS_SpaceInvaders24::ResetGame() {
 	Level = 0;
 	Lives = 3;
 	Points = 0;
-	GameState = EGameState::PLAYING;
 	SpawnSwarm();
 	SpawnPlayer();
 	SpawnBunkers();
 
+	GameState = EGameState::PLAYING_FORWARD;
 	Player->StartGame();
 }
 
@@ -97,6 +97,10 @@ void AGS_SpaceInvaders24::SetEnemyInIndexed2DArray(int32 X, int32 Y, class AEnem
 	int32 Index1D = Y * EnemiesPerRow + X;
 	_Enemies2D[Index1D] = Enemy;
 }
+
+void AGS_SpaceInvaders24::SetNewState(EGameState NewGameState) { GameState = NewGameState; }
+
+void AGS_SpaceInvaders24::OnTimeStateFinished() { UKismetSystemLibrary::PrintString(GetWorld(), "There isn't a BP_Minimap in the Level", true, true, FColor::Red, 5); }
 
 void AGS_SpaceInvaders24::BeginPlay() {
 	Super::BeginPlay();
@@ -114,6 +118,8 @@ void AGS_SpaceInvaders24::Tick(float DeltaTime) {
 
 	SwarmMind->ManualTick(DeltaTime);
 }
+
+EGameState AGS_SpaceInvaders24::GetGameState() const { return GameState; }
 
 const TArray<AEnemy *> &AGS_SpaceInvaders24::GetEnemies() const { return Enemies; }
 

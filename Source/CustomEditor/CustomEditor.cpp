@@ -6,12 +6,14 @@
 #include "Actors/GamePreviewActor.h"
 #include "Actors/LaserTank.h"
 #include "Actors/Shot.h"
+#include "Components/GameTimeManager.h"
 #include "Core/GS_SpaceInvaders24.h"
 #include "CustomGameplayAbilityCustomization.h"
 #include "EnemyCustomization.h"
 #include "GAS/CustomGameplayAbility.h"
 #include "GS_SpaceInvaders24Customization.h"
 #include "GamePreviewActorCustomization.h"
+#include "GameTimeManagerCustomization.h"
 #include "LaserTankCustomization.h"
 #include "PropertyEditorDelegates.h"
 #include "PropertyEditorModule.h"
@@ -27,6 +29,7 @@ void FCustomEditorModule::StartupModule() {
 	RegisterClass(UCustomGameplayAbility::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FCustomGameplayAbilityDetailsCustomization::MakeInstance));
 	RegisterClass(AShot::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FShotDetailsCustomization::MakeInstance));
 	RegisterClass(AActorInTexels::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FActorInTexelsDetailsCustomization::MakeInstance));
+	RegisterClass(UGameTimeManager::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FGameTimeManagerDetailsCustomization::MakeInstance));
 }
 
 void FCustomEditorModule::ShutdownModule() {
@@ -39,6 +42,7 @@ void FCustomEditorModule::ShutdownModule() {
 	PropertyModule.UnregisterCustomClassLayout(UCustomGameplayAbility::StaticClass()->GetFName());
 	PropertyModule.UnregisterCustomClassLayout(AShot::StaticClass()->GetFName());
 	PropertyModule.UnregisterCustomClassLayout(AActorInTexels::StaticClass()->GetFName());
+	PropertyModule.UnregisterCustomClassLayout(UGameTimeManager::StaticClass()->GetFName());
 }
 
 void FCustomEditorModule::RegisterClass(FName ClassName, FOnGetDetailCustomizationInstance DetailLayoutDelegate) {

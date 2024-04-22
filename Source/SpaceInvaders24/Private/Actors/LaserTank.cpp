@@ -59,8 +59,6 @@ void ALaserTank::BeginPlay() {
 
 	GraphicNodes->SetVisibility(false, true);
 
-	OnTouchLimit.AddUniqueDynamic(this, &ALaserTank::OnTouchBorder);
-
 	InitializeGAS();
 }
 

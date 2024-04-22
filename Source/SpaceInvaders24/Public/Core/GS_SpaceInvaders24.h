@@ -6,12 +6,9 @@
 #include "GameFramework/GameStateBase.h"
 #include "Math/IntPoint.h"
 #include "Math/Rotator.h"
-#include "Structs/EnemyRow.h"
-#include "Structs/TimeStateData.h"
 #include "Utils/Enums.h"
 
 #include "GS_SpaceInvaders24.generated.h"
-
 
 UCLASS()
 class SPACEINVADERS24_API AGS_SpaceInvaders24 : public AGameStateBase {
@@ -41,6 +38,9 @@ private:
 	UPROPERTY()
 	TArray<class ABunker *> Bunkers;
 
+	UPROPERTY()
+	EGameState GameState{EGameState::IN_MENU};
+
 	UFUNCTION()
 	void SpawnSwarm();
 
@@ -57,8 +57,15 @@ private:
 	UFUNCTION()
 	void SetEnemyInIndexed2DArray(int32 X, int32 Y, class AEnemy *Enemy);
 
+	UFUNCTION()
+	void SetNewState(EGameState NewGameState);
+
+	// Called from GameTimeManager's event
+	UFUNCTION()
+	void OnTimeStateFinished();
+
 protected:
-	void BeginPlay() override;
+	virtual void BeginPlay() override;
 
 	// Components:
 	UPROPERTY(VisibleAnywhere)
@@ -88,19 +95,15 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Enemies")
 	FIntPoint SeparationBetweenEnemies;
 
-	// Disposition of the enemies. From top to bottom
-	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Enemies")
-	TArray<FEnemyRow> EnemyDispositions;
-
 	// The count of columns of aliens
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Enemies")
 	int32 EnemiesPerRow{11};
 
-	// Disposition of the enemies. From top to bottom
+	// The type of the enemies by row. From top to bottom
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Enemies")
 	TArray<EEnemyType> EnemyTypesByRow;
 
-	// It represents the speed of the entire swarm in texels per frame, but distributed among all the enemies.
+	// It represents the speed of the entire swarm in texels per frame, but is distributed among all the enemies.
 	// This causes the remaining enemies to update faster as there are fewer of them.
 	// In the original game, it's 2 texels per frame.
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Enemies")
@@ -115,9 +118,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Shots")
 	TMap<EShotType, TSubclassOf<class AShot>> ShotsClasses;
 
-	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data")
-	TMap<ETimeState, FTimeStateData> TimeStateData;
-
 	UPROPERTY(BlueprintReadOnly, Transient)
 	int32 Level{0};
 
@@ -131,8 +131,8 @@ public:
 	AGS_SpaceInvaders24();
 
 
-	UPROPERTY(BlueprintReadOnly, Transient)
-	EGameState GameState{EGameState::IN_MENU};
+	UFUNCTION()
+	EGameState GetGameState() const;
 
 	UFUNCTION()
 	const TArray<class AEnemy *> &GetEnemies() const;

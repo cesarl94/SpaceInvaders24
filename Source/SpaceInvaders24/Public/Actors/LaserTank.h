@@ -40,7 +40,7 @@ private:
 #pragma endregion
 
 protected:
-	void BeginPlay() override;
+	virtual void BeginPlay() override;
 
 	// Components:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)

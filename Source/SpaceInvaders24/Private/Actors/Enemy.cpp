@@ -23,9 +23,9 @@ AEnemy::AEnemy() {
 	GraphicNodes->SetupAttachment(SceneComponent);
 }
 
-void ManualInitialize(FIntPoint CoordinateInGrid) { EnemyCoordinateInGrid = CoordinateInGrid; }
+void AEnemy::ManualInitialize(FIntPoint CoordinateInGrid) { EnemyCoordinateInGrid = CoordinateInGrid; }
 
-FIntPoint GetEnemyCoordinateInGrid() const { return EnemyCoordinateInGrid; }
+FIntPoint AEnemy::GetEnemyCoordinateInGrid() const { return EnemyCoordinateInGrid; }
 
 void AEnemy::BeginPlay() { Super::BeginPlay(); }
 
@@ -35,7 +35,7 @@ void AEnemy::Animate_Implementation(bool Forward, float Rate) const {}
 // This function will be triggered in BP
 void AEnemy::DieAnimation_Implementation(bool Forward, float Rate) const {}
 
-void ApplyVelocity(float DeltaTime) {
+void AEnemy::ApplyVelocity(float DeltaTime) {
 	FVector2D PrevTexelPosition = GetFloatTexelPosition();
 	FVector2D NewTexelPosition = PrevTexelPosition + GetTexelVelocity() * DeltaTime;
 

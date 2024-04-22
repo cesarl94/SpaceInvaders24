@@ -13,7 +13,8 @@
 		"typescript.tsc.autoDetect": "off",
 		"files.associations": {
 			"*.txt": "plaintext",
-			"*.rh": "cpp"
+			"*.rh": "cpp",
+			"type_traits": "cpp"
 		}
 	},
 	"extensions": {

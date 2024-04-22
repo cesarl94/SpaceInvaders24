@@ -17,7 +17,7 @@ class SPACEINVADERS24_API AShot : public AActorInTexels {
 	GENERATED_BODY()
 
 protected:
-	void BeginPlay() override;
+	virtual void BeginPlay() override;
 
 	// Components:
 
