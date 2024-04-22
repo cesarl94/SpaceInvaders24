@@ -9,6 +9,8 @@
 #include "GAS/GASEnums.h"
 #include "Kismet/GameplayStatics.h"
 #include "Math/Vector.h"
+#include "Structs/GunData.h"
+
 
 void ALaserTank::InitializeGAS() {
 	UCustomAbilitySystemComponent *ASC = GetCustomAbilitySystemComponent();
@@ -57,6 +59,8 @@ void ALaserTank::BeginPlay() {
 
 	GraphicNodes->SetVisibility(false, true);
 
+	OnTouchLimit.AddUniqueDynamic(this, &ALaserTank::OnTouchBorder);
+
 	InitializeGAS();
 }
 
@@ -99,18 +103,7 @@ void ALaserTank::StartGame() {
 
 bool ALaserTank::IsAlive() const { return GetCustomAbilitySystemComponent()->HasTagByString("Player.IsAlive"); }
 
-void ALaserTank::PossessedBy(AController *NewController) {
-	Super::PossessedBy(NewController);
-
-	AGS_SpaceInvaders24 *GameState = Cast<AGS_SpaceInvaders24>(UGameplayStatics::GetGameState(this));
-	CurrentTexelPosition = GameState->WorldToTexelPos(RootComponent->GetComponentLocation());
-
-	// FVector Texel0X0Y_WorldPos = GameState->TexelToWorldPos(FIntPoint(0, 0));
-	// FVector Texel1X0Y_WorldPos = GameState->TexelToWorldPos(FIntPoint(1, 0));
-	// FVector WorldDifferenceBetweenTexels = Texel1X0Y_WorldPos - Texel0X0Y_WorldPos;
-	// float TexelWorldDifference = WorldDifferenceBetweenTexels.Size();
-	// FVector HorizontalMovementWorldDirection = WorldDifferenceBetweenTexels / TexelWorldDifference;
-}
+FGunData ALaserTank::GetGunData() const { return GunData; }
 
 UAbilitySystemComponent *ALaserTank::GetAbilitySystemComponent() const { return AbilitySystemComponent; }
 
@@ -119,18 +112,8 @@ UCustomAbilitySystemComponent *ALaserTank::GetCustomAbilitySystemComponent() con
 void ALaserTank::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
-	if (CurrentHorizontalMovement != 0) {
-		// We multiply by 60 because the Speed is in texels per frame
-		CurrentTexelPosition.X += HorizontalVelocity * DeltaTime * 60.f;
-
-		AGS_SpaceInvaders24 *GameState = Cast<AGS_SpaceInvaders24>(UGameplayStatics::GetGameState(this));
-
-		CurrentTexelPosition.X = FMath::Clamp(CurrentTexelPosition.X, 0, GameState->GetMapSize().X - CharacterSize.X - 1);
-
-
-		FIntPoint RoundedTexelPosition = FIntPoint(FMath::RoundToInt(CurrentTexelPosition.X), FMath::RoundToInt(CurrentTexelPosition.Y));
-		FVector NewWorldPos = GameState->TexelToWorldPos(RoundedTexelPosition);
-		RootComponent->SetWorldLocation(NewWorldPos);
+	if (IsAlive()) {
+		ApplyVelocity(DeltaTime);
 	}
 }
 
@@ -140,7 +123,21 @@ void ALaserTank::SetHorizontalMovement(float HorizontalMovement) {
 	}
 
 	CurrentHorizontalMovement = HorizontalMovement;
-	HorizontalVelocity = HorizontalMovement * Speed;
+
+	// We multiply by 60 because the Speed is in texels per frame
+	SetTexelVelocity(FVector2D(HorizontalMovement * Speed * 60.f, 0));
 }
 
-void ALaserTank::SetAbilityInput(EGASAbilityInput input, bool pressed) {}
+void ALaserTank::SetAbilityInput(EGASAbilityInput input, bool pressed) {
+	if (AbilitySystemComponent == nullptr) {
+		return;
+	}
+
+	int32 inputId = static_cast<int32>(input);
+
+	if (pressed) {
+		AbilitySystemComponent->AbilityLocalInputPressed(inputId);
+	} else {
+		AbilitySystemComponent->AbilityLocalInputReleased(inputId);
+	}
+}

@@ -3,9 +3,9 @@
 #pragma once
 
 #include "AbilitySystemInterface.h"
+#include "Actors/ActorInTexels.h"
 #include "Components/BoxComponent.h"
 #include "CoreMinimal.h"
-#include "GameFramework/Pawn.h"
 #include "GameplayTagContainer.h"
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
@@ -16,22 +16,15 @@
 
 
 UCLASS()
-class SPACEINVADERS24_API ALaserTank : public APawn, public IAbilitySystemInterface {
+class SPACEINVADERS24_API ALaserTank : public AActorInTexels, public IAbilitySystemInterface {
 	GENERATED_BODY()
 
 private:
 	UPROPERTY()
-	FVector2D CurrentTexelPosition;
-
-	UPROPERTY()
-	float HorizontalVelocity;
-
-	UPROPERTY()
 	float CurrentHorizontalMovement{0};
 
-	UPROPERTY()
-	bool Alive;
 
+#pragma region // GAS
 	UPROPERTY()
 	bool bIsInputBound{false};
 
@@ -44,6 +37,7 @@ private:
 
 	UFUNCTION()
 	void InitializeEffects();
+#pragma endregion
 
 protected:
 	void BeginPlay() override;
@@ -66,9 +60,6 @@ protected:
 
 	// Serialized data:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Laser Tank Data")
-	FIntPoint CharacterSize;
-
-	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Laser Tank Data")
 	FGunData GunData;
 
 	// texels per frame
@@ -84,7 +75,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: GAS")
 	TArray<FGameplayTag> DefaultTags;
 
-	// for binding the enhanced input system
+	// for binding the enhanced input system with GAS
 	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
 
 public:
@@ -95,8 +86,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Laser Tank", DisplayName = "LaserTank IsAlive", Meta = (CompactNodeTitle = "Is alive?"))
 	bool IsAlive() const;
 
-	// Used to initialize
-	virtual void PossessedBy(AController *NewController) override;
+	UFUNCTION(BlueprintCallable, Category = "Laser Tank", DisplayName = "LaserTank GetGunData", Meta = (CompactNodeTitle = "GUN Data"))
+	FGunData GetGunData() const;
 
 	// Inherited from interface
 	virtual UAbilitySystemComponent *GetAbilitySystemComponent() const override;

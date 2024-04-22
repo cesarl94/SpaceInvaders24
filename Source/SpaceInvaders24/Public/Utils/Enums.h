@@ -33,14 +33,6 @@ enum class ETimeState : uint8 {
 	BACKWARD UMETA(DisplayName = "Backward"),
 };
 
-UENUM(BlueprintType, DisplayName = "Map Bound Type")
-enum class EMapBoundType : uint8 {
-	SHOTS_BOUND UMETA(DisplayName = "Shots Bound"),
-	ENEMY_BOUND UMETA(DisplayName = "Enemy Bound"),
-	PLAYER_BOUND UMETA(DisplayName = "Player Bound"),
-	UFO_BOUND UMETA(DisplayName = "UFO Bound"),
-};
-
 UENUM(BlueprintType, DisplayName = "Shot Type")
 enum class EShotType : uint8 {
 	SIMPLE_LINE UMETA(DisplayName = "Simple Line"),
@@ -55,6 +47,9 @@ enum class ECrystalType : uint8 {
 	CRYSTAL_B UMETA(DisplayName = "Crystal B"),
 	CRYSTAL_C UMETA(DisplayName = "Crystal C"),
 };
+
+UENUM(BlueprintType, DisplayName = "")
+enum class EDirection : uint8 { UP, DOWN, LEFT, RIGHT };
 
 UENUM(BlueprintType, DisplayName = "Game State")
 enum class EGameState : uint8 {

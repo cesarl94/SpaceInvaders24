@@ -58,7 +58,7 @@ protected:
 	FIntPoint PlayerSpawnPosition;
 
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Enemies")
-	TMap<EEnemyType, TSubclassOf<AEnemy>> EnemyClasses;
+	TMap<EEnemyType, TSubclassOf<class AEnemy>> EnemyClasses;
 
 	// Open preview image of the first level, check the pixel of the first enemy (plus the offset) and put here
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Enemies")
@@ -86,6 +86,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Bunkers")
 	TArray<FIntPoint> BunkerCoordinates;
+
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Shots")
+	TMap<EShotType, TSubclassOf<class AShot>> ShotsClasses;
 
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data")
 	TMap<ETimeState, FTimeStateData> TimeStateData;

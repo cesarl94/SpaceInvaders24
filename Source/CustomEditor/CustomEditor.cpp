@@ -1,11 +1,11 @@
 #include "CustomEditor.h"
 
-#include "Actors/Bunker.h"
+#include "ActorInTexelsCustomization.h"
+#include "Actors/ActorInTexels.h"
 #include "Actors/Enemy.h"
 #include "Actors/GamePreviewActor.h"
 #include "Actors/LaserTank.h"
-#include "Actors/MapBound.h"
-#include "BunkerCustomization.h"
+#include "Actors/Shot.h"
 #include "Core/GS_SpaceInvaders24.h"
 #include "CustomGameplayAbilityCustomization.h"
 #include "EnemyCustomization.h"
@@ -13,20 +13,20 @@
 #include "GS_SpaceInvaders24Customization.h"
 #include "GamePreviewActorCustomization.h"
 #include "LaserTankCustomization.h"
-#include "MapBoundCustomization.h"
 #include "PropertyEditorDelegates.h"
 #include "PropertyEditorModule.h"
+#include "ShotCustomization.h"
 
 IMPLEMENT_GAME_MODULE(FCustomEditorModule, CustomEditor);
 
 void FCustomEditorModule::StartupModule() {
 	RegisterClass(AGS_SpaceInvaders24::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FGS_SpaceInvaders24DetailsCustomization::MakeInstance));
 	RegisterClass(AEnemy::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FEnemyDetailsCustomization::MakeInstance));
-	RegisterClass(AMapBound::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FMapBoundDetailsCustomization::MakeInstance));
 	RegisterClass(AGamePreviewActor::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FGamePreviewActorDetailsCustomization::MakeInstance));
 	RegisterClass(ALaserTank::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FLaserTankDetailsCustomization::MakeInstance));
-	RegisterClass(ABunker::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FBunkerDetailsCustomization::MakeInstance));
 	RegisterClass(UCustomGameplayAbility::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FCustomGameplayAbilityDetailsCustomization::MakeInstance));
+	RegisterClass(AShot::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FShotDetailsCustomization::MakeInstance));
+	RegisterClass(AActorInTexels::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FActorInTexelsDetailsCustomization::MakeInstance));
 }
 
 void FCustomEditorModule::ShutdownModule() {
@@ -34,11 +34,11 @@ void FCustomEditorModule::ShutdownModule() {
 
 	PropertyModule.UnregisterCustomClassLayout(AGS_SpaceInvaders24::StaticClass()->GetFName());
 	PropertyModule.UnregisterCustomClassLayout(AEnemy::StaticClass()->GetFName());
-	PropertyModule.UnregisterCustomClassLayout(AMapBound::StaticClass()->GetFName());
 	PropertyModule.UnregisterCustomClassLayout(AGamePreviewActor::StaticClass()->GetFName());
 	PropertyModule.UnregisterCustomClassLayout(ALaserTank::StaticClass()->GetFName());
-	PropertyModule.UnregisterCustomClassLayout(ABunker::StaticClass()->GetFName());
 	PropertyModule.UnregisterCustomClassLayout(UCustomGameplayAbility::StaticClass()->GetFName());
+	PropertyModule.UnregisterCustomClassLayout(AShot::StaticClass()->GetFName());
+	PropertyModule.UnregisterCustomClassLayout(AActorInTexels::StaticClass()->GetFName());
 }
 
 void FCustomEditorModule::RegisterClass(FName ClassName, FOnGetDetailCustomizationInstance DetailLayoutDelegate) {

@@ -5,9 +5,11 @@
 #include "CoreMinimal.h"
 #include "GenericPlatform/GenericPlatformMath.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "Math/IntVector.h"
 #include "Math/Vector2D.h"
 
 #include "MathUtils.generated.h"
+
 
 /*
  * This entire class is filled with methods that I usually use. I didn't write this class for this project, bring this from another mine projects

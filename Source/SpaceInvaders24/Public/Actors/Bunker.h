@@ -2,16 +2,16 @@
 
 #pragma once
 
+#include "Actors/ActorInTexels.h"
 #include "Components/BunkerBrick.h"
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
 #include "Math/IntPoint.h"
 
 #include "Bunker.generated.h"
 
 
 UCLASS()
-class SPACEINVADERS24_API ABunker : public AActor {
+class SPACEINVADERS24_API ABunker : public AActorInTexels {
 	GENERATED_BODY()
 
 private:
@@ -64,10 +64,6 @@ protected:
 	// TODO: comentar que es esto
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	USceneComponent *SceneInMaxRelativePos;
-
-	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Bunker Data")
-	FIntPoint BunkerSize;
-
 
 public:
 	ABunker();

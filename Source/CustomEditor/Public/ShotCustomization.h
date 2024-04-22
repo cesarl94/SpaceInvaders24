@@ -8,7 +8,7 @@
 class IPropertyHandle;
 
 // Custom Class Details Customization
-class FBunkerDetailsCustomization : public IDetailCustomization {
+class FShotDetailsCustomization : public IDetailCustomization {
 
 public:
 	// Function that customizes the Details Panel.

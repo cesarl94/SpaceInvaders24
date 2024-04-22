@@ -8,7 +8,7 @@
 class IPropertyHandle;
 
 // Custom Class Details Customization
-class FMapBoundDetailsCustomization : public IDetailCustomization {
+class FActorInTexelsDetailsCustomization : public IDetailCustomization {
 
 public:
 	// Function that customizes the Details Panel.

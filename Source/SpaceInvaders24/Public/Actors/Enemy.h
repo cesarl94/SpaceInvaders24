@@ -2,21 +2,20 @@
 
 #pragma once
 
+#include "Actors/ActorInTexels.h"
 #include "Components/BoxComponent.h"
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
 #include "Math/IntVector.h"
+#include "Math/Vector2D.h"
 #include "Utils/Enums.h"
 
 #include "Enemy.generated.h"
 
 
 UCLASS()
-class SPACEINVADERS24_API AEnemy : public AActor {
+class SPACEINVADERS24_API AEnemy : public AActorInTexels {
 	GENERATED_BODY()
 
-public:
-	AEnemy();
 
 private:
 	UPROPERTY()
@@ -25,6 +24,8 @@ private:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	// Components:
 
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	USceneComponent *SceneComponent;
@@ -35,12 +36,9 @@ protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	UBoxComponent *Collider;
 
+	// Serialized data:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemy Stats")
 	EEnemyType Type;
-
-	// Offset in X, offset in Y, width, height
-	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemy Stats")
-	FIntVector4 EnemyLocalBounds;
 
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemy Stats")
 	int32 Health;
@@ -57,6 +55,7 @@ protected:
 
 
 public:
-	// Called every frame
+	AEnemy();
+
 	virtual void Tick(float DeltaTime) override;
 };
