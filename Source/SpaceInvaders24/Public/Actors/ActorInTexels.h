@@ -44,7 +44,7 @@ public:
 	FIntPoint GetIntTexelPosition();
 
 	// TODO: comentar esto
-	void SetTexelPosition(FVector2D NewTexelPosition);
+	void SetTexelPosition(FVector2D NewTexelPosition, bool Sweep = false);
 
 	// TODO: comentar esto
 	FVector2D GetTexelVelocity();

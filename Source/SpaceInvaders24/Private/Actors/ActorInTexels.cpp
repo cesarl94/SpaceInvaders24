@@ -20,50 +20,19 @@ void AActorInTexels::BeginPlay() {
 }
 
 void AActorInTexels::ApplyVelocity(float DeltaTime) {
-	// FIntPoint PrevIntTexelPosition = GetIntTexelPosition();
-
-	// FIntVector4 PositionLimits = FIntVector4(ActorLimits.X - ActorLocalBounds.X, ActorLimits.X - ActorLocalBounds.Y, ActorLimits.X + ActorLimits.Z - ActorLocalBounds.X - ActorLocalBounds.Z,
-	// 										 ActorLimits.Y + ActorLimits.W - ActorLocalBounds.Y - ActorLocalBounds.W);
-
-	// bool IsPrevAtLeftBorder = PrevIntTexelPosition.X == PositionLimits.X;
-	// bool IsPrevAtRightBorder = PrevIntTexelPosition.X == PositionLimits.X + PositionLimits.Z;
-	// bool IsPrevAtUpBorder = PrevIntTexelPosition.Y == PositionLimits.Y;
-	// bool IsPrevAtDownBorder = PrevIntTexelPosition.Y == PositionLimits.Y + PositionLimits.W;
 
 	FVector2D PrevTexelPosition = GetFloatTexelPosition();
 	FVector2D NewTexelPosition = PrevTexelPosition + GetTexelVelocity() * DeltaTime;
 
-
-	SetTexelPosition(NewTexelPosition);
-
-	// FIntPoint NewIntTexelPosition = GetIntTexelPosition();
-
-	// if (NewIntTexelPosition.X <= PositionLimits.X && !IsPrevAtLeftBorder) {
-	// 	OnTouchLimit.Broadcast(EDirection::LEFT);
-	// }
-	// if (NewIntTexelPosition.Y <= PositionLimits.Y && !IsPrevAtUpBorder) {
-	// 	OnTouchLimit.Broadcast(EDirection::UP);
-	// }
-	// if (NewIntTexelPosition.X >= PositionLimits.X + PositionLimits.Z && !IsPrevAtRightBorder) {
-	// 	OnTouchLimit.Broadcast(EDirection::RIGHT);
-	// }
-	// if (NewIntTexelPosition.Y <= PositionLimits.Y + PositionLimits.W && !IsPrevAtDownBorder) {
-	// 	OnTouchLimit.Broadcast(EDirection::DOWN);
-	// }
+	SetTexelPosition(NewTexelPosition, true);
 }
 
 FVector2D AActorInTexels::GetFloatTexelPosition() { return CurrentTexelPosition; }
 
 FIntPoint AActorInTexels::GetIntTexelPosition() { return FIntPoint(FMath::RoundToInt(CurrentTexelPosition.X), FMath::RoundToInt(CurrentTexelPosition.Y)); }
 
-void AActorInTexels::SetTexelPosition(FVector2D NewTexelPosition) {
+void AActorInTexels::SetTexelPosition(FVector2D NewTexelPosition, bool Sweep) {
 	FIntPoint PrevIntTexelPosition = GetIntTexelPosition();
-
-
-	// bool IsPrevAtLeftBorder = PrevIntTexelPosition.X == PositionLimits.X;
-	// bool IsPrevAtRightBorder = PrevIntTexelPosition.X == PositionLimits.X + PositionLimits.Z;
-	// bool IsPrevAtUpBorder = PrevIntTexelPosition.Y == PositionLimits.Y;
-	// bool IsPrevAtDownBorder = PrevIntTexelPosition.Y == PositionLimits.Y + PositionLimits.W;
 
 	FIntVector4 PositionLimits = FIntVector4(ActorLimits.X - ActorLocalBounds.X, ActorLimits.X - ActorLocalBounds.Y, ActorLimits.X + ActorLimits.Z - ActorLocalBounds.X - ActorLocalBounds.Z,
 											 ActorLimits.Y + ActorLimits.W - ActorLocalBounds.Y - ActorLocalBounds.W);
@@ -78,7 +47,7 @@ void AActorInTexels::SetTexelPosition(FVector2D NewTexelPosition) {
 	FIntPoint NewIntTexelPosition = GetIntTexelPosition();
 
 	FVector NewWorldPos = GameState->TexelToWorldPos(NewIntTexelPosition);
-	RootComponent->SetWorldLocation(NewWorldPos);
+	RootComponent->SetWorldLocation(NewWorldPos, Sweep);
 
 
 	if (NewIntTexelPosition.X <= PositionLimits.X && PrevIntTexelPosition.X != PositionLimits.X) {
