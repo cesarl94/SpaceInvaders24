@@ -10,7 +10,6 @@
 #include "Utils/Enums.h"
 #include "Utils/MathUtils.h"
 
-
 void AActorInTexels::BeginPlay() {
 	Super::BeginPlay();
 
@@ -57,10 +56,10 @@ void AActorInTexels::SetTexelPosition(FVector2D NewTexelPosition, bool Sweep) {
 	if (NewIntTexelPosition.Y <= PositionLimits.Y && PrevIntTexelPosition.Y > PositionLimits.Y) {
 		OnTouchLimit.Broadcast(EDirection::UP);
 	}
-	if (NewIntTexelPosition.X >= PositionLimits.X + PositionLimits.Z && PrevIntTexelPosition.X < PositionLimits.X + PositionLimits.Z) {
+	if (NewIntTexelPosition.X >= PositionLimits.Z && PrevIntTexelPosition.X < PositionLimits.Z) {
 		OnTouchLimit.Broadcast(EDirection::RIGHT);
 	}
-	if (NewIntTexelPosition.Y >= PositionLimits.Y + PositionLimits.W && PrevIntTexelPosition.Y < PositionLimits.Y + PositionLimits.W) {
+	if (NewIntTexelPosition.Y >= PositionLimits.W && PrevIntTexelPosition.Y < PositionLimits.W) {
 		OnTouchLimit.Broadcast(EDirection::DOWN);
 	}
 }

@@ -2,11 +2,15 @@
 
 #pragma once
 
+#include "Actors/Enemy.h"
 #include "Components/ActorComponent.h"
 #include "CoreMinimal.h"
 #include "Utils/Enums.h"
 
 #include "SwarmMind.generated.h"
+
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FSwarmMindEvents);
 
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -16,13 +20,13 @@ private:
 	// CAUTION: Ultra-private variable
 	// Since Unreal doesn't allow 2-dimensional-arrays, we'll use a 1D array indexed :(
 	// Use with the functions: "GetEnemyInCoordinate" and "SetEnemyInIndexed2DArray"
-	// CAUTION2: Double reference array togheter with the another array of enemies, "TArray<class AEnemy *> Enemies".
+	// CAUTION2: Double reference array togheter with the another array of enemies, "TArray<AEnemy *> Enemies".
 	UPROPERTY()
-	TArray<class AEnemy *> _Enemies2D;
+	TArray<AEnemy *> _Enemies2D;
 
 	// TODO: comentar esto. Advertir la doble referencia
 	UPROPERTY()
-	TArray<class AEnemy *> Enemies;
+	TArray<AEnemy *> Enemies;
 
 	UPROPERTY()
 	FIntPoint LastUpdatedEnemyGridID;
@@ -34,9 +38,16 @@ private:
 	UPROPERTY()
 	bool MovingToRight{true};
 
+	UPROPERTY()
+	bool MovingDown{false};
+
 	// TODO: Explicar esto
 	UPROPERTY()
 	bool DirectionBlocked{false};
+
+	// TODO: Explicar esto
+	UPROPERTY()
+	bool GameOverWasDispatched{false};
 
 	/**
 	 * What? Why would I store DeltaTimes? Well, if you want a game equal to the original Space Invaders,
@@ -47,19 +58,39 @@ private:
 	UPROPERTY()
 	float AccumulatedDeltaTime{0};
 
+	// TODO: comentar esta función
 	UFUNCTION()
-	FIntPoint GetNextEnemyGridIDToUpdate() const;
+	void FixedUpdate();
 
 	UFUNCTION()
-	class AEnemy *GetNextEnemyToUpdate() const;
+	FIntPoint GetNextEnemyGridIDToUpdate(FIntPoint LastGridID) const;
+
+	UFUNCTION()
+	AEnemy *GetNextEnemyToUpdate() const;
 
 	// TODO: comentar que hace esto
 	UFUNCTION()
-	void SetEnemyInIndexed2DArray(int32 X, int32 Y, class AEnemy *Enemy);
+	void SetEnemyInIndexed2DArray(int32 X, int32 Y, AEnemy *Enemy);
+
+	UFUNCTION()
+	int32 GetHighestTexelYPositionOfAliveEnemy();
+
+	UFUNCTION()
+	bool CanEnemiesGoLower();
+
+	// Functions binded to events:
+
+	// Called from Enemy event
+	UFUNCTION()
+	void OnEnemyTouchBorder(EDirection Direction);
+
+	// Called from Enemy event
+	UFUNCTION()
+	void OnEnemyDied(AEnemy *EnemyDied, int32 Points);
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemies Data")
-	TMap<EEnemyType, TSubclassOf<class AEnemy>> EnemyClasses;
+	TMap<EEnemyType, TSubclassOf<AEnemy>> EnemyClasses;
 
 	// Open preview image of the first level, check the pixel of the first enemy (plus the offset) and put here
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemies Data")
@@ -68,6 +99,10 @@ protected:
 	// Open preview image, move all enemies at the lowest level before touch the LaserTank, and check the pixel of the first enemy (plus the offset)
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemies Data")
 	FIntPoint TexelCoordOfTopLeftEnemyInLastLevel;
+
+	// Position Y on screen of the Enemies in the last valid line before GameOver.
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemies Data")
+	int32 LastValidTexelCoordY{208};
 
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemies Data")
 	FIntPoint SeparationBetweenEnemies;
@@ -95,23 +130,33 @@ public:
 	UFUNCTION()
 	void ManualReset(int32 Level);
 
+	// Called from GS_SpaceInvaders24
+	UFUNCTION()
+	void ManualTick(float CrystalDeltaTime, float CrystalTotalSeconds);
+
 	UFUNCTION()
 	FIntPoint GetEnemyArraySize() const;
 
 	UFUNCTION()
-	const TArray<class AEnemy *> &GetEnemies() const;
+	const TArray<AEnemy *> &GetEnemies() const;
 
 	UFUNCTION()
-	TArray<class AEnemy *> GetLiveEnemies() const;
+	TArray<AEnemy *> GetLiveEnemies() const;
 
 	// TODO: comentar que hace esto
 	UFUNCTION()
-	class AEnemy *GetEnemyInIndexed2DArray(int32 X, int32 Y) const;
+	AEnemy *GetEnemyInIndexed2DArray(int32 X, int32 Y) const;
 
 	UFUNCTION()
 	void OnNewGameState(EGameState NewGameState);
 
-	// Called from GS_SpaceInvaders24
-	UFUNCTION()
-	void ManualTick(float CrystalDeltaTime);
+	// Events:
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
+	FOnEnemyDie EnemyDiedEvent;
+
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
+	FSwarmMindEvents KilledAllEnemies;
+
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
+	FSwarmMindEvents EnemiesCantGoLower;
 };

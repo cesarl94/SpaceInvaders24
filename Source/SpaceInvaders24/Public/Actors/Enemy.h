@@ -15,7 +15,7 @@
 
 class AEnemy;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEnemyDie, AEnemy *, DiedEnemy);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnEnemyDie, AEnemy *, DiedEnemy, int32, Points);
 
 UCLASS()
 class SPACEINVADERS24_API AEnemy : public AActorInTexels {

@@ -32,9 +32,6 @@ private:
 	EGameState GameState{EGameState::IN_MENU};
 
 	UFUNCTION()
-	void SpawnSwarm();
-
-	UFUNCTION()
 	void SpawnPlayer();
 
 	UFUNCTION()
@@ -47,9 +44,23 @@ private:
 	UFUNCTION()
 	void SetNewState(EGameState NewGameState);
 
+	// Functions binded to events:
+
 	// Called from GameTimeManager's event
 	UFUNCTION()
 	void OnTimeStateFinished();
+
+	// Called from SwarmMind's event
+	UFUNCTION()
+	void OnEnemyDiedEvent(AEnemy *EnemyDied, int32 PointsGiven);
+
+	// Called from SwarmMind's event
+	UFUNCTION()
+	void OnEnemiesCantGoLower();
+
+	// Called from SwarmMind's event
+	UFUNCTION()
+	void OnKilledAllEnemies();
 
 protected:
 	virtual void BeginPlay() override;

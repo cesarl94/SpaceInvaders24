@@ -28,6 +28,7 @@ void AEnemy::ManualInitialize(FIntPoint CoordinateInGrid) { EnemyCoordinateInGri
 
 void AEnemy::ManualReset(FIntPoint NewTexelPosition) {
 	SetTexelPosition(FVector2D(NewTexelPosition.X, NewTexelPosition.Y));
+	GraphicNodes->SetVisibility(true, true);
 	Alive = true;
 }
 
@@ -57,5 +58,10 @@ bool AEnemy::IsAlive() const { return Alive; }
 
 void AEnemy::Die() {
 	Alive = false;
-	OnDie.Broadcast(this);
+	GraphicNodes->SetVisibility(false, true);
+
+	int32 PointsGivenRandomId = FMath::RandRange(0, PointsThatCouldGive.Num() - 1);
+	int32 PointsGiven = PointsThatCouldGive[PointsGivenRandomId];
+
+	OnDie.Broadcast(this, PointsGiven);
 }

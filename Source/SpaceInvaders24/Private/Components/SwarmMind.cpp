@@ -6,37 +6,124 @@
 #include "Actors/Enemy.h"
 #include "Components/GameTimeManager.h"
 #include "Core/GS_SpaceInvaders24.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Math/IntPoint.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
+#include "Math/Vector2D.h"
 #include "Utils/Enums.h"
 
 
 USwarmMind::USwarmMind() { PrimaryComponentTick.bCanEverTick = false; }
 
-FIntPoint USwarmMind::GetNextEnemyGridIDToUpdate() const {
+FIntPoint USwarmMind::GetNextEnemyGridIDToUpdate(FIntPoint LastGridID) const {
 	FIntPoint RetornedValue;
 
-	if (LastUpdatedEnemyGridID.X == EnemiesPerRow - 1) {
+	if (LastGridID.X == EnemiesPerRow - 1) {
 		RetornedValue.X = 0;
-		if (LastUpdatedEnemyGridID.Y == 0) {
+		if (LastGridID.Y == 0) {
 			RetornedValue.Y = EnemyTypesByRow.Num() - 1;
 		} else {
-			RetornedValue.Y = LastUpdatedEnemyGridID.Y - 1;
+			RetornedValue.Y = LastGridID.Y - 1;
 		}
 	} else {
-		RetornedValue.X = LastUpdatedEnemyGridID.X + 1;
-		RetornedValue.Y = LastUpdatedEnemyGridID.Y;
+		RetornedValue.X = LastGridID.X + 1;
+		RetornedValue.Y = LastGridID.Y;
 	}
 
 	return RetornedValue;
 }
 
-AEnemy *USwarmMind::GetNextEnemyToUpdate() const { return nullptr; }
+void USwarmMind::FixedUpdate() {
+	if (GameOverWasDispatched) {
+		return;
+	}
+
+	bool AlreadyUpdatedLastOne = (LastUpdatedEnemyGridID.X == EnemiesPerRow - 1 && LastUpdatedEnemyGridID.Y == 0);
+	bool CanMove{true};
+	if (AlreadyUpdatedLastOne) {
+		if (!DirectionBlocked) {
+			bool CanGoLower = CanEnemiesGoLower();
+
+			if (CanGoLower) {
+				MovingToRight = !MovingToRight;
+				MovingDown = true;
+				DirectionBlocked = true;
+			} else {
+				CanMove = false;
+				GameOverWasDispatched = true;
+				EnemiesCantGoLower.Broadcast();
+			}
+		} else {
+			MovingDown = false;
+		}
+	}
+
+	if (CanMove) {
+		AEnemy *NextEnemyToUpdate = GetNextEnemyToUpdate();
+
+		FVector2D EnemyTexelPosition = NextEnemyToUpdate->GetFloatTexelPosition();
+		EnemyTexelPosition += FVector2D((MovingToRight ? 1 : -1) * SwarmVelocity, (MovingDown ? SeparationBetweenEnemies.Y / 2 : 0));
+		NextEnemyToUpdate->SetTexelPosition(EnemyTexelPosition, !MovingDown);
+
+		LastUpdatedEnemyGridID = NextEnemyToUpdate->GetEnemyCoordinateInGrid();
+	}
+}
+
+AEnemy *USwarmMind::GetNextEnemyToUpdate() const {
+	int32 MaxTries = EnemiesPerRow * EnemyTypesByRow.Num();
+
+	FIntPoint NextEnemyGridId = LastUpdatedEnemyGridID;
+	do {
+		NextEnemyGridId = GetNextEnemyGridIDToUpdate(NextEnemyGridId);
+		AEnemy *NextEnemy = GetEnemyInIndexed2DArray(NextEnemyGridId.X, NextEnemyGridId.Y);
+
+		if (NextEnemy->IsAlive()) {
+			return NextEnemy;
+		}
+
+	} while (--MaxTries);
+
+	return nullptr;
+}
 
 void USwarmMind::SetEnemyInIndexed2DArray(int32 X, int32 Y, class AEnemy *Enemy) {
 	int32 Index1D = Y * EnemiesPerRow + X;
 	_Enemies2D[Index1D] = Enemy;
+}
+
+void USwarmMind::OnEnemyTouchBorder(EDirection Direction) {
+	if (Direction == EDirection::LEFT || Direction == EDirection::RIGHT) {
+		DirectionBlocked = false;
+	}
+}
+
+void USwarmMind::OnEnemyDied(class AEnemy *EnemyDied, int32 Points) {
+	EnemyDiedEvent.Broadcast(EnemyDied, Points);
+
+	if (GetLiveEnemies().Num() == 0) {
+		KilledAllEnemies.Broadcast();
+	}
+}
+
+int32 USwarmMind::GetHighestTexelYPositionOfAliveEnemy() {
+	TArray<AEnemy *> LiveEnemies = GetLiveEnemies();
+
+	int32 HighestTexelYPosition = -1000000;
+
+	for (AEnemy *Enemy : LiveEnemies) {
+		int32 TexelYPosition = Enemy->GetIntTexelPosition().Y;
+		if (HighestTexelYPosition < TexelYPosition) {
+			HighestTexelYPosition = TexelYPosition;
+		}
+	}
+
+	return HighestTexelYPosition;
+}
+
+bool USwarmMind::CanEnemiesGoLower() {
+	int32 BottomEnemyTexelYPosition = GetHighestTexelYPositionOfAliveEnemy();
+	return BottomEnemyTexelYPosition < LastValidTexelCoordY;
 }
 
 void USwarmMind::OnNewGameState(EGameState NewGameState) {
@@ -76,6 +163,9 @@ void USwarmMind::ManualInitialize() {
 			FVector EnemyWorldPosition = GameState->TexelToWorldPos(PositionDelta);
 			AEnemy *Enemy = GetWorld()->SpawnActor<AEnemy>(*EnemySubclass, EnemyWorldPosition, GameObjectOrientation, ActorSpawnParams);
 			Enemy->ManualInitialize(FIntPoint(j, i));
+			Enemy->OnTouchLimit.AddUniqueDynamic(this, &USwarmMind::OnEnemyTouchBorder);
+			Enemy->OnDie.AddUniqueDynamic(this, &USwarmMind::OnEnemyDied);
+
 			SetEnemyInIndexed2DArray(j, i, Enemy);
 			Enemies.Add(Enemy);
 
@@ -92,6 +182,8 @@ void USwarmMind::ManualReset(int32 Level) {
 	MovingToRight = true;
 	DirectionBlocked = true;
 	OnBackwards = true;
+	MovingDown = false;
+	GameOverWasDispatched = false;
 
 	AccumulatedDeltaTime = 0;
 
@@ -110,6 +202,36 @@ void USwarmMind::ManualReset(int32 Level) {
 		}
 		PositionDelta.X -= SeparationBetweenEnemies.X * EnemiesPerRow;
 		PositionDelta.Y += SeparationBetweenEnemies.Y;
+	}
+}
+
+void USwarmMind::ManualTick(float CrystalDeltaTime, float CrystalTotalSeconds) {
+	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
+
+	switch (GameState->GetGameState()) {
+	case EGameState::IN_MENU:
+	case EGameState::READY_SET_GO:
+	case EGameState::DYING:
+	case EGameState::GAME_OVER:
+		break;
+	case EGameState::PLAYING_FORWARD:
+	case EGameState::PLAYING_SLOW_TIME_DOWN:
+	case EGameState::PLAYING_PAUSED_TIME:
+		{
+			AccumulatedDeltaTime += CrystalDeltaTime;
+
+			float IdealFrameDelta = 1.f / 60.f;
+
+			while (AccumulatedDeltaTime >= IdealFrameDelta) {
+				AccumulatedDeltaTime -= IdealFrameDelta;
+				FixedUpdate();
+			}
+		}
+
+
+		break;
+	case EGameState::PLAYING_REVERSE:
+		break;
 	}
 }
 
@@ -132,33 +254,4 @@ TArray<AEnemy *> USwarmMind::GetLiveEnemies() const {
 AEnemy *USwarmMind::GetEnemyInIndexed2DArray(int32 X, int32 Y) const {
 	int32 Index1D = Y * EnemiesPerRow + X;
 	return _Enemies2D[Index1D];
-}
-
-void USwarmMind::ManualTick(float CrystalDeltaTime) {
-	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
-
-	switch (GameState->GetGameState()) {
-	case EGameState::IN_MENU:
-	case EGameState::READY_SET_GO:
-	case EGameState::DYING:
-	case EGameState::GAME_OVER:
-		break;
-	case EGameState::PLAYING_FORWARD:
-	case EGameState::PLAYING_SLOW_TIME_DOWN:
-	case EGameState::PLAYING_PAUSED_TIME:
-		{
-			AccumulatedDeltaTime += CrystalDeltaTime;
-
-			float IdealFrameDelta = 1.f / 60.f;
-
-			while (AccumulatedDeltaTime >= IdealFrameDelta) {
-				AccumulatedDeltaTime -= IdealFrameDelta;
-			}
-		}
-
-
-		break;
-	case EGameState::PLAYING_REVERSE:
-		break;
-	}
 }
