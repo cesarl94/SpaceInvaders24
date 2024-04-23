@@ -74,11 +74,16 @@ public:
 
 	void StartGame();
 
+	void ManualTick(float DeltaTime);
+
 	UFUNCTION(BlueprintCallable, Category = "Laser Tank", DisplayName = "LaserTank IsAlive", Meta = (CompactNodeTitle = "Is alive?"))
 	bool IsAlive() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Laser Tank", DisplayName = "LaserTank GetGunData", Meta = (CompactNodeTitle = "GUN Data"))
 	FGunData GetGunData() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Laser Tank", DisplayName = "LaserTank CanShoot", Meta = (CompactNodeTitle = "Can Shoot?"))
+	bool CanShot() const;
 
 	// Inherited from interface
 	virtual UAbilitySystemComponent *GetAbilitySystemComponent() const override;
@@ -87,8 +92,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: GAS", DisplayName = "LaserTank GetCustomAbilitySystemComponent", Meta = (CompactNodeTitle = "ASC"))
 	class UCustomAbilitySystemComponent *GetCustomAbilitySystemComponent() const;
 
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 	// Called from Player Controller to move this
 	UFUNCTION(BlueprintCallable, Category = "Laser Tank", DisplayName = "LaserTank SetHorizontalMovement")

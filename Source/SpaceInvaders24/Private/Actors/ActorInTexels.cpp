@@ -25,14 +25,14 @@ void AActorInTexels::ApplyVelocity(float DeltaTime) {
 	SetTexelPosition(NewTexelPosition, true);
 }
 
-FVector2D AActorInTexels::GetFloatTexelPosition() { return CurrentTexelPosition; }
+FVector2D AActorInTexels::GetFloatTexelPosition() const { return CurrentTexelPosition; }
 
-FIntPoint AActorInTexels::GetIntTexelPosition() { return FIntPoint(FMath::RoundToInt(CurrentTexelPosition.X), FMath::RoundToInt(CurrentTexelPosition.Y)); }
+FIntPoint AActorInTexels::GetIntTexelPosition() const { return FIntPoint(FMath::RoundToInt(CurrentTexelPosition.X), FMath::RoundToInt(CurrentTexelPosition.Y)); }
 
 void AActorInTexels::SetTexelPosition(FVector2D NewTexelPosition, bool Sweep) {
 	FIntPoint PrevIntTexelPosition = GetIntTexelPosition();
 
-	FIntVector4 PositionLimits = FIntVector4(ActorLimits.X - ActorLocalBounds.X, ActorLimits.X - ActorLocalBounds.Y, ActorLimits.X + ActorLimits.Z - ActorLocalBounds.X - ActorLocalBounds.Z,
+	FIntVector4 PositionLimits = FIntVector4(ActorLimits.X - ActorLocalBounds.X, ActorLimits.Y - ActorLocalBounds.Y, ActorLimits.X + ActorLimits.Z - ActorLocalBounds.X - ActorLocalBounds.Z,
 											 ActorLimits.Y + ActorLimits.W - ActorLocalBounds.Y - ActorLocalBounds.W);
 
 	if (ClampPosition) {
@@ -64,11 +64,11 @@ void AActorInTexels::SetTexelPosition(FVector2D NewTexelPosition, bool Sweep) {
 	}
 }
 
-FVector2D AActorInTexels::GetTexelVelocity() { return TexelVelocity; }
+FVector2D AActorInTexels::GetTexelVelocity() const { return TexelVelocity; }
 
 void AActorInTexels::SetTexelVelocity(FVector2D NewTexelVelocity) { TexelVelocity = NewTexelVelocity; }
 
-FIntVector4 AActorInTexels::GetIntTexelBoundingBox() {
+FIntVector4 AActorInTexels::GetIntTexelBoundingBox() const {
 	FIntPoint IntTexelPosition = GetIntTexelPosition();
 
 	return FIntVector4(IntTexelPosition.X + ActorLocalBounds.X, IntTexelPosition.Y + ActorLocalBounds.Y, ActorLocalBounds.Z, ActorLocalBounds.W);

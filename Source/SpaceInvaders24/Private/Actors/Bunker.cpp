@@ -9,7 +9,7 @@
 
 
 ABunker::ABunker() {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Scene Component"));
 	SceneComponent->SetupAttachment(RootComponent);

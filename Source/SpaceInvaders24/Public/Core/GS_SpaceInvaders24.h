@@ -29,6 +29,9 @@ private:
 	TArray<class ABunker *> Bunkers;
 
 	UPROPERTY()
+	TArray<class AShot *> Shots;
+
+	UPROPERTY()
 	EGameState GameState{EGameState::IN_MENU};
 
 	UFUNCTION()
@@ -62,6 +65,10 @@ private:
 	UFUNCTION()
 	void OnKilledAllEnemies();
 
+	// Called from Shot's event
+	UFUNCTION()
+	void OnShotHit(class AShot *Shot);
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -85,7 +92,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Bunkers")
 	TArray<FIntPoint> BunkerCoordinates;
 
-	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Shots")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SpaceInvaders24: Game Data|Shots")
 	TMap<EShotType, TSubclassOf<class AShot>> ShotsClasses;
 
 	UPROPERTY(BlueprintReadOnly, Transient)
@@ -104,12 +111,18 @@ public:
 	UFUNCTION()
 	EGameState GetGameState() const;
 
-
 	virtual void Tick(float DeltaTime) override;
 
 	// TODO: comentar que hace esto
 	UFUNCTION()
 	void OnPlayerControllerConnected(class APlayerController *PC);
+
+	// Called from AShot
+	UFUNCTION()
+	void ReportNewShot(class AShot *NewShot);
+
+	UFUNCTION(BlueprintCallable)
+	const TArray<class AShot *> &GetShots() const;
 
 
 #pragma region // Wrapped functions from GamePreviewActor

@@ -58,6 +58,10 @@ private:
 	UPROPERTY()
 	float AccumulatedDeltaTime{0};
 
+	// TODO: comentar esto
+	UFUNCTION()
+	FIntPoint GetCoordinateOfLastAliveEnemyToUpdate() const;
+
 	// TODO: comentar esta función
 	UFUNCTION()
 	void FixedUpdate();

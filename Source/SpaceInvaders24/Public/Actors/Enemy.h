@@ -74,7 +74,7 @@ public:
 	void ManualReset(FIntPoint NewTexelPosition);
 
 	UFUNCTION()
-	FIntPoint GetEnemyCoordinateInGrid() const;
+	FIntPoint GetCoordinateInEnemyGrid() const;
 
 	virtual void Tick(float DeltaTime) override;
 
@@ -82,7 +82,7 @@ public:
 	bool IsAlive() const;
 
 	UFUNCTION()
-	void Die();
+	void Kill();
 
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
 	FOnEnemyDie OnDie;

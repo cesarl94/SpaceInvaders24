@@ -4,6 +4,7 @@
 #include "Actors/Enemy.h"
 #include "Actors/GamePreviewActor.h"
 #include "Actors/LaserTank.h"
+#include "Actors/Shot.h"
 #include "Components/GameTimeManager.h"
 #include "Components/SwarmMind.h"
 #include "Core/PC_SpaceInvaders24.h"
@@ -92,6 +93,8 @@ void AGS_SpaceInvaders24::OnKilledAllEnemies() {
 	SetNewState(EGameState::READY_SET_GO);
 }
 
+void AGS_SpaceInvaders24::OnShotHit(AShot *Shot) { Shots.Remove(Shot); }
+
 void AGS_SpaceInvaders24::BeginPlay() {
 	Super::BeginPlay();
 
@@ -108,7 +111,15 @@ void AGS_SpaceInvaders24::Tick(float DeltaTime) {
 
 	GameTimeManager->ManualTick(DeltaTime);
 
+	Player->ManualTick(GetLastDeltaTime());
+
 	SwarmMind->ManualTick(GetLastCrystalDeltaTime(), GetCrystalTotalSeconds());
+
+	// I need to iterate a copy because this ManualTick could make that shot dissapear and the iteration will be wrong
+	TArray<AShot *> ShotsCopy = Shots;
+	for (AShot *Shot : ShotsCopy) {
+		Shot->ManualTick(GetLastDeltaTime());
+	}
 }
 
 
@@ -119,6 +130,13 @@ void AGS_SpaceInvaders24::OnPlayerControllerConnected(APlayerController *PC) {
 		PC->Possess(Player);
 	}
 }
+
+void AGS_SpaceInvaders24::ReportNewShot(AShot *NewShot) {
+	NewShot->OnHit.AddUniqueDynamic(this, &AGS_SpaceInvaders24::OnShotHit);
+	Shots.Add(NewShot);
+}
+
+const TArray<AShot *> &AGS_SpaceInvaders24::GetShots() const { return Shots; }
 
 #pragma region // Wrapped functions from GamePreviewActor
 FIntPoint AGS_SpaceInvaders24::GetMapSize() const { return GamePreviewActor->GetMapSize(); }

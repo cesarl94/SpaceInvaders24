@@ -34,13 +34,31 @@ FIntPoint USwarmMind::GetNextEnemyGridIDToUpdate(FIntPoint LastGridID) const {
 	return RetornedValue;
 }
 
+FIntPoint USwarmMind::GetCoordinateOfLastAliveEnemyToUpdate() const {
+	for (int32 x = EnemiesPerRow - 1; x >= 0; x--) {
+		for (int32 y = 0; y < EnemyTypesByRow.Num(); y++) {
+			AEnemy *EnemyInThatPos = GetEnemyInIndexed2DArray(x, y);
+			if (EnemyInThatPos->IsAlive()) {
+				return EnemyInThatPos->GetCoordinateInEnemyGrid();
+			}
+		}
+	}
+
+	return FIntPoint(-1, -1);
+}
+
 void USwarmMind::FixedUpdate() {
 	if (GameOverWasDispatched) {
 		return;
 	}
 
-	bool AlreadyUpdatedLastOne = (LastUpdatedEnemyGridID.X == EnemiesPerRow - 1 && LastUpdatedEnemyGridID.Y == 0);
-	bool CanMove{true};
+	FIntPoint LastCoordinateToUpdate = GetCoordinateOfLastAliveEnemyToUpdate();
+	if (LastCoordinateToUpdate.X == -1 && LastCoordinateToUpdate.Y == -1) {
+		return;
+	}
+
+	bool AlreadyUpdatedLastOne = (LastUpdatedEnemyGridID.X == LastCoordinateToUpdate.X && LastUpdatedEnemyGridID.Y == LastCoordinateToUpdate.Y);
+	bool CanMove = true;
 	if (AlreadyUpdatedLastOne) {
 		if (!DirectionBlocked) {
 			bool CanGoLower = CanEnemiesGoLower();
@@ -61,12 +79,15 @@ void USwarmMind::FixedUpdate() {
 
 	if (CanMove) {
 		AEnemy *NextEnemyToUpdate = GetNextEnemyToUpdate();
+		if (NextEnemyToUpdate == nullptr) {
+			return;
+		}
 
 		FVector2D EnemyTexelPosition = NextEnemyToUpdate->GetFloatTexelPosition();
 		EnemyTexelPosition += FVector2D((MovingToRight ? 1 : -1) * SwarmVelocity, (MovingDown ? SeparationBetweenEnemies.Y / 2 : 0));
 		NextEnemyToUpdate->SetTexelPosition(EnemyTexelPosition, !MovingDown);
 
-		LastUpdatedEnemyGridID = NextEnemyToUpdate->GetEnemyCoordinateInGrid();
+		LastUpdatedEnemyGridID = NextEnemyToUpdate->GetCoordinateInEnemyGrid();
 	}
 }
 
@@ -94,6 +115,7 @@ void USwarmMind::SetEnemyInIndexed2DArray(int32 X, int32 Y, class AEnemy *Enemy)
 
 void USwarmMind::OnEnemyTouchBorder(EDirection Direction) {
 	if (Direction == EDirection::LEFT || Direction == EDirection::RIGHT) {
+		UKismetSystemLibrary::PrintString(GetWorld(), "OnEnemyTouchBorder", true, true, FColor::Yellow, 5);
 		DirectionBlocked = false;
 	}
 }

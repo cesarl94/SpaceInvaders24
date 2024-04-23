@@ -16,7 +16,7 @@
 
 
 AGamePreviewActor::AGamePreviewActor() {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root Component"));
 	SceneComponent->SetupAttachment(RootComponent);

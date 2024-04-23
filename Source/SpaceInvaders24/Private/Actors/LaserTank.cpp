@@ -3,13 +3,17 @@
 #include "Actors/LaserTank.h"
 
 #include "AbilitySystemComponent.h"
+#include "Actors/Shot.h"
 #include "Core/GS_SpaceInvaders24.h"
 #include "GAS/CustomAbilitySystemComponent.h"
 #include "GAS/CustomAttributeSet.h"
+#include "GAS/CustomGameplayAbility.h"
 #include "GAS/GASEnums.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Math/Vector.h"
 #include "Structs/GunData.h"
+#include "Utils/Enums.h"
 
 
 void ALaserTank::InitializeGAS() {
@@ -20,6 +24,16 @@ void ALaserTank::InitializeGAS() {
 
 	ASC->SetAttributeSetReference(AttributeSet);
 	ASC->InitAbilityActorInfo(this, this);
+
+	for (TSubclassOf<UCustomGameplayAbility> &Ability : DefaultAbilities) {
+		const EGASAbilityInput AbilityInputID = Ability.GetDefaultObject()->AbilityInputID;
+
+		if (AbilityInputID == EGASAbilityInput::None) {
+			UKismetSystemLibrary::PrintString(GetWorld(), "You're trying to set a Default Ability with \"None\" as Ability Input ID. This ability was canceled.", true, true, FColor::Red, 5);
+		} else {
+			AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(Ability, 1, static_cast<int32>(AbilityInputID), this));
+		}
+	}
 
 	BindInput();
 }
@@ -33,6 +47,7 @@ void ALaserTank::BindInput() {
 	AbilitySystemComponent->BindAbilityActivationToInputComponent(
 		InputComponent, FGameplayAbilityInputBinds(FString("Confirm"), FString("Cancel"), EnumAssetPath, static_cast<int32>(EGASAbilityInput::Confirm), static_cast<int32>(EGASAbilityInput::Cancel)));
 
+	UKismetSystemLibrary::PrintString(GetWorld(), "Binded Input", true, true, FColor::Red, 5);
 	bIsInputBound = true;
 }
 
@@ -60,7 +75,7 @@ void ALaserTank::SetupPlayerInputComponent(class UInputComponent *PlayerInputCom
 }
 
 ALaserTank::ALaserTank() {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Scene Component"));
 	SceneComponent->SetupAttachment(RootComponent);
@@ -81,21 +96,35 @@ void ALaserTank::StartGame() {
 	GraphicNodes->SetVisibility(true, true);
 }
 
-bool ALaserTank::IsAlive() const { return GetCustomAbilitySystemComponent()->HasTagByString("Player.IsAlive"); }
-
-FGunData ALaserTank::GetGunData() const { return GunData; }
-
-UAbilitySystemComponent *ALaserTank::GetAbilitySystemComponent() const { return AbilitySystemComponent; }
-
-UCustomAbilitySystemComponent *ALaserTank::GetCustomAbilitySystemComponent() const { return Cast<UCustomAbilitySystemComponent>(AbilitySystemComponent); }
-
-void ALaserTank::Tick(float DeltaTime) {
-	Super::Tick(DeltaTime);
-
+void ALaserTank::ManualTick(float DeltaTime) {
 	if (IsAlive()) {
 		ApplyVelocity(DeltaTime);
 	}
 }
+
+bool ALaserTank::IsAlive() const { return GetCustomAbilitySystemComponent()->HasTagByString("Player.IsAlive"); }
+
+FGunData ALaserTank::GetGunData() const { return GunData; }
+
+bool ALaserTank::CanShot() const {
+	if (!IsAlive()) {
+		return false;
+	}
+
+	AGS_SpaceInvaders24 *GameState = Cast<AGS_SpaceInvaders24>(UGameplayStatics::GetGameState(this));
+
+	for (AShot *Shot : GameState->GetShots()) {
+		if (Shot->GetType() == EShotType::SIMPLE_LINE) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+UAbilitySystemComponent *ALaserTank::GetAbilitySystemComponent() const { return AbilitySystemComponent; }
+
+UCustomAbilitySystemComponent *ALaserTank::GetCustomAbilitySystemComponent() const { return Cast<UCustomAbilitySystemComponent>(AbilitySystemComponent); }
 
 void ALaserTank::SetHorizontalMovement(float HorizontalMovement) {
 	if (HorizontalMovement == CurrentHorizontalMovement) {

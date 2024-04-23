@@ -4,6 +4,7 @@
 #include "Actors/Enemy.h"
 
 #include "Components/BoxComponent.h"
+#include "Engine/EngineTypes.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Math/IntPoint.h"
 #include "Math/Vector2D.h"
@@ -12,7 +13,7 @@
 // Sets default values
 AEnemy::AEnemy() {
 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Scene Component"));
 	SceneComponent->SetupAttachment(RootComponent);
@@ -29,10 +30,11 @@ void AEnemy::ManualInitialize(FIntPoint CoordinateInGrid) { EnemyCoordinateInGri
 void AEnemy::ManualReset(FIntPoint NewTexelPosition) {
 	SetTexelPosition(FVector2D(NewTexelPosition.X, NewTexelPosition.Y));
 	GraphicNodes->SetVisibility(true, true);
+	Collider->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	Alive = true;
 }
 
-FIntPoint AEnemy::GetEnemyCoordinateInGrid() const { return EnemyCoordinateInGrid; }
+FIntPoint AEnemy::GetCoordinateInEnemyGrid() const { return EnemyCoordinateInGrid; }
 
 // This function will be triggered in BP
 void AEnemy::Animate_Implementation(bool Forward, float Rate) const {}
@@ -56,9 +58,11 @@ void AEnemy::Tick(float DeltaTime) {
 
 bool AEnemy::IsAlive() const { return Alive; }
 
-void AEnemy::Die() {
+void AEnemy::Kill() {
 	Alive = false;
 	GraphicNodes->SetVisibility(false, true);
+
+	Collider->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	int32 PointsGivenRandomId = FMath::RandRange(0, PointsThatCouldGive.Num() - 1);
 	int32 PointsGiven = PointsThatCouldGive[PointsGivenRandomId];

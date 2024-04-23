@@ -42,22 +42,28 @@ protected:
 
 public:
 	// TODO: comentar esto
-	virtual FVector2D GetFloatTexelPosition();
+	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: Actor In Texels")
+	virtual FVector2D GetFloatTexelPosition() const;
 
 	// TODO: comentar esto. La posición visible del actor
-	virtual FIntPoint GetIntTexelPosition();
+	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: Actor In Texels")
+	virtual FIntPoint GetIntTexelPosition() const;
 
 	// TODO: comentar esto
+	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: Actor In Texels")
 	virtual void SetTexelPosition(FVector2D NewTexelPosition, bool Sweep = false);
 
 	// TODO: comentar esto
-	virtual FVector2D GetTexelVelocity();
+	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: Actor In Texels")
+	virtual FVector2D GetTexelVelocity() const;
 
 	// TODO: comentar esto
+	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: Actor In Texels")
 	virtual void SetTexelVelocity(FVector2D NewTexelVelocity);
 
 	// TODO: comentar esto
-	virtual FIntVector4 GetIntTexelBoundingBox();
+	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: Actor In Texels")
+	virtual FIntVector4 GetIntTexelBoundingBox() const;
 
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
 	FOnTouchLimitEvent OnTouchLimit;
