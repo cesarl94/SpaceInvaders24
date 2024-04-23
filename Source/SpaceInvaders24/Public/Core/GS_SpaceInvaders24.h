@@ -21,16 +21,6 @@ private:
 	UPROPERTY()
 	class AGamePreviewActor *GamePreviewActor;
 
-	// CAUTION: Ultra-private variable
-	// Since Unreal doesn't allow 2-dimensional-arrays, we'll use a 1D array indexed :(
-	// Use with the functions: "GetEnemyInCoordinate" and "SetEnemyInIndexed2DArray"
-	// CAUTION2: Double reference array togheter with the another array of enemies, "TArray<class AEnemy *> Enemies".
-	UPROPERTY()
-	TArray<class AEnemy *> _Enemies2D;
-
-	// TODO: comentar esto. Advertir la doble referencia
-	UPROPERTY()
-	TArray<class AEnemy *> Enemies;
 
 	UPROPERTY()
 	class ALaserTank *Player;
@@ -53,9 +43,6 @@ private:
 	UFUNCTION()
 	void ResetGame();
 
-	// TODO: comentar que hace esto
-	UFUNCTION()
-	void SetEnemyInIndexed2DArray(int32 X, int32 Y, class AEnemy *Enemy);
 
 	UFUNCTION()
 	void SetNewState(EGameState NewGameState);
@@ -80,34 +67,6 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Player")
 	FIntPoint PlayerSpawnPosition;
-
-	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Enemies")
-	TMap<EEnemyType, TSubclassOf<class AEnemy>> EnemyClasses;
-
-	// Open preview image of the first level, check the pixel of the first enemy (plus the offset) and put here
-	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Enemies")
-	FIntPoint TexelCoordOfTopLeftEnemyInFirstLevel;
-
-	// Open preview image, move all enemies at the lowest level before touch the LaserTank, and check the pixel of the first enemy (plus the offset)
-	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Enemies")
-	FIntPoint TexelCoordOfTopLeftEnemyInLastLevel;
-
-	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Enemies")
-	FIntPoint SeparationBetweenEnemies;
-
-	// The count of columns of aliens
-	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Enemies")
-	int32 EnemiesPerRow{11};
-
-	// The type of the enemies by row. From top to bottom
-	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Enemies")
-	TArray<EEnemyType> EnemyTypesByRow;
-
-	// It represents the speed of the entire swarm in texels per frame, but is distributed among all the enemies.
-	// This causes the remaining enemies to update faster as there are fewer of them.
-	// In the original game, it's 2 texels per frame.
-	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Enemies")
-	float SwarmVelocity{2};
 
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Bunkers")
 	TSubclassOf<AActor> BunkerClass;
@@ -134,8 +93,6 @@ public:
 	UFUNCTION()
 	EGameState GetGameState() const;
 
-	UFUNCTION()
-	const TArray<class AEnemy *> &GetEnemies() const;
 
 	virtual void Tick(float DeltaTime) override;
 
@@ -143,12 +100,9 @@ public:
 	UFUNCTION()
 	void OnPlayerControllerConnected(class APlayerController *PC);
 
-	// TODO: comentar que hace esto
-	UFUNCTION()
-	class AEnemy *GetEnemyInIndexed2DArray(int32 X, int32 Y) const;
-
 
 #pragma region // Wrapped functions from GamePreviewActor
+
 	// TODO: comentar que hace esto
 	UFUNCTION(BlueprintCallable)
 	FIntPoint GetMapSize() const;
@@ -172,5 +126,29 @@ public:
 	// TODO: comentar que hace esto
 	UFUNCTION(BlueprintCallable)
 	FRotator GetGameObjectOrientation() const;
+
+#pragma endregion
+#pragma region // Wrapped functions from GameTimeManager
+
+	// Returns the maximum time that we could pass in another time state (only special states count)
+	UFUNCTION()
+	float GetDurationOfLongestTimeState();
+
+	// TODO: comentar esto
+	UFUNCTION(BlueprintCallable)
+	float GetNormalGameTotalSeconds();
+
+	// TODO: comentar esto
+	UFUNCTION(BlueprintCallable)
+	float GetCrystalTotalSeconds();
+
+	// TODO: comentar esto
+	UFUNCTION(BlueprintCallable)
+	float GetLastDeltaTime();
+
+	// TODO: comentar esto
+	UFUNCTION(BlueprintCallable)
+	float GetLastCrystalDeltaTime();
+
 #pragma endregion
 };

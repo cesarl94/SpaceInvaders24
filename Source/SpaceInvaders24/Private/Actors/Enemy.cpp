@@ -6,6 +6,7 @@
 #include "Components/BoxComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Math/IntPoint.h"
+#include "Math/Vector2D.h"
 
 
 // Sets default values
@@ -25,22 +26,18 @@ AEnemy::AEnemy() {
 
 void AEnemy::ManualInitialize(FIntPoint CoordinateInGrid) { EnemyCoordinateInGrid = CoordinateInGrid; }
 
-FIntPoint AEnemy::GetEnemyCoordinateInGrid() const { return EnemyCoordinateInGrid; }
+void AEnemy::ManualReset(FIntPoint NewTexelPosition) {
+	SetTexelPosition(FVector2D(NewTexelPosition.X, NewTexelPosition.Y));
+	Alive = true;
+}
 
-void AEnemy::BeginPlay() { Super::BeginPlay(); }
+FIntPoint AEnemy::GetEnemyCoordinateInGrid() const { return EnemyCoordinateInGrid; }
 
 // This function will be triggered in BP
 void AEnemy::Animate_Implementation(bool Forward, float Rate) const {}
 
 // This function will be triggered in BP
 void AEnemy::DieAnimation_Implementation(bool Forward, float Rate) const {}
-
-void AEnemy::ApplyVelocity(float DeltaTime) {
-	FVector2D PrevTexelPosition = GetFloatTexelPosition();
-	FVector2D NewTexelPosition = PrevTexelPosition + GetTexelVelocity() * DeltaTime;
-
-	SetTexelPosition(NewTexelPosition, true);
-}
 
 // Called every frame
 void AEnemy::Tick(float DeltaTime) {
@@ -56,7 +53,9 @@ void AEnemy::Tick(float DeltaTime) {
 	}
 }
 
+bool AEnemy::IsAlive() const { return Alive; }
+
 void AEnemy::Die() {
+	Alive = false;
 	OnDie.Broadcast(this);
-	Destroy();
 }

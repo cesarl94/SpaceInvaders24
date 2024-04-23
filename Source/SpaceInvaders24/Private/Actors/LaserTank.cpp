@@ -22,8 +22,6 @@ void ALaserTank::InitializeGAS() {
 	ASC->InitAbilityActorInfo(this, this);
 
 	BindInput();
-
-	InitializeEffects();
 }
 
 void ALaserTank::BindInput() {
@@ -36,22 +34,6 @@ void ALaserTank::BindInput() {
 		InputComponent, FGameplayAbilityInputBinds(FString("Confirm"), FString("Cancel"), EnumAssetPath, static_cast<int32>(EGASAbilityInput::Confirm), static_cast<int32>(EGASAbilityInput::Cancel)));
 
 	bIsInputBound = true;
-}
-
-void ALaserTank::InitializeEffects() {
-	if (AbilitySystemComponent == nullptr) {
-		return;
-	}
-
-	FGameplayEffectContextHandle EffectContext = AbilitySystemComponent->MakeEffectContext();
-	EffectContext.AddSourceObject(this);
-
-	for (TSubclassOf<UGameplayEffect> &Effect : DefaultEffects) {
-		FGameplayEffectSpecHandle SpecHandle = AbilitySystemComponent->MakeOutgoingSpec(Effect, 1, EffectContext);
-		if (SpecHandle.IsValid()) {
-			FActiveGameplayEffectHandle GEHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
-		}
-	}
 }
 
 void ALaserTank::BeginPlay() {
@@ -123,7 +105,7 @@ void ALaserTank::SetHorizontalMovement(float HorizontalMovement) {
 	CurrentHorizontalMovement = HorizontalMovement;
 
 	// We multiply by 60 because the Speed is in texels per frame
-	SetTexelVelocity(FVector2D(HorizontalMovement * Speed * 60.f, 0));
+	SetTexelVelocity(FVector2D(HorizontalMovement * MovementSpeed * 60.f, 0));
 }
 
 void ALaserTank::SetAbilityInput(EGASAbilityInput input, bool pressed) {

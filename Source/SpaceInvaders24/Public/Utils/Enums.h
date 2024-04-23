@@ -9,6 +9,7 @@ enum class EEnemyType : uint8 {
 	OCTOPUS UMETA(DisplayName = "Octopus"),
 	CRAB UMETA(DisplayName = "Crab"),
 	SQUID UMETA(DisplayName = "Squid"),
+	UFO UMETA(DisplayName = "UFO"),
 };
 
 UENUM(BlueprintType, DisplayName = "Enemy State")

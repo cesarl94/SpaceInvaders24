@@ -34,6 +34,10 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Actor In Texels")
 	FIntVector4 ActorLimits;
 
+	// Avoids move the actor outside the actor limits, respect its ActorLocalBounds
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Actor In Texels")
+	bool ClampPosition{false};
+
 	virtual void ApplyVelocity(float DeltaTime);
 
 public:

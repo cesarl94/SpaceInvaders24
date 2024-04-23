@@ -7,6 +7,7 @@
 #include "Actors/LaserTank.h"
 #include "Actors/Shot.h"
 #include "Components/GameTimeManager.h"
+#include "Components/SwarmMind.h"
 #include "Core/GS_SpaceInvaders24.h"
 #include "CustomGameplayAbilityCustomization.h"
 #include "EnemyCustomization.h"
@@ -18,6 +19,7 @@
 #include "PropertyEditorDelegates.h"
 #include "PropertyEditorModule.h"
 #include "ShotCustomization.h"
+#include "SwarmMindCustomization.h"
 
 IMPLEMENT_GAME_MODULE(FCustomEditorModule, CustomEditor);
 
@@ -30,6 +32,7 @@ void FCustomEditorModule::StartupModule() {
 	RegisterClass(AShot::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FShotDetailsCustomization::MakeInstance));
 	RegisterClass(AActorInTexels::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FActorInTexelsDetailsCustomization::MakeInstance));
 	RegisterClass(UGameTimeManager::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FGameTimeManagerDetailsCustomization::MakeInstance));
+	RegisterClass(USwarmMind::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FSwarmMindDetailsCustomization::MakeInstance));
 }
 
 void FCustomEditorModule::ShutdownModule() {
@@ -43,6 +46,7 @@ void FCustomEditorModule::ShutdownModule() {
 	PropertyModule.UnregisterCustomClassLayout(AShot::StaticClass()->GetFName());
 	PropertyModule.UnregisterCustomClassLayout(AActorInTexels::StaticClass()->GetFName());
 	PropertyModule.UnregisterCustomClassLayout(UGameTimeManager::StaticClass()->GetFName());
+	PropertyModule.UnregisterCustomClassLayout(USwarmMind::StaticClass()->GetFName());
 }
 
 void FCustomEditorModule::RegisterClass(FName ClassName, FOnGetDetailCustomizationInstance DetailLayoutDelegate) {

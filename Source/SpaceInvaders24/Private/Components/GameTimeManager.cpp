@@ -13,6 +13,11 @@
 
 UGameTimeManager::UGameTimeManager() { PrimaryComponentTick.bCanEverTick = false; }
 
+void UGameTimeManager::ManualReset() {
+	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
+	GlobalTimeAtLastStateChange = GameState->GetServerWorldTimeSeconds();
+}
+
 void UGameTimeManager::ManualTick(float DeltaTime) {
 	FTimeStateData *CurrentTimeStateData = TimeStateData.Find(TimeState);
 	if (CurrentTimeStateData != nullptr) {
@@ -39,7 +44,16 @@ void UGameTimeManager::ManualTick(float DeltaTime) {
 	CrystalTotalSeconds += LastCrystalDeltaTime;
 }
 
-float UGameTimeManager::GetMaxTimeDilationDuration() {
+ETimeState UGameTimeManager::GetTimeState() { return TimeState; }
+
+void UGameTimeManager::SetNewState(ETimeState NewTimeState) {
+	TimeState = NewTimeState;
+
+	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
+	GlobalTimeAtLastStateChange = GameState->GetServerWorldTimeSeconds();
+}
+
+float UGameTimeManager::GetDurationOfLongestTimeState() {
 	float RetornedValue = -1;
 
 	for (const TPair<ETimeState, FTimeStateData> &Pair : TimeStateData) {
@@ -49,15 +63,6 @@ float UGameTimeManager::GetMaxTimeDilationDuration() {
 	}
 
 	return RetornedValue;
-}
-
-ETimeState UGameTimeManager::GetTimeState() { return TimeState; }
-
-void UGameTimeManager::SetNewState(ETimeState NewTimeState) {
-	TimeState = NewTimeState;
-
-	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
-	GlobalTimeAtLastStateChange = GameState->GetServerWorldTimeSeconds();
 }
 
 float UGameTimeManager::GetNormalGameTotalSeconds() { return NormalGameTotalSeconds; }

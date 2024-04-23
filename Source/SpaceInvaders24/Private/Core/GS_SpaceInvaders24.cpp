@@ -24,34 +24,34 @@ AGS_SpaceInvaders24::AGS_SpaceInvaders24() {
 }
 
 void AGS_SpaceInvaders24::SpawnSwarm() {
-	_Enemies2D.SetNumUninitialized(EnemiesPerRow * EnemyTypesByRow.Num());
+	// _Enemies2D.SetNumUninitialized(EnemiesPerRow * EnemyTypesByRow.Num());
 
-	FActorSpawnParameters ActorSpawnParams;
-	ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	FRotator GameObjectOrientation = GetGameObjectOrientation();
+	// FActorSpawnParameters ActorSpawnParams;
+	// ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	// FRotator GameObjectOrientation = GetGameObjectOrientation();
 
-	FIntPoint PositionDelta = TexelCoordOfTopLeftEnemyInFirstLevel + Level * (SeparationBetweenEnemies.Y / 2);
-	if (PositionDelta.Y > TexelCoordOfTopLeftEnemyInLastLevel.Y) {
-		PositionDelta.Y = TexelCoordOfTopLeftEnemyInLastLevel.Y;
-	}
+	// FIntPoint PositionDelta = TexelCoordOfTopLeftEnemyInFirstLevel + Level * (SeparationBetweenEnemies.Y / 2);
+	// if (PositionDelta.Y > TexelCoordOfTopLeftEnemyInLastLevel.Y) {
+	// 	PositionDelta.Y = TexelCoordOfTopLeftEnemyInLastLevel.Y;
+	// }
 
 
-	for (int32 i = 0; i < EnemyTypesByRow.Num(); i++) {
-		for (int32 j = 0; j < EnemiesPerRow; j++) {
-			TSubclassOf<AEnemy> *EnemySubclass = EnemyClasses.Find(EnemyTypesByRow[i]);
-			if (EnemySubclass != nullptr) {
-				FVector EnemyWorldPosition = TexelToWorldPos(PositionDelta);
-				AEnemy *Enemy = GetWorld()->SpawnActor<AEnemy>(*EnemySubclass, EnemyWorldPosition, GameObjectOrientation, ActorSpawnParams);
-				Enemy->ManualInitialize(FIntPoint(j, i));
-				SetEnemyInIndexed2DArray(j, i, Enemy);
-				Enemies.Add(Enemy);
+	// for (int32 i = 0; i < EnemyTypesByRow.Num(); i++) {
+	// 	for (int32 j = 0; j < EnemiesPerRow; j++) {
+	// 		TSubclassOf<AEnemy> *EnemySubclass = EnemyClasses.Find(EnemyTypesByRow[i]);
+	// 		if (EnemySubclass != nullptr) {
+	// 			FVector EnemyWorldPosition = TexelToWorldPos(PositionDelta);
+	// 			AEnemy *Enemy = GetWorld()->SpawnActor<AEnemy>(*EnemySubclass, EnemyWorldPosition, GameObjectOrientation, ActorSpawnParams);
+	// 			Enemy->ManualInitialize(FIntPoint(j, i));
+	// 			SetEnemyInIndexed2DArray(j, i, Enemy);
+	// 			Enemies.Add(Enemy);
 
-				PositionDelta.X += SeparationBetweenEnemies.X;
-			}
-		}
-		PositionDelta.X -= SeparationBetweenEnemies.X * EnemiesPerRow;
-		PositionDelta.Y += SeparationBetweenEnemies.Y;
-	}
+	// 			PositionDelta.X += SeparationBetweenEnemies.X;
+	// 		}
+	// 	}
+	// 	PositionDelta.X -= SeparationBetweenEnemies.X * EnemiesPerRow;
+	// 	PositionDelta.Y += SeparationBetweenEnemies.Y;
+	// }
 }
 
 void AGS_SpaceInvaders24::SpawnPlayer() {
@@ -90,13 +90,14 @@ void AGS_SpaceInvaders24::ResetGame() {
 	SpawnBunkers();
 
 	GameState = EGameState::PLAYING_FORWARD;
+	GameTimeManager->SetNewState(ETimeState::FORWARD);
+
+	SwarmMind->ManualReset(0);
+
+
 	Player->StartGame();
 }
 
-void AGS_SpaceInvaders24::SetEnemyInIndexed2DArray(int32 X, int32 Y, class AEnemy *Enemy) {
-	int32 Index1D = Y * EnemiesPerRow + X;
-	_Enemies2D[Index1D] = Enemy;
-}
 
 void AGS_SpaceInvaders24::SetNewState(EGameState NewGameState) { GameState = NewGameState; }
 
@@ -108,6 +109,8 @@ void AGS_SpaceInvaders24::BeginPlay() {
 	GamePreviewActor = Cast<AGamePreviewActor>(UGameplayStatics::GetActorOfClass(this, AGamePreviewActor::StaticClass()));
 	GamePreviewActor->ManualInitialize();
 
+	SwarmMind->ManualInitialize();
+
 	ResetGame();
 }
 
@@ -116,22 +119,16 @@ void AGS_SpaceInvaders24::Tick(float DeltaTime) {
 
 	GameTimeManager->ManualTick(DeltaTime);
 
-	SwarmMind->ManualTick(DeltaTime);
+	SwarmMind->ManualTick(GameTimeManager->GetLastCrystalDeltaTime());
 }
 
-EGameState AGS_SpaceInvaders24::GetGameState() const { return GameState; }
 
-const TArray<AEnemy *> &AGS_SpaceInvaders24::GetEnemies() const { return Enemies; }
+EGameState AGS_SpaceInvaders24::GetGameState() const { return GameState; }
 
 void AGS_SpaceInvaders24::OnPlayerControllerConnected(APlayerController *PC) {
 	if (Player != nullptr && PC->GetPawn() == nullptr) {
 		PC->Possess(Player);
 	}
-}
-
-AEnemy *AGS_SpaceInvaders24::GetEnemyInIndexed2DArray(int32 X, int32 Y) const {
-	int32 Index1D = Y * EnemiesPerRow + X;
-	return _Enemies2D[Index1D];
 }
 
 #pragma region // Wrapped functions from GamePreviewActor
@@ -146,4 +143,15 @@ FVector AGS_SpaceInvaders24::GetForward() const { return GamePreviewActor->GetFo
 FVector AGS_SpaceInvaders24::GetUp() const { return GamePreviewActor->GetUp(); }
 
 FRotator AGS_SpaceInvaders24::GetGameObjectOrientation() const { return GamePreviewActor->GetGameObjectOrientation(); }
+#pragma endregion
+#pragma region // Wrapped functions from GameTimeManager
+float AGS_SpaceInvaders24::GetDurationOfLongestTimeState() { return GameTimeManager->GetDurationOfLongestTimeState(); }
+
+float AGS_SpaceInvaders24::GetNormalGameTotalSeconds() { return GameTimeManager->GetNormalGameTotalSeconds(); }
+
+float AGS_SpaceInvaders24::GetCrystalTotalSeconds() { return GameTimeManager->GetCrystalTotalSeconds(); }
+
+float AGS_SpaceInvaders24::GetLastDeltaTime() { return GameTimeManager->GetLastDeltaTime(); }
+
+float AGS_SpaceInvaders24::GetLastCrystalDeltaTime() { return GameTimeManager->GetLastCrystalDeltaTime(); }
 #pragma endregion

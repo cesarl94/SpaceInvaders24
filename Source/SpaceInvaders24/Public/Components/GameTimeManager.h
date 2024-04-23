@@ -42,13 +42,12 @@ protected:
 public:
 	UGameTimeManager();
 
+	UFUNCTION()
+	void ManualReset();
+
 	// Called from GS_SpaceInvaders24
 	UFUNCTION()
 	void ManualTick(float DeltaTime);
-
-	// Returns the maximum time that we could pass in another time state (only special states count)
-	UFUNCTION()
-	float GetMaxTimeDilationDuration();
 
 	UFUNCTION(BlueprintCallable)
 	ETimeState GetTimeState();
@@ -56,15 +55,23 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetNewState(ETimeState NewTimeState);
 
+	// Returns the maximum time that we could pass in another time state (only special states count)
+	UFUNCTION()
+	float GetDurationOfLongestTimeState();
+
+	// TODO: comentar esto
 	UFUNCTION(BlueprintCallable)
 	float GetNormalGameTotalSeconds();
 
+	// TODO: comentar esto
 	UFUNCTION(BlueprintCallable)
 	float GetCrystalTotalSeconds();
 
+	// TODO: comentar esto
 	UFUNCTION(BlueprintCallable)
 	float GetLastDeltaTime();
 
+	// TODO: comentar esto
 	UFUNCTION(BlueprintCallable)
 	float GetLastCrystalDeltaTime();
 

@@ -36,8 +36,10 @@ void AActorInTexels::SetTexelPosition(FVector2D NewTexelPosition, bool Sweep) {
 	FIntVector4 PositionLimits = FIntVector4(ActorLimits.X - ActorLocalBounds.X, ActorLimits.X - ActorLocalBounds.Y, ActorLimits.X + ActorLimits.Z - ActorLocalBounds.X - ActorLocalBounds.Z,
 											 ActorLimits.Y + ActorLimits.W - ActorLocalBounds.Y - ActorLocalBounds.W);
 
-	NewTexelPosition.X = FMath::Clamp(NewTexelPosition.X, PositionLimits.X, PositionLimits.X + PositionLimits.Z);
-	NewTexelPosition.Y = FMath::Clamp(NewTexelPosition.Y, PositionLimits.Y, PositionLimits.Y + PositionLimits.W);
+	if (ClampPosition) {
+		NewTexelPosition.X = FMath::Clamp(NewTexelPosition.X, PositionLimits.X, PositionLimits.X + PositionLimits.Z);
+		NewTexelPosition.Y = FMath::Clamp(NewTexelPosition.Y, PositionLimits.Y, PositionLimits.Y + PositionLimits.W);
+	}
 
 	CurrentTexelPosition = NewTexelPosition;
 
@@ -49,16 +51,16 @@ void AActorInTexels::SetTexelPosition(FVector2D NewTexelPosition, bool Sweep) {
 	RootComponent->SetWorldLocation(NewWorldPos, Sweep);
 
 
-	if (NewIntTexelPosition.X <= PositionLimits.X && PrevIntTexelPosition.X != PositionLimits.X) {
+	if (NewIntTexelPosition.X <= PositionLimits.X && PrevIntTexelPosition.X > PositionLimits.X) {
 		OnTouchLimit.Broadcast(EDirection::LEFT);
 	}
-	if (NewIntTexelPosition.Y <= PositionLimits.Y && PrevIntTexelPosition.Y != PositionLimits.Y) {
+	if (NewIntTexelPosition.Y <= PositionLimits.Y && PrevIntTexelPosition.Y > PositionLimits.Y) {
 		OnTouchLimit.Broadcast(EDirection::UP);
 	}
-	if (NewIntTexelPosition.X >= PositionLimits.X + PositionLimits.Z && PrevIntTexelPosition.X != PositionLimits.X + PositionLimits.Z) {
+	if (NewIntTexelPosition.X >= PositionLimits.X + PositionLimits.Z && PrevIntTexelPosition.X < PositionLimits.X + PositionLimits.Z) {
 		OnTouchLimit.Broadcast(EDirection::RIGHT);
 	}
-	if (NewIntTexelPosition.Y <= PositionLimits.Y + PositionLimits.W && PrevIntTexelPosition.Y != PositionLimits.Y + PositionLimits.W) {
+	if (NewIntTexelPosition.Y >= PositionLimits.Y + PositionLimits.W && PrevIntTexelPosition.Y < PositionLimits.Y + PositionLimits.W) {
 		OnTouchLimit.Broadcast(EDirection::DOWN);
 	}
 }

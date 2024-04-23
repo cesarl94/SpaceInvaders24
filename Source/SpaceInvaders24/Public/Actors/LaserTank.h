@@ -34,9 +34,6 @@ private:
 	// To add mapping context to GAS
 	UFUNCTION()
 	void BindInput();
-
-	UFUNCTION()
-	void InitializeEffects();
 #pragma endregion
 
 protected:
@@ -64,16 +61,10 @@ protected:
 
 	// texels per frame
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Laser Tank Data")
-	float Speed{1};
+	float MovementSpeed{1};
 
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: GAS")
 	TArray<TSubclassOf<class UCustomGameplayAbility>> DefaultAbilities;
-
-	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: GAS")
-	TArray<TSubclassOf<class UGameplayEffect>> DefaultEffects;
-
-	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: GAS")
-	TArray<FGameplayTag> DefaultTags;
 
 	// for binding the enhanced input system with GAS
 	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;

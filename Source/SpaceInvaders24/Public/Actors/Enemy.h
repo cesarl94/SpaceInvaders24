@@ -29,13 +29,12 @@ private:
 	UPROPERTY()
 	FIntPoint EnemyCoordinateInGrid;
 
+	UPROPERTY()
+	bool Alive{false};
+
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
 	// Components:
-
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	USceneComponent *SceneComponent;
 
@@ -64,8 +63,6 @@ protected:
 	UFUNCTION(BlueprintNativeEvent, Category = "SpaceInvaders24: Native Events")
 	void DieAnimation(bool Forward, float Rate) const;
 
-	virtual void ApplyVelocity(float DeltaTime) override;
-
 
 public:
 	AEnemy();
@@ -73,9 +70,16 @@ public:
 	// Called from GS_SpaceInvaders24 after create
 	void ManualInitialize(FIntPoint CoordinateInGrid);
 
+	UFUNCTION()
+	void ManualReset(FIntPoint NewTexelPosition);
+
+	UFUNCTION()
 	FIntPoint GetEnemyCoordinateInGrid() const;
 
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION(BlueprintCallable, DisplayName = "Enemy IsAlive")
+	bool IsAlive() const;
 
 	UFUNCTION()
 	void Die();
