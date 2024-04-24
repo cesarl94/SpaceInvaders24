@@ -2,12 +2,15 @@
 
 #pragma once
 
+#include "Components/BoxComponent.h"
+#include "Components/SceneComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Math/IntVector.h"
 #include "Utils/Enums.h"
 
 #include "ActorInTexels.generated.h"
+
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTouchLimitEvent, EDirection, Direction);
@@ -25,6 +28,40 @@ class SPACEINVADERS24_API AActorInTexels : public APawn {
 protected:
 	virtual void BeginPlay() override;
 
+	// Components:
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	USceneComponent *SceneComponent;
+
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	USceneComponent *GraphicNodes;
+
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	UBoxComponent *Collider;
+
+	/**
+	 * If your actor needs to access its voxels using coordinates, such as Bunker or the BlastTrail of a shot, you'll need
+	 * to position this actor at the same position as the voxel at coordinate (0, 0). This actor transforms, based on its
+	 * relative position, the relative position of each voxel to world coordinates and vice versa. Similarly, we need its
+	 * sibling component, SceneInMaxRelativePos, to do the same but for voxels at coordinate (width - 1, height - 1) according
+	 * to the size specified in ActorLocalBounds.Z and W.
+	 *
+	 * If your actor doesn't need to access its voxels by coordinate, ignore these two components.
+	 */
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	USceneComponent *SceneInMinRelativePos;
+
+	/**
+	 * If your actor needs to access its voxels using coordinates, such as Bunker or the BlastTrail of a Shot, you'll need
+	 * to position this actor at the same position as the voxel at coordinate (width - 1, height - 1) according to the size
+	 * specified in ActorLocalBounds.Z and W. This actor transforms, based on its relative position, the relative position
+	 * of each voxel to world coordinates and vice versa. Similarly, we need its sibling component, SceneInMinRelativePos,
+	 * to do the same but for voxels at coordinate (0, 0).
+	 *
+	 * If your actor doesn't need to access its voxels by coordinate, ignore these two components.
+	 */
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	USceneComponent *SceneInMaxRelativePos;
+
 	// A 2D box that covers the actor, in texels. Like a collider. Offset in X, offset in Y, width, height
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Actor In Texels")
 	FIntVector4 ActorLocalBounds;
@@ -40,6 +77,8 @@ protected:
 
 
 public:
+	AActorInTexels();
+
 	// TODO: comentar esto
 	virtual void ApplyVelocity(float DeltaTime);
 

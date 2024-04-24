@@ -6,9 +6,8 @@
 #include "Components/BoxComponent.h"
 #include "CoreMinimal.h"
 #include "Math/IntPoint.h"
-#include "Math/IntVector.h"
-#include "Math/Vector2D.h"
 #include "Structs/BlastTrailData.h"
+#include "Structs/CrystalDropData.h"
 #include "Utils/Enums.h"
 
 #include "Enemy.generated.h"
@@ -36,18 +35,11 @@ private:
 	UFUNCTION()
 	void SpawnBlastTrail();
 
+	UFUNCTION()
+	void SpawnCrystal();
+
 
 protected:
-	// Components:
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-	USceneComponent *SceneComponent;
-
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-	USceneComponent *GraphicNodes;
-
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-	UBoxComponent *Collider;
-
 	// Serialized data:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemy Stats")
 	EEnemyType Type;
@@ -57,9 +49,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemy Stats")
 	TArray<int32> PointsThatCouldGive;
 
-	// In percentage
-	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemy Stats")
-	int32 CrystalDropProbability;
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Crystal Drop Data")
+	FCrystalDropData CrystalDropData;
 
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Blast Trace Data")
 	FBlastTrailData BlastTrailData;
@@ -91,6 +82,7 @@ public:
 	UFUNCTION()
 	void Kill(bool IsForcedKill = false);
 
+	// Events:
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
 	FOnEnemyDie OnDie;
 };

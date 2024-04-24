@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "Actors/ActorInTexels.h"
 #include "Actors/BlastTrail.h"
 #include "CoreMinimal.h"
 #include "Math/IntPoint.h"
@@ -20,8 +19,9 @@ struct SPACEINVADERS24_API FBlastTrailData {
 	TSubclassOf<ABlastTrail> BlastTrailActorClass;
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "SpaceInvaders24: Blast Trace Data")
-	float Duration{0.5};
+	float Duration{0.1};
 
+	// Amount of texels that we'll add to our texel position to spawn the BlastTrailActor
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "SpaceInvaders24: Blast Trace Data")
 	FIntPoint Offset;
 };

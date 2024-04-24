@@ -115,7 +115,6 @@ void USwarmMind::SetEnemyInIndexed2DArray(int32 X, int32 Y, class AEnemy *Enemy)
 
 void USwarmMind::OnEnemyTouchBorder(EDirection Direction) {
 	if (Direction == EDirection::LEFT || Direction == EDirection::RIGHT) {
-		UKismetSystemLibrary::PrintString(GetWorld(), "OnEnemyTouchBorder", true, true, FColor::Yellow, 5);
 		DirectionBlocked = false;
 	}
 }

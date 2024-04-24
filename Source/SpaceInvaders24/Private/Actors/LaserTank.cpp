@@ -47,7 +47,6 @@ void ALaserTank::BindInput() {
 	AbilitySystemComponent->BindAbilityActivationToInputComponent(
 		InputComponent, FGameplayAbilityInputBinds(FString("Confirm"), FString("Cancel"), EnumAssetPath, static_cast<int32>(EGASAbilityInput::Confirm), static_cast<int32>(EGASAbilityInput::Cancel)));
 
-	UKismetSystemLibrary::PrintString(GetWorld(), "Binded Input", true, true, FColor::Red, 5);
 	bIsInputBound = true;
 }
 
@@ -74,18 +73,7 @@ void ALaserTank::SetupPlayerInputComponent(class UInputComponent *PlayerInputCom
 	BindInput();
 }
 
-ALaserTank::ALaserTank() {
-	PrimaryActorTick.bCanEverTick = false;
-
-	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Scene Component"));
-	SceneComponent->SetupAttachment(RootComponent);
-
-	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Box Collider"));
-	Collider->SetupAttachment(SceneComponent);
-
-	GraphicNodes = CreateDefaultSubobject<USceneComponent>(TEXT("Graphic Nodes"));
-	GraphicNodes->SetupAttachment(SceneComponent);
-
+ALaserTank::ALaserTank() : Super() {
 	// GAS
 	AbilitySystemComponent = CreateDefaultSubobject<UCustomAbilitySystemComponent>("Ability System Component");
 	AttributeSet = CreateDefaultSubobject<UCustomAttributeSet>("Attribute Set");

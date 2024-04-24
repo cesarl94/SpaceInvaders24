@@ -46,28 +46,7 @@ private:
 	UFUNCTION()
 	FVector RelativeTexelToRelative3DPos(FIntPoint RelativeTexelPos) const;
 
-
-protected:
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-	USceneComponent *SceneComponent;
-
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-	USceneComponent *BricksScene;
-
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-	UBoxComponent *Collider;
-
-	// TODO: comentar que es esto
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-	USceneComponent *SceneInMinRelativePos;
-
-	// TODO: comentar que es esto
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-	USceneComponent *SceneInMaxRelativePos;
-
 public:
-	ABunker();
-
 	// Called from GameState's BeginPlay
 	void ManualInitialize();
 

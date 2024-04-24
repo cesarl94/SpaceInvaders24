@@ -1,6 +1,7 @@
 #include "Core/GS_SpaceInvaders24.h"
 
 #include "Actors/Bunker.h"
+#include "Actors/Crystal.h"
 #include "Actors/Enemy.h"
 #include "Actors/GamePreviewActor.h"
 #include "Actors/LaserTank.h"
@@ -8,6 +9,8 @@
 #include "Components/GameTimeManager.h"
 #include "Components/SwarmMind.h"
 #include "Core/PC_SpaceInvaders24.h"
+#include "GAS/CustomAbilitySystemComponent.h"
+#include "GAS/GASEnums.h"
 #include "GameFramework/PlayerState.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -92,8 +95,6 @@ void AGS_SpaceInvaders24::ResetGame() {
 }
 
 
-void AGS_SpaceInvaders24::SetNewState(EGameState NewGameState) { GameState = NewGameState; }
-
 void AGS_SpaceInvaders24::UFOAppear() {
 	UFO->ManualReset(UFOSpawnPosition);
 	UFO->SetTexelVelocity(FVector2D(UFOMovementSpeed * 60.f, 0));
@@ -118,6 +119,14 @@ void AGS_SpaceInvaders24::OnKilledAllEnemies() {
 }
 
 void AGS_SpaceInvaders24::OnShotHit(AShot *Shot) { Shots.Remove(Shot); }
+
+void AGS_SpaceInvaders24::OnCrystalHit(ACrystal *Crystal, bool AddCrystalCount) {
+	if (AddCrystalCount) {
+		int32 CurrentCrystalCount = Player->GetCustomAbilitySystemComponent()->GetAttributeValueByEnum(EPlayerAttribute::Crystals);
+		Player->GetCustomAbilitySystemComponent()->SetAttributeValueByEnum(EPlayerAttribute::Crystals, CurrentCrystalCount + 1);
+	}
+	Crystals.Remove(Crystal);
+}
 
 void AGS_SpaceInvaders24::OnUFOTouchBorder(EDirection Direction) {
 	if (Direction == EDirection::RIGHT) {
@@ -161,6 +170,11 @@ void AGS_SpaceInvaders24::Tick(float DeltaTime) {
 	}
 }
 
+void AGS_SpaceInvaders24::SetNewState(EGameState NewGameState) {
+	GameState = NewGameState;
+
+	UKismetSystemLibrary::PrintString(GetWorld(), FString::Printf(TEXT("NewGameState: %d"), static_cast<int32>(NewGameState)), true, true, FColor::Red, 5);
+}
 
 EGameState AGS_SpaceInvaders24::GetGameState() const { return GameState; }
 
@@ -173,6 +187,11 @@ void AGS_SpaceInvaders24::OnPlayerControllerConnected(APlayerController *PC) {
 void AGS_SpaceInvaders24::ReportNewShot(AShot *NewShot) {
 	NewShot->OnHit.AddUniqueDynamic(this, &AGS_SpaceInvaders24::OnShotHit);
 	Shots.Add(NewShot);
+}
+
+void AGS_SpaceInvaders24::ReportNewCrystal(ACrystal *NewCrystal) {
+	NewCrystal->OnHit.AddUniqueDynamic(this, &AGS_SpaceInvaders24::OnCrystalHit);
+	Crystals.Add(NewCrystal);
 }
 
 const TArray<AShot *> &AGS_SpaceInvaders24::GetShots() const { return Shots; }

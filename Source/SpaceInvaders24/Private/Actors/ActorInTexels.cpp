@@ -3,6 +3,8 @@
 
 #include "Actors/ActorInTexels.h"
 
+#include "Components/BoxComponent.h"
+#include "Components/SceneComponent.h"
 #include "Core/GS_SpaceInvaders24.h"
 #include "Kismet/GameplayStatics.h"
 #include "Math/IntVector.h"
@@ -10,12 +12,32 @@
 #include "Utils/Enums.h"
 #include "Utils/MathUtils.h"
 
+
 void AActorInTexels::BeginPlay() {
 	Super::BeginPlay();
 
 	AGS_SpaceInvaders24 *GameState = Cast<AGS_SpaceInvaders24>(UGameplayStatics::GetGameState(this));
 	CurrentTexelPosition = GameState->WorldToTexelPos(RootComponent->GetComponentLocation());
 	TexelVelocity = FVector2D(0, 0);
+}
+
+AActorInTexels::AActorInTexels() {
+	PrimaryActorTick.bCanEverTick = false;
+
+	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Scene Component"));
+	SceneComponent->SetupAttachment(RootComponent);
+
+	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Box Collider"));
+	Collider->SetupAttachment(SceneComponent);
+
+	GraphicNodes = CreateDefaultSubobject<USceneComponent>(TEXT("Graphic Nodes"));
+	GraphicNodes->SetupAttachment(SceneComponent);
+
+	SceneInMinRelativePos = CreateDefaultSubobject<USceneComponent>(TEXT("Min Relative Pos Scene"));
+	SceneInMinRelativePos->SetupAttachment(SceneComponent);
+
+	SceneInMaxRelativePos = CreateDefaultSubobject<USceneComponent>(TEXT("Max Relative Pos Scene"));
+	SceneInMaxRelativePos->SetupAttachment(SceneComponent);
 }
 
 void AActorInTexels::ApplyVelocity(float DeltaTime) {

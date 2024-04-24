@@ -14,6 +14,7 @@
 
 #include "CustomAttributeSet.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FAttributeChanged, EPlayerAttribute, AttributeEnum, float, OldValue, float, NewValue);
 
 UCLASS()
 class SPACEINVADERS24_API UCustomAttributeSet : public UAttributeSet {
@@ -23,6 +24,10 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "SpaceInvaders24: GAS", Meta = (AllowPrivateAccess = "true"))
 	FGameplayAttributeData Crystals{0};
 	ATTRIBUTE_ACCESSORS(UCustomAttributeSet, Crystals)
+
+	UPROPERTY(BlueprintReadOnly, Category = "SpaceInvaders24: GAS", Meta = (AllowPrivateAccess = "true"))
+	FGameplayAttributeData MaxCrystals{3};
+	ATTRIBUTE_ACCESSORS(UCustomAttributeSet, MaxCrystals)
 
 	UPROPERTY(BlueprintReadOnly, Category = "SpaceInvaders24: GAS", Meta = (AllowPrivateAccess = "true"))
 	FGameplayAttributeData Points{0};
@@ -37,4 +42,14 @@ public:
 	ATTRIBUTE_ACCESSORS(UCustomAttributeSet, Level)
 
 	FGameplayAttribute GetAttributeByEnum(EPlayerAttribute AttributeEnum);
+
+	void ClampAttributeOnChange(const FGameplayAttribute &Attribute, float &NewValue) const;
+	virtual void PreAttributeBaseChange(const FGameplayAttribute &Attribute, float &NewValue) const override;
+	virtual void PreAttributeChange(const FGameplayAttribute &Attribute, float &NewValue) override;
+
+	virtual void PostAttributeChange(const FGameplayAttribute &Attribute, float OldValue, float NewValue) override;
+
+	// Events:
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
+	FAttributeChanged OnAttributeChange;
 };

@@ -2,6 +2,7 @@
 
 #include "ActorInTexelsCustomization.h"
 #include "Actors/ActorInTexels.h"
+#include "Actors/Crystal.h"
 #include "Actors/Enemy.h"
 #include "Actors/GamePreviewActor.h"
 #include "Actors/LaserTank.h"
@@ -9,6 +10,7 @@
 #include "Components/GameTimeManager.h"
 #include "Components/SwarmMind.h"
 #include "Core/GS_SpaceInvaders24.h"
+#include "CrystalCustomization.h"
 #include "CustomGameplayAbilityCustomization.h"
 #include "EnemyCustomization.h"
 #include "GAS/CustomGameplayAbility.h"
@@ -33,6 +35,7 @@ void FCustomEditorModule::StartupModule() {
 	RegisterClass(AActorInTexels::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FActorInTexelsDetailsCustomization::MakeInstance));
 	RegisterClass(UGameTimeManager::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FGameTimeManagerDetailsCustomization::MakeInstance));
 	RegisterClass(USwarmMind::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FSwarmMindDetailsCustomization::MakeInstance));
+	RegisterClass(ACrystal::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FCrystalDetailsCustomization::MakeInstance));
 }
 
 void FCustomEditorModule::ShutdownModule() {
@@ -47,6 +50,7 @@ void FCustomEditorModule::ShutdownModule() {
 	PropertyModule.UnregisterCustomClassLayout(AActorInTexels::StaticClass()->GetFName());
 	PropertyModule.UnregisterCustomClassLayout(UGameTimeManager::StaticClass()->GetFName());
 	PropertyModule.UnregisterCustomClassLayout(USwarmMind::StaticClass()->GetFName());
+	PropertyModule.UnregisterCustomClassLayout(ACrystal::StaticClass()->GetFName());
 }
 
 void FCustomEditorModule::RegisterClass(FName ClassName, FOnGetDetailCustomizationInstance DetailLayoutDelegate) {

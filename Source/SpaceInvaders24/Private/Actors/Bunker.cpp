@@ -7,26 +7,6 @@
 #include "Math/IntPoint.h"
 #include "Utils/MathUtils.h"
 
-
-ABunker::ABunker() {
-	PrimaryActorTick.bCanEverTick = false;
-
-	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Scene Component"));
-	SceneComponent->SetupAttachment(RootComponent);
-
-	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Box Collider"));
-	Collider->SetupAttachment(SceneComponent);
-
-	BricksScene = CreateDefaultSubobject<USceneComponent>(TEXT("Bricks Scene"));
-	BricksScene->SetupAttachment(SceneComponent);
-
-	SceneInMinRelativePos = CreateDefaultSubobject<USceneComponent>(TEXT("Min Relative Pos Scene"));
-	SceneInMinRelativePos->SetupAttachment(SceneComponent);
-
-	SceneInMaxRelativePos = CreateDefaultSubobject<USceneComponent>(TEXT("Max Relative Pos Scene"));
-	SceneInMaxRelativePos->SetupAttachment(SceneComponent);
-}
-
 void ABunker::SetBrickInCoordinate(int32 RelativeX, int32 RelativeY, USimpleVoxel *Brick) {
 	int32 Index1D = RelativeY * ActorLocalBounds.Z + RelativeX;
 	_BricksGrid[Index1D] = Brick;

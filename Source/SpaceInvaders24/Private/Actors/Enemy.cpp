@@ -4,6 +4,7 @@
 #include "Actors/Enemy.h"
 
 #include "Actors/BlastTrail.h"
+#include "Actors/Crystal.h"
 #include "Components/BoxComponent.h"
 #include "Core/GS_SpaceInvaders24.h"
 #include "Engine/EngineTypes.h"
@@ -33,18 +34,29 @@ void AEnemy::SpawnBlastTrail() {
 	BlastTrail->ManualInitialize(BlastTrailData.Duration);
 }
 
-AEnemy::AEnemy() {
-	PrimaryActorTick.bCanEverTick = true;
+void AEnemy::SpawnCrystal() {
+	if (CrystalDropData.CrystalDroppedClass == nullptr) {
+		return;
+	}
 
-	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Scene Component"));
-	SceneComponent->SetupAttachment(RootComponent);
+	int32 RandomNum = FMath::RandRange(1, 100);
+	if (RandomNum > CrystalDropData.CrystalDropProbability) {
+		return;
+	}
 
-	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Box Collider"));
-	Collider->SetupAttachment(SceneComponent);
+	AGS_SpaceInvaders24 *GameState = Cast<AGS_SpaceInvaders24>(UGameplayStatics::GetGameState(this));
 
-	GraphicNodes = CreateDefaultSubobject<USceneComponent>(TEXT("Graphic Nodes"));
-	GraphicNodes->SetupAttachment(SceneComponent);
+	FIntPoint TexelIntPoint = GetIntTexelPosition() + CrystalDropData.CrystalOffset;
+	FVector CrystalWorldPosition = GameState->TexelToWorldPos(TexelIntPoint);
+
+	FActorSpawnParameters ActorSpawnParams;
+	ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	ACrystal *Crystal = GetWorld()->SpawnActor<ACrystal>(CrystalDropData.CrystalDroppedClass, CrystalWorldPosition, GameState->GetGameObjectOrientation(), ActorSpawnParams);
+	Crystal->ManualInitialize();
 }
+
+AEnemy::AEnemy() : Super() { PrimaryActorTick.bCanEverTick = true; }
 
 void AEnemy::ManualInitialize(FIntPoint CoordinateInGrid) {
 	EnemyCoordinateInGrid = CoordinateInGrid;
@@ -88,12 +100,15 @@ void AEnemy::Kill(bool IsForcedKill) {
 
 	Collider->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
+	int32 PointsGiven = 0;
+
 	if (!IsForcedKill) {
 		SpawnBlastTrail();
-	}
+		SpawnCrystal();
 
-	int32 PointsGivenRandomId = FMath::RandRange(0, PointsThatCouldGive.Num() - 1);
-	int32 PointsGiven = IsForcedKill ? 0 : PointsThatCouldGive[PointsGivenRandomId];
+		int32 PointsGivenRandomId = FMath::RandRange(0, PointsThatCouldGive.Num() - 1);
+		PointsGiven = PointsThatCouldGive[PointsGivenRandomId];
+	}
 
 	OnDie.Broadcast(this, PointsGiven);
 }

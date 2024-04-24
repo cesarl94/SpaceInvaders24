@@ -3,9 +3,11 @@
 #include "GAS/CustomAttributeSet.h"
 #include "GAS/CustomGameplayAbility.h"
 #include "GameplayTagContainer.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Logging/StructuredLog.h"
 #include "Net/UnrealNetwork.h"
 #include "Utils/Enums.h"
+
 
 void UCustomAbilitySystemComponent::AddTag(FGameplayTag Tag) { AddLooseGameplayTag(Tag); }
 
@@ -25,13 +27,14 @@ bool UCustomAbilitySystemComponent::HasTagByString(FString TagString, bool Conta
 	}
 }
 
-void UCustomAbilitySystemComponent::SetAttributeSetReference(UCustomAttributeSet *AttributeSet) { CustomAttributeSet = AttributeSet; }
 
-void UCustomAbilitySystemComponent::OnTagUpdated(const FGameplayTag &Tag, bool TagExists) {
-	// UE_LOGFMT(LogTemp, Log, "TagName: {0}, {1}", Tag.GetTagName(), TagExists);
-
-	OnTagUpdateEvt.Broadcast(Tag, TagExists);
+void UCustomAbilitySystemComponent::OnAttributeChanged(EPlayerAttribute AttributeEnum, float OldValue, float NewValue) {
+	OnAttributeChange.Broadcast(AttributeEnum, OldValue, NewValue);
+	UKismetSystemLibrary::PrintString(GetWorld(), FString::Printf(TEXT("AttributeEnum: %d, OldValue: %f, NewValue: %f"), static_cast<int32>(AttributeEnum), OldValue, NewValue), true, true,
+									  FColor::Yellow, 5);
 }
+
+void UCustomAbilitySystemComponent::OnTagUpdated(const FGameplayTag &Tag, bool TagExists) { OnTagUpdateEvt.Broadcast(Tag, TagExists); }
 
 void UCustomAbilitySystemComponent::OnGiveAbility(FGameplayAbilitySpec &AbilitySpec) {
 	Super::OnGiveAbility(AbilitySpec);
@@ -51,6 +54,22 @@ void UCustomAbilitySystemComponent::OnRemoveAbility(FGameplayAbilitySpec &Abilit
 	}
 }
 
+void UCustomAbilitySystemComponent::NotifyAbilityActivated(const FGameplayAbilitySpecHandle Handle, UGameplayAbility *Ability) {
+	Super::NotifyAbilityActivated(Handle, Ability);
+
+	if (UCustomGameplayAbility *GA = Cast<UCustomGameplayAbility>(Ability)) {
+		OnAbilityActivated.Broadcast(GA);
+	}
+}
+
+void UCustomAbilitySystemComponent::NotifyAbilityEnded(FGameplayAbilitySpecHandle Handle, UGameplayAbility *Ability, bool bWasCancelled) {
+	Super::NotifyAbilityEnded(Handle, Ability, bWasCancelled);
+
+	if (UCustomGameplayAbility *GA = Cast<UCustomGameplayAbility>(Ability)) {
+		OnAbilityEnded.Broadcast(GA, bWasCancelled);
+	}
+}
+
 float UCustomAbilitySystemComponent::GetAttributeValueByEnum(EPlayerAttribute AttributeEnum) const {
 	FGameplayAttribute Attribute = CustomAttributeSet->GetAttributeByEnum(AttributeEnum);
 	return GetNumericAttribute(Attribute);
@@ -59,4 +78,9 @@ float UCustomAbilitySystemComponent::GetAttributeValueByEnum(EPlayerAttribute At
 void UCustomAbilitySystemComponent::SetAttributeValueByEnum(EPlayerAttribute AttributeEnum, float Value) {
 	FGameplayAttribute Attribute = CustomAttributeSet->GetAttributeByEnum(AttributeEnum);
 	SetNumericAttributeBase(Attribute, Value);
+}
+
+void UCustomAbilitySystemComponent::SetAttributeSetReference(UCustomAttributeSet *AttributeSet) {
+	CustomAttributeSet = AttributeSet;
+	CustomAttributeSet->OnAttributeChange.AddUniqueDynamic(this, &UCustomAbilitySystemComponent::OnAttributeChanged);
 }

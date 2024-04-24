@@ -42,15 +42,6 @@ protected:
 
 	// Components:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-	USceneComponent *SceneComponent;
-
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-	USceneComponent *GraphicNodes;
-
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-	UBoxComponent *Collider;
-
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	class UAbilitySystemComponent *AbilitySystemComponent;
 
 	UPROPERTY(VisibleAnywhere, Meta = (AllowPrivateAccess = "true"))

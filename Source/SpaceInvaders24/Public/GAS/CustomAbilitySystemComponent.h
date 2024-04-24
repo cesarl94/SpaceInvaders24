@@ -10,7 +10,11 @@
 #include "CustomAbilitySystemComponent.generated.h"
 
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FGASEvent, const FGameplayTag &, Tag, bool, TagExists);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnTagUpdated, const FGameplayTag &, Tag, bool, TagExists);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FAttributeChanged2, EPlayerAttribute, AttributeEnum, float, OldValue, float, NewValue);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FActivateAbility, UGameplayAbility *, Ability);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FEndAbility, UGameplayAbility *, Ability, bool, WasCancelled);
+
 
 UCLASS()
 class SPACEINVADERS24_API UCustomAbilitySystemComponent : public UAbilitySystemComponent {
@@ -19,6 +23,9 @@ class SPACEINVADERS24_API UCustomAbilitySystemComponent : public UAbilitySystemC
 private:
 	UPROPERTY()
 	class UCustomAttributeSet *CustomAttributeSet;
+
+	UFUNCTION()
+	void OnAttributeChanged(EPlayerAttribute AttributeEnum, float OldValue, float NewValue);
 
 protected:
 	virtual void OnTagUpdated(const FGameplayTag &Tag, bool TagExists) override;
@@ -30,6 +37,10 @@ protected:
 	virtual void OnRemoveAbility(FGameplayAbilitySpec &AbilitySpec) override;
 
 public:
+	virtual void NotifyAbilityActivated(const FGameplayAbilitySpecHandle Handle, UGameplayAbility *Ability) override;
+
+	virtual void NotifyAbilityEnded(FGameplayAbilitySpecHandle Handle, UGameplayAbility *Ability, bool bWasCancelled) override;
+
 	// Adds a Gameplay Ability Tag to Custom Ability System Component
 	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: GAS")
 	void AddTag(FGameplayTag Tag);
@@ -60,9 +71,6 @@ public:
 	UFUNCTION()
 	bool HasTagByString(FString TagString, bool Contains = false) const;
 
-	UPROPERTY(BlueprintAssignable, VisibleAnywhere)
-	FGASEvent OnTagUpdateEvt;
-
 	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: GAS")
 	float GetAttributeValueByEnum(EPlayerAttribute AttributeEnum) const;
 
@@ -70,4 +78,17 @@ public:
 	void SetAttributeValueByEnum(EPlayerAttribute AttributeEnum, float Value);
 
 	void SetAttributeSetReference(class UCustomAttributeSet *AttributeSet);
+
+	// Events:
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
+	FOnTagUpdated OnTagUpdateEvt;
+
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
+	FAttributeChanged2 OnAttributeChange;
+
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
+	FActivateAbility OnAbilityActivated;
+
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
+	FEndAbility OnAbilityEnded;
 };

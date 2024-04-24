@@ -32,6 +32,9 @@ private:
 	TArray<class AShot *> Shots;
 
 	UPROPERTY()
+	TArray<class ACrystal *> Crystals;
+
+	UPROPERTY()
 	class AEnemy *UFO;
 
 	UPROPERTY()
@@ -51,9 +54,6 @@ private:
 
 	UFUNCTION()
 	void ResetGame();
-
-	UFUNCTION()
-	void SetNewState(EGameState NewGameState);
 
 	UFUNCTION()
 	void UFOAppear();
@@ -79,6 +79,10 @@ private:
 	// Called from Shot's event
 	UFUNCTION()
 	void OnShotHit(class AShot *Shot);
+
+	// Called from Crystal's event
+	UFUNCTION()
+	void OnCrystalHit(class ACrystal *Crystal, bool AddCrystalCount);
 
 	// Called from UFO's event
 	UFUNCTION()
@@ -136,8 +140,10 @@ protected:
 public:
 	AGS_SpaceInvaders24();
 
+	UFUNCTION(BlueprintCallable)
+	void SetNewState(EGameState NewGameState);
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	EGameState GetGameState() const;
 
 	virtual void Tick(float DeltaTime) override;
@@ -149,6 +155,10 @@ public:
 	// Called from AShot
 	UFUNCTION()
 	void ReportNewShot(class AShot *NewShot);
+
+	// Called from ACrystal
+	UFUNCTION()
+	void ReportNewCrystal(class ACrystal *NewCrystal);
 
 	UFUNCTION(BlueprintCallable)
 	const TArray<class AShot *> &GetShots() const;

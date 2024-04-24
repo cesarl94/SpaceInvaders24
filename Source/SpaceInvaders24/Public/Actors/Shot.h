@@ -41,17 +41,6 @@ private:
 protected:
 	virtual void BeginPlay() override;
 
-	// Components:
-
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-	USceneComponent *SceneComponent;
-
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-	USceneComponent *GraphicNodes;
-
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-	UBoxComponent *Collider;
-
 	// Serialized data:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SpaceInvaders24: Shot Stats")
 	EShotType Type;
