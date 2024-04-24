@@ -41,6 +41,11 @@ public:
 
 	virtual void NotifyAbilityEnded(FGameplayAbilitySpecHandle Handle, UGameplayAbility *Ability, bool bWasCancelled) override;
 
+	// This is ugly, and seems innecesary, but is an exception for get the GameState in a place where I haven't world context but I have a reference to an object of this class
+	// I talk about the function "CanActivateAbility" of the "CustomGameplayAbility"
+	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: GAS", DisplayName = "CustomAbilitySystemComponent GetGameState", Meta = (CompactNodeTitle = "GameState"))
+	class AGameStateBase *GetGameState() const;
+
 	// Adds a Gameplay Ability Tag to Custom Ability System Component
 	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: GAS")
 	void AddTag(FGameplayTag Tag);

@@ -66,7 +66,3 @@ FVector AGamePreviewActor::GetForward() const { return RelativeForward->GetForwa
 FVector AGamePreviewActor::GetUp() const { return RelativeUp->GetUpVector(); }
 
 FRotator AGamePreviewActor::GetGameObjectOrientation() const { return GameObjectOrientation; }
-
-// float GetTexelToWorldFactorOfConversion() const { return TexelToWorldFactorOfConversion; }
-
-// float GetWorldToTexelFactorOfConversion() const { return WorldToTexelFactorOfConversion; }

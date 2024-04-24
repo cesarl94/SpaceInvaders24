@@ -12,7 +12,6 @@
 #include "ActorInTexels.generated.h"
 
 
-
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTouchLimitEvent, EDirection, Direction);
 
 UCLASS()
@@ -29,9 +28,12 @@ protected:
 	virtual void BeginPlay() override;
 
 	// Components:
+
+	// The new root component
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	USceneComponent *SceneComponent;
 
+	// Put inside of this Scene all voxels and visible things
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	USceneComponent *GraphicNodes;
 
@@ -79,33 +81,57 @@ protected:
 public:
 	AActorInTexels();
 
-	// TODO: comentar esto
+	// Call this function to move an object that has velocity in texels. The delta time it receives can be either the normal delta time or the CrystalDeltaTime from the GameTimeManager
 	virtual void ApplyVelocity(float DeltaTime);
 
-	// TODO: comentar esto
+	/**
+	 * Returns the internal texel position of the object. While it is not the visible texel position, it is floating-point and
+	 * includes intermediate positions between each texel. This texel position is affected by the TexelVelocity.
+	 */
 	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: Actor In Texels")
 	virtual FVector2D GetFloatTexelPosition() const;
 
-	// TODO: comentar esto. La posición visible del actor
+	// Returns the visible position of the object in texels
 	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: Actor In Texels")
 	virtual FIntPoint GetIntTexelPosition() const;
 
-	// TODO: comentar esto
+	/**
+	 * This function may be more complex than it seems:
+	 *
+	 * Simply put, it sets the real position of the object. If the values are very similar to the current ones, no visible change may be reflected.
+	 *
+	 * Additionally, if the internal variable "ClampPosition" is activated, this function will automatically clamp the object's position to the allowed
+	 * area, established collectively between "ActorLimits" and "ActorLocalBounds".
+	 *
+	 * It also triggers the "OnTouchLimit" event when objects touch the edges of the allowed area or exceed it (in case ClampPosition is not activated).
+	 * These events are not constantly triggered if the actor is outside the area, but only when it wasn't touching that edge and now it is, providing
+	 * the direction in which it tries to escape.
+	 */
 	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: Actor In Texels")
 	virtual void SetTexelPosition(FVector2D NewTexelPosition, bool Sweep = false);
 
-	// TODO: comentar esto
+	// Gets the current velocity of the object in texels.
 	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: Actor In Texels")
 	virtual FVector2D GetTexelVelocity() const;
 
-	// TODO: comentar esto
+	/**
+	 * Sets the current velocity of the object in texels.
+	 *
+	 * CAUTION: The velocity will not be applied automatically. For that, it is necessary to call ApplyVelocity each frame and provide the DeltaTime to use.
+	 */
 	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: Actor In Texels")
 	virtual void SetTexelVelocity(FVector2D NewTexelVelocity);
 
-	// TODO: comentar esto
+	// Gets the visible bounding box of the object. Established collectively between the Texel Position and ActorLocalBounds.
 	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: Actor In Texels")
 	virtual FIntVector4 GetIntTexelBoundingBox() const;
 
+	// Events:
+	/**
+	 * This event is triggered within the "SetTexelPosition" function when objects touch the edges of the allowed area or
+	 * exceed it (in case ClampPosition is not activated). These events are not constantly triggered if the actor is outside
+	 * the area, but only when it wasn't touching that edge and now it is, providing the direction in which it tries to escape.
+	 */
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
 	FOnTouchLimitEvent OnTouchLimit;
 };

@@ -59,23 +59,23 @@ public:
 	UFUNCTION()
 	float GetDurationOfLongestTimeState();
 
-	// TODO: comentar esto
+	// Obtains the elapsed time since this game started.
 	UFUNCTION(BlueprintCallable)
 	float GetNormalGameTotalSeconds();
 
-	// TODO: comentar esto
+	// Gets the elapsed time since this game started, affected by crystals.
 	UFUNCTION(BlueprintCallable)
 	float GetCrystalTotalSeconds();
 
-	// TODO: comentar esto
+	// Gets the last delta time.
 	UFUNCTION(BlueprintCallable)
 	float GetLastDeltaTime();
 
-	// TODO: comentar esto
+	// Gets the last delta time, affected by crystals.
 	UFUNCTION(BlueprintCallable)
 	float GetLastCrystalDeltaTime();
 
-
+	// This event is triggered when the current time state ends, as long as it is a state that has a duration.
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
 	FGameTimeManagerEvent OnTimeStateFinished;
 };

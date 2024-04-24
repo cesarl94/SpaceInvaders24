@@ -21,7 +21,7 @@ void FLaserTankDetailsCustomization::CustomizeDetails(IDetailLayoutBuilder &Deta
 TSharedRef<IDetailCustomization> FLaserTankDetailsCustomization::MakeInstance() { return MakeShareable(new FLaserTankDetailsCustomization); }
 
 void FLaserTankDetailsCustomization::SortCustomDetailsCategories(const TMap<FName, IDetailCategoryBuilder *> &AllCategoryMap) {
-	TArray<FString> CategoriesInOrder = {"SpaceInvaders24: Laser Tank Data", "SpaceInvaders24: GAS"};
+	TArray<FString> CategoriesInOrder = {"SpaceInvaders24: Laser Tank Data", "SpaceInvaders24: GAS", "SpaceInvaders24: Laser Tank Blast Trail Data"};
 
 	for (int32 i = 0, limit = CategoriesInOrder.Num(); i < limit; i++) {
 		FName CategoryName = FName(CategoriesInOrder[i]);

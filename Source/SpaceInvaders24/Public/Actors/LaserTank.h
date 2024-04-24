@@ -58,18 +58,20 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: GAS")
 	TArray<TSubclassOf<class UCustomGameplayAbility>> DefaultAbilities;
 
-	// TODO: Comentar esto
-	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Laser Tank Data")
+	// Since LaserTank has a death animation of 2 frames, BlastTrailDataA and B represent each frame. Ignore Duration, as there is a new Duration below.
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Laser Tank Blast Trail Data")
 	FBlastTrailData BlastTrailDataA;
 
-	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Laser Tank Data")
+	// Since LaserTank has a death animation of 2 frames, BlastTrailDataA and B represent each frame. Ignore Duration, as there is a new Duration below.
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Laser Tank Blast Trail Data")
 	FBlastTrailData BlastTrailDataB;
 
-	// In seconds
-	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Laser Tank Data")
+	// Time that elapses between each frame, in seconds.
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Laser Tank Blast Trail Data")
 	float SwapBlastTrailFrequence{0.05f};
 
-	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Laser Tank Data")
+	// Total duration of death animation. In seconds
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Laser Tank Blast Trail Data")
 	float TotalBlastTrailDuration{0.5f};
 
 	// for binding the enhanced input system with GAS

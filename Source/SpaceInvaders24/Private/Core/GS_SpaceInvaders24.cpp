@@ -54,6 +54,7 @@ void AGS_SpaceInvaders24::SpawnBunkers() {
 		FIntPoint BunkerTexelCoordinate = BunkerCoordinates[i];
 		FVector BunkerWorldPosition = TexelToWorldPos(BunkerTexelCoordinate);
 		ABunker *NewBunker = GetWorld()->SpawnActor<ABunker>(BunkerClass, BunkerWorldPosition, GetGameObjectOrientation(), ActorSpawnParams);
+		NewBunker->ManualInitialize();
 		Bunkers.Add(NewBunker);
 	}
 }
@@ -100,7 +101,10 @@ void AGS_SpaceInvaders24::UFOAppear() {
 	UFO->SetTexelVelocity(FVector2D(UFOMovementSpeed * 60.f, 0));
 }
 
-void AGS_SpaceInvaders24::OnTimeStateFinished() { UKismetSystemLibrary::PrintString(GetWorld(), "On Time State Finished", true, true, FColor::Yellow, 5); }
+void AGS_SpaceInvaders24::OnTimeStateFinished() {
+	UKismetSystemLibrary::PrintString(GetWorld(), "On Time State Finished", true, true, FColor::Yellow, 5);
+	SetNewState(EGameState::PLAYING_FORWARD);
+}
 
 void AGS_SpaceInvaders24::OnEnemyDiedEvent(AEnemy *EnemyDied, int32 PointsGiven) {
 	Points += PointsGiven;
@@ -115,7 +119,12 @@ void AGS_SpaceInvaders24::OnEnemiesCantGoLower() {
 
 void AGS_SpaceInvaders24::OnKilledAllEnemies() {
 	UKismetSystemLibrary::PrintString(GetWorld(), "OnKilledAllEnemies", true, true, FColor::Red, 5);
-	SetNewState(EGameState::READY_SET_GO);
+
+	// GetWorld()->GetTimerManager().SetTimer(
+	// 	InputTimeHandle, [&]() { Destroy(); }, Duration, false);
+
+
+	SetNewState(EGameState::PASSING_LEVEL);
 }
 
 void AGS_SpaceInvaders24::OnShotHit(AShot *Shot) { Shots.Remove(Shot); }
@@ -173,7 +182,26 @@ void AGS_SpaceInvaders24::Tick(float DeltaTime) {
 void AGS_SpaceInvaders24::SetNewState(EGameState NewGameState) {
 	GameState = NewGameState;
 
-	UKismetSystemLibrary::PrintString(GetWorld(), FString::Printf(TEXT("NewGameState: %d"), static_cast<int32>(NewGameState)), true, true, FColor::Red, 5);
+	switch (NewGameState) {
+	case EGameState::PLAYING_FORWARD:
+	case EGameState::PASSING_LEVEL:
+		GameTimeManager->SetNewState(ETimeState::FORWARD);
+		break;
+	case EGameState::PLAYING_SLOW_TIME_DOWN:
+		GameTimeManager->SetNewState(ETimeState::SLOW);
+		break;
+	case EGameState::PLAYING_PAUSED_TIME:
+		GameTimeManager->SetNewState(ETimeState::PAUSED);
+		break;
+	case EGameState::PLAYING_REVERSE:
+		GameTimeManager->SetNewState(ETimeState::BACKWARD);
+		break;
+	default:
+		GameTimeManager->SetNewState(ETimeState::IDLE);
+		break;
+	}
+
+	SwarmMind->OnNewGameState(NewGameState);
 }
 
 EGameState AGS_SpaceInvaders24::GetGameState() const { return GameState; }

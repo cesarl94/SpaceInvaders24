@@ -24,14 +24,17 @@ private:
 	UPROPERTY()
 	TArray<AEnemy *> _Enemies2D;
 
-	// TODO: comentar esto. Advertir la doble referencia
+	/**
+	 * Contains all the enemies, both alive and dead.
+	 * CAUTION: Double reference array togheter with the another array of enemies, "TArray<AEnemy *> _Enemies2D".
+	 */
 	UPROPERTY()
 	TArray<AEnemy *> Enemies;
 
 	UPROPERTY()
 	FIntPoint LastUpdatedEnemyGridID;
 
-	// TODO: Explicar q me guardo esto para cuando recibimos un nuevo estado
+	// TODO: Explain that I'm saving this for when we receive a new state.
 	UPROPERTY()
 	bool OnBackwards{false};
 
@@ -41,28 +44,42 @@ private:
 	UPROPERTY()
 	bool MovingDown{false};
 
-	// TODO: Explicar esto
+	/**
+	 * Every time the enemies move, they do so as a group, and all of them will perform the same action until one touches an edge.
+	 * When one touches the edge, it will unlock this variable and allow them to descend and change direction once the last enemy in the group has been updated.
+	 */
 	UPROPERTY()
 	bool DirectionBlocked{false};
 
-	// TODO: Explicar esto
+	// Auxiliary variable to prevent triggering the game over event twice.
 	UPROPERTY()
 	bool GameOverWasDispatched{false};
 
 	/**
-	 * What? Why would I store DeltaTimes? Well, if you want a game equal to the original Space Invaders,
-	 * you probably want 60 enemy updates per frame, and by not using DeltaTime to multiply the speed, like
-	 * in a current game, it is better to accumulate delta times until it "overflows" from the amount necessary
-	 * to update one or more enemies and so that the game is not affected by frame drops
+	 * Why would I store DeltaTimes? Well, if you want a game equal to the original Space Invaders, you
+	 * probably want 60 enemy updates per frame, and by not using DeltaTime to multiply the speed, like
+	 * in a current game, it is better to accumulate delta times until it "overflows" from the amount
+	 * necessary to update one or more enemies and so that the game is not affected by frame drops
 	 */
 	UPROPERTY()
 	float AccumulatedDeltaTime{0};
 
-	// TODO: comentar esto
+	UPROPERTY()
+	int32 LiveEnemiesCount;
+
+	/**
+	 * Since all enemies move as a group and perform the same action, we need to wait for the last living enemy tobe updated before
+	 * making new decisions. With this function, we can find out which is the last living enemy, starting from the top, from right to left.
+	 */
 	UFUNCTION()
 	FIntPoint GetCoordinateOfLastAliveEnemyToUpdate() const;
 
-	// TODO: comentar esta función
+	/**
+	 * It's like a tick and is called 60 times per second, regardless of frame drops. So, we don't need DeltaTime. Similar to Unity's FixedUpdate.
+	 * It's called from our ManualTick function, which does receive a DeltaTime and manages calls to this class.
+	 *
+	 * We use it to update one enemy and then move to the next.
+	 */
 	UFUNCTION()
 	void FixedUpdate();
 
@@ -72,7 +89,7 @@ private:
 	UFUNCTION()
 	AEnemy *GetNextEnemyToUpdate() const;
 
-	// TODO: comentar que hace esto
+	// This function is for setting enemies in the _Enemies2D array without directly accessing the variable.
 	UFUNCTION()
 	void SetEnemyInIndexed2DArray(int32 X, int32 Y, AEnemy *Enemy);
 
@@ -147,10 +164,11 @@ public:
 	UFUNCTION()
 	TArray<AEnemy *> GetLiveEnemies() const;
 
-	// TODO: comentar que hace esto
+	// This function is for get enemies from the _Enemies2D array without directly accessing the variable.
 	UFUNCTION()
 	AEnemy *GetEnemyInIndexed2DArray(int32 X, int32 Y) const;
 
+	// Called from GS
 	UFUNCTION()
 	void OnNewGameState(EGameState NewGameState);
 

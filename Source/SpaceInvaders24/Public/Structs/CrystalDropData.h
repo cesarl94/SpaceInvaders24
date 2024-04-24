@@ -8,8 +8,11 @@
 
 #include "CrystalDropData.generated.h"
 
-
-// TODO: Comentar esto
+/**
+ * The enemies have this struct to fill with data on how to spawn crystals,
+ * specifying the class to instantiate, an offset to add to the position of
+ * the enemy that dropped it, and the drop probability (in percentage).
+ */
 
 USTRUCT(BlueprintType)
 struct SPACEINVADERS24_API FCrystalDropData {

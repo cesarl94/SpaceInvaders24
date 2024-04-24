@@ -32,6 +32,9 @@ private:
 	UPROPERTY()
 	bool Alive{false};
 
+	UPROPERTY()
+	bool LastAnimationWasForward{false};
+
 	UFUNCTION()
 	void SpawnBlastTrail();
 
@@ -55,26 +58,26 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Blast Trace Data")
 	FBlastTrailData BlastTrailData;
 
+	// This should be implemented in Blueprints
 	UFUNCTION(BlueprintNativeEvent, Category = "SpaceInvaders24: Native Events")
 	void Animate(bool Forward, float Rate) const;
 
-	UFUNCTION(BlueprintNativeEvent, Category = "SpaceInvaders24: Native Events")
-	void DieAnimation(bool Forward, float Rate) const;
-
 
 public:
-	AEnemy();
-
 	// Called from GS_SpaceInvaders24 after create
 	void ManualInitialize(FIntPoint CoordinateInGrid);
+
+	UPROPERTY()
+	float AnimationPlayRate{1};
+
+	UFUNCTION()
+	void TriggerMoveAnimation(float PlayRate);
 
 	UFUNCTION()
 	void ManualReset(FIntPoint NewTexelPosition);
 
 	UFUNCTION()
 	FIntPoint GetCoordinateInEnemyGrid() const;
-
-	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Enemy IsAlive")
 	bool IsAlive() const;

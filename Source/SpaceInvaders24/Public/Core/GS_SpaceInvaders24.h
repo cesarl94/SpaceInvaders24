@@ -121,10 +121,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|UFO")
 	float UFOMovementSpeed{0.5f};
 
+	// How often will a UFO appear, in seconds
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|UFO")
-	float UFOSecondsPerAppearance{5.f};
+	float UFOSecondsPerAppearance{20.f};
 
-	// TODO: comentar esto
+	// References to the shot classes, mapped according to the ShotType enum.
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SpaceInvaders24: Game Data|Shots")
 	TMap<EShotType, TSubclassOf<class AShot>> ShotsClasses;
 
@@ -148,7 +149,7 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
-	// TODO: comentar que hace esto
+	// This function is called from the PlayerController, and here we will link the player's pawn to the PlayerController.
 	UFUNCTION()
 	void OnPlayerControllerConnected(class APlayerController *PC);
 
@@ -166,27 +167,30 @@ public:
 
 #pragma region // Wrapped functions from GamePreviewActor
 
-	// TODO: comentar que hace esto
+	// Returns the count of texels of the world. Width in X, Height in Y
 	UFUNCTION(BlueprintCallable)
 	FIntPoint GetMapSize() const;
 
-	// TODO: comentar que hace esto
+	// It takes a 3D world position and returns the position in texels. The relative Z-axis is ignored.
 	UFUNCTION(BlueprintCallable)
 	FIntPoint WorldToTexelPos(FVector WorldPos) const;
 
-	// TODO: comentar que hace esto
+	// It takes a position in texels and returns a 3D world position. The Z-axis is flattened.
 	UFUNCTION(BlueprintCallable)
 	FVector TexelToWorldPos(FIntPoint TexelPos) const;
 
-	// TODO: comentar que hace esto
+	// It returns the forward direction of the game in 3D, meaning the direction in which the enemies are facing.
 	UFUNCTION(BlueprintCallable)
 	FVector GetForward() const;
 
-	// TODO: comentar que hace esto
+	// It returns the up direction of the game in 3D, meaning the direction in which the enemies would look if they were to raise their view by 90°.
 	UFUNCTION(BlueprintCallable)
 	FVector GetUp() const;
 
-	// TODO: comentar que hace esto
+	/**
+	 * It returns the orientation that all objects in the game should have if they were part of the preview. This data is
+	 * constructed collectively with the forward and up vectors (with forward taking priority).
+	 */
 	UFUNCTION(BlueprintCallable)
 	FRotator GetGameObjectOrientation() const;
 
@@ -197,19 +201,19 @@ public:
 	UFUNCTION()
 	float GetDurationOfLongestTimeState();
 
-	// TODO: comentar esto
+	// Obtains the elapsed time since this game started.
 	UFUNCTION(BlueprintCallable)
 	float GetNormalGameTotalSeconds();
 
-	// TODO: comentar esto
+	// Gets the elapsed time since this game started, affected by crystals.
 	UFUNCTION(BlueprintCallable)
 	float GetCrystalTotalSeconds();
 
-	// TODO: comentar esto
+	// Gets the last delta time.
 	UFUNCTION(BlueprintCallable)
 	float GetLastDeltaTime();
 
-	// TODO: comentar esto
+	// Gets the last delta time, affected by crystals.
 	UFUNCTION(BlueprintCallable)
 	float GetLastCrystalDeltaTime();
 

@@ -87,6 +87,8 @@ void USwarmMind::FixedUpdate() {
 		EnemyTexelPosition += FVector2D((MovingToRight ? 1 : -1) * SwarmVelocity, (MovingDown ? SeparationBetweenEnemies.Y / 2 : 0));
 		NextEnemyToUpdate->SetTexelPosition(EnemyTexelPosition, !MovingDown);
 
+		NextEnemyToUpdate->TriggerMoveAnimation(static_cast<float>(EnemiesPerRow * EnemyTypesByRow.Num()) / static_cast<float>(LiveEnemiesCount));
+
 		LastUpdatedEnemyGridID = NextEnemyToUpdate->GetCoordinateInEnemyGrid();
 	}
 }
@@ -120,9 +122,11 @@ void USwarmMind::OnEnemyTouchBorder(EDirection Direction) {
 }
 
 void USwarmMind::OnEnemyDied(class AEnemy *EnemyDied, int32 Points) {
-	EnemyDiedEvent.Broadcast(EnemyDied, Points);
 
-	if (GetLiveEnemies().Num() == 0) {
+	LiveEnemiesCount--;
+
+	EnemyDiedEvent.Broadcast(EnemyDied, Points);
+	if (LiveEnemiesCount == 0) {
 		KilledAllEnemies.Broadcast();
 	}
 }
@@ -151,6 +155,7 @@ void USwarmMind::OnNewGameState(EGameState NewGameState) {
 	switch (NewGameState) {
 	case EGameState::IN_MENU:
 	case EGameState::READY_SET_GO:
+	// case EGameState::PASSING_LEVEL:
 	case EGameState::DYING:
 	case EGameState::GAME_OVER:
 		break;
@@ -207,6 +212,7 @@ void USwarmMind::ManualReset(int32 Level) {
 	GameOverWasDispatched = false;
 
 	AccumulatedDeltaTime = 0;
+	LiveEnemiesCount = EnemiesPerRow * EnemyTypesByRow.Num();
 
 	LastUpdatedEnemyGridID = FIntPoint(EnemiesPerRow - 1, 0);
 
@@ -234,6 +240,7 @@ void USwarmMind::ManualTick(float CrystalDeltaTime, float CrystalTotalSeconds) {
 	case EGameState::READY_SET_GO:
 	case EGameState::DYING:
 	case EGameState::GAME_OVER:
+	case EGameState::PASSING_LEVEL:
 		break;
 	case EGameState::PLAYING_FORWARD:
 	case EGameState::PLAYING_SLOW_TIME_DOWN:

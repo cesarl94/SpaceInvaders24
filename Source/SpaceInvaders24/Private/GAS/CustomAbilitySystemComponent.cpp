@@ -3,11 +3,14 @@
 #include "GAS/CustomAttributeSet.h"
 #include "GAS/CustomGameplayAbility.h"
 #include "GameplayTagContainer.h"
+#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Logging/StructuredLog.h"
 #include "Net/UnrealNetwork.h"
 #include "Utils/Enums.h"
 
+
+AGameStateBase *UCustomAbilitySystemComponent::GetGameState() const { return UGameplayStatics::GetGameState(this); }
 
 void UCustomAbilitySystemComponent::AddTag(FGameplayTag Tag) { AddLooseGameplayTag(Tag); }
 

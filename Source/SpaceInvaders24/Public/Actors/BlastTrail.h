@@ -8,6 +8,7 @@
 
 #include "BlastTrail.generated.h"
 
+// TODO: Comentar esta clase
 
 UCLASS()
 class SPACEINVADERS24_API ABlastTrail : public AActorInTexels {

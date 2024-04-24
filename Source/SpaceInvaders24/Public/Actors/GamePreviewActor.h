@@ -12,32 +12,27 @@
 
 #include "GamePreviewActor.generated.h"
 
-// TODO: comentar que es esta clase
+/**
+ * This class is responsible for transforming all world coordinates into texels and vice versa. It provides a preview of a plane
+ * with a screenshot of the original game to position wherever we want in the world using that screenshot as a reference.
+ */
 
 UCLASS()
 class SPACEINVADERS24_API AGamePreviewActor : public AActor {
 	GENERATED_BODY()
 
 private:
-	// TODO: Comentar esto
+	// Cached value stored to facilitate calculations for position transformation. Takes the relative position of the SceneInMinRelativePos node.
 	UPROPERTY()
 	FVector MinRelativeLocation;
 
-	// TODO: Comentar esto
+	// Cached value stored to facilitate calculations for position transformation. Takes the relative position of the SceneInMaxRelativePos node.
 	UPROPERTY()
 	FVector MaxRelativeLocation;
 
-	// TODO: Comentar esto
+	// The orientation that all objects in the map will receive. Constructed collectively between the RelativeForward and RelativeUp components.
 	UPROPERTY()
 	FRotator GameObjectOrientation;
-
-	// // TODO: Comentar esto
-	// UPROPERTY()
-	// float TexelToWorldFactorOfConversion;
-
-	// // TODO: Comentar esto
-	// UPROPERTY()
-	// float WorldToTexelFactorOfConversion;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
@@ -86,35 +81,30 @@ public:
 	// Called from GameState's BeginPlay
 	void ManualInitialize();
 
-	// TODO: comentar que hace esto
+	// Returns the count of texels of the world. Width in X, Height in Y
 	UFUNCTION(BlueprintCallable)
 	FIntPoint GetMapSize() const;
 
-	// TODO: comentar que hace esto
+	// It takes a 3D world position and returns the position in texels. The relative Z-axis is ignored.
 	UFUNCTION(BlueprintCallable)
 	FIntPoint WorldToTexelPos(FVector WorldPos) const;
 
-	// TODO: comentar que hace esto
+	// It takes a position in texels and returns a 3D world position. The Z-axis is flattened.
 	UFUNCTION(BlueprintCallable)
 	FVector TexelToWorldPos(FIntPoint TexelPos) const;
 
-	// TODO: comentar que hace esto
+	// It returns the forward direction of the game in 3D, meaning the direction in which the enemies are facing.
 	UFUNCTION(BlueprintCallable)
 	FVector GetForward() const;
 
-	// TODO: comentar que hace esto
+	// It returns the up direction of the game in 3D, meaning the direction in which the enemies would look if they were to raise their view by 90°.
 	UFUNCTION(BlueprintCallable)
 	FVector GetUp() const;
 
-	// TODO: comentar que hace esto
+	/**
+	 * It returns the orientation that all objects in the game should have if they were part of the preview. This data is
+	 * constructed collectively with the forward and up vectors (with forward taking priority).
+	 */
 	UFUNCTION(BlueprintCallable)
 	FRotator GetGameObjectOrientation() const;
-
-	// // TODO: Comentar esto
-	// UFUNCTION(BlueprintCallable)
-	// float GetTexelToWorldFactorOfConversion() const;
-
-	// // TODO: Comentar esto
-	// UFUNCTION(BlueprintCallable)
-	// float GetWorldToTexelFactorOfConversion() const;
 };

@@ -56,41 +56,31 @@ void AEnemy::SpawnCrystal() {
 	Crystal->ManualInitialize();
 }
 
-AEnemy::AEnemy() : Super() { PrimaryActorTick.bCanEverTick = true; }
+// This function will be triggered in BP
+void AEnemy::Animate_Implementation(bool Forward, float Rate) const {}
 
 void AEnemy::ManualInitialize(FIntPoint CoordinateInGrid) {
 	EnemyCoordinateInGrid = CoordinateInGrid;
 	GraphicNodes->SetVisibility(false, true);
 }
 
+void AEnemy::TriggerMoveAnimation(float PlayRate) {
+	Animate(!LastAnimationWasForward, 2 * PlayRate);
+	LastAnimationWasForward = !LastAnimationWasForward;
+}
+
 void AEnemy::ManualReset(FIntPoint NewTexelPosition) {
 	SetTexelPosition(FVector2D(NewTexelPosition.X, NewTexelPosition.Y));
+	LastAnimationWasForward = false;
+	// we need to set to the first frame inmediatly
+	Animate(false, 1000000.f);
+
 	GraphicNodes->SetVisibility(true, true);
 	Collider->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	Alive = true;
 }
 
 FIntPoint AEnemy::GetCoordinateInEnemyGrid() const { return EnemyCoordinateInGrid; }
-
-// This function will be triggered in BP
-void AEnemy::Animate_Implementation(bool Forward, float Rate) const {}
-
-// This function will be triggered in BP
-void AEnemy::DieAnimation_Implementation(bool Forward, float Rate) const {}
-
-// Called every frame
-void AEnemy::Tick(float DeltaTime) {
-	Super::Tick(DeltaTime);
-
-	// TODO: replace this hard-coded reference
-	if (UKismetSystemLibrary::GetFrameCount() % 50 == 0) {
-		if (UKismetSystemLibrary::GetFrameCount() % 100 == 0) {
-			Animate(true, 2);
-		} else {
-			Animate(false, 2);
-		}
-	}
-}
 
 bool AEnemy::IsAlive() const { return Alive; }
 
