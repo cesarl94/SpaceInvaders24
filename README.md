@@ -15,20 +15,20 @@ The crystals you gather in this game are dropped at a 40% drop rate from the ali
 2 Crystals - Stop Time for 3 seconds<br>
 3 Crystals - Reverse Time 3 Seconds<br>
 
-This should be done in Unreal Engine 5, and not 4.
-Gameplay mechanics and core logic should be written in C++.
-There should be three visually different enemy types, but all behave the same.
-An enemy can shoot if no other enemy is in front of it.
-Additionally a UFO will sometimes go across the top of the screen which the player can shoot for bonus points.
-Enemies move left or right as a group and shift downward and change direction every time they reach the screen's edge.
-Enemy group speed gradually increases as enemies are destroyed.
-The player has three lives.
-The game saves the highest score between sessions.
-In each advancing level the enemies start one row lower, unless already at the lowest possible one.
-Above the player are "bunkers" which get eroded when shot at by either the player or enemies, or if they get touched by enemies.
-Cite your sources in your code comments if you use code/methods from elsewhere.
-You're allowed to use Quixel Megascans or marketplace assets as long as they're assets only (no code or BP).
-Feel free to change the visual theme of the game (it doesn't have to be in space).
+This should be done in Unreal Engine 5, and not 4.<br>
+Gameplay mechanics and core logic should be written in C++.<br>
+There should be three visually different enemy types, but all behave the same.<br>
+An enemy can shoot if no other enemy is in front of it.<br>
+Additionally a UFO will sometimes go across the top of the screen which the player can shoot for bonus points.<br>
+Enemies move left or right as a group and shift downward and change direction every time they reach the screen's edge.<br>
+Enemy group speed gradually increases as enemies are destroyed.<br>
+The player has three lives.<br>
+The game saves the highest score between sessions.<br>
+In each advancing level the enemies start one row lower, unless already at the lowest possible one.<br>
+Above the player are "bunkers" which get eroded when shot at by either the player or enemies, or if they get touched by enemies.<br>
+Cite your sources in your code comments if you use code/methods from elsewhere.<br>
+You're allowed to use Quixel Megascans or marketplace assets as long as they're assets only (no code or BP).<br>
+Feel free to change the visual theme of the game (it doesn't have to be in space).<br>
 
 You will be judged on:
 
