@@ -51,3 +51,16 @@ The game is taking shape. I just finished the skeleton of the game, that is, the
 ![Invaders](RawContent/Invaders.gif)
 ![SkeletonReady](RawContent/SkeletonReady.png)
 ![SkeletonReady_vscode](RawContent/SkeletonReady_Code.png)
+
+---
+### 23/04/24 Tuesday night update:
+
+Well, continuing with the challenge, I already have a big part of the game done. I still need a few things, but I've reached that stage where every time you hit play to test something, you end up getting hooked playing because it's really fun 😂
+
+Poor aliens, I still haven't given them the power to defend themselves.<br>
+![Gameplay](RawContent/Gameplay.gif)
+
+
+
+
+
