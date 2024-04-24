@@ -10,6 +10,7 @@
 
 #include "GS_SpaceInvaders24.generated.h"
 
+
 UCLASS()
 class SPACEINVADERS24_API AGS_SpaceInvaders24 : public AGameStateBase {
 	GENERATED_BODY()
@@ -21,7 +22,6 @@ private:
 	UPROPERTY()
 	class AGamePreviewActor *GamePreviewActor;
 
-
 	UPROPERTY()
 	class ALaserTank *Player;
 
@@ -32,7 +32,13 @@ private:
 	TArray<class AShot *> Shots;
 
 	UPROPERTY()
+	class AEnemy *UFO;
+
+	UPROPERTY()
 	EGameState GameState{EGameState::IN_MENU};
+
+	UPROPERTY()
+	float LastUFOAppearance{0};
 
 	UFUNCTION()
 	void SpawnPlayer();
@@ -41,11 +47,16 @@ private:
 	void SpawnBunkers();
 
 	UFUNCTION()
-	void ResetGame();
+	void SpawnUFO();
 
+	UFUNCTION()
+	void ResetGame();
 
 	UFUNCTION()
 	void SetNewState(EGameState NewGameState);
+
+	UFUNCTION()
+	void UFOAppear();
 
 	// Functions binded to events:
 
@@ -53,9 +64,9 @@ private:
 	UFUNCTION()
 	void OnTimeStateFinished();
 
-	// Called from SwarmMind's event
+	// Called from SwarmMind's event and from UFO's event
 	UFUNCTION()
-	void OnEnemyDiedEvent(AEnemy *EnemyDied, int32 PointsGiven);
+	void OnEnemyDiedEvent(class AEnemy *EnemyDied, int32 PointsGiven);
 
 	// Called from SwarmMind's event
 	UFUNCTION()
@@ -68,6 +79,10 @@ private:
 	// Called from Shot's event
 	UFUNCTION()
 	void OnShotHit(class AShot *Shot);
+
+	// Called from UFO's event
+	UFUNCTION()
+	void OnUFOTouchBorder(EDirection Direction);
 
 protected:
 	virtual void BeginPlay() override;
@@ -92,6 +107,20 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|Bunkers")
 	TArray<FIntPoint> BunkerCoordinates;
 
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|UFO")
+	TSubclassOf<class AEnemy> UFOClass;
+
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|UFO")
+	FIntPoint UFOSpawnPosition;
+
+	// texels per frame
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|UFO")
+	float UFOMovementSpeed{0.5f};
+
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|UFO")
+	float UFOSecondsPerAppearance{5.f};
+
+	// TODO: comentar esto
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SpaceInvaders24: Game Data|Shots")
 	TMap<EShotType, TSubclassOf<class AShot>> ShotsClasses;
 

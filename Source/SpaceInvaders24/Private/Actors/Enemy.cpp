@@ -33,10 +33,8 @@ void AEnemy::SpawnBlastTrail() {
 	BlastTrail->ManualInitialize(BlastTrailData.Duration);
 }
 
-// Sets default values
 AEnemy::AEnemy() {
-	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 
 	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Scene Component"));
 	SceneComponent->SetupAttachment(RootComponent);
@@ -48,7 +46,10 @@ AEnemy::AEnemy() {
 	GraphicNodes->SetupAttachment(SceneComponent);
 }
 
-void AEnemy::ManualInitialize(FIntPoint CoordinateInGrid) { EnemyCoordinateInGrid = CoordinateInGrid; }
+void AEnemy::ManualInitialize(FIntPoint CoordinateInGrid) {
+	EnemyCoordinateInGrid = CoordinateInGrid;
+	GraphicNodes->SetVisibility(false, true);
+}
 
 void AEnemy::ManualReset(FIntPoint NewTexelPosition) {
 	SetTexelPosition(FVector2D(NewTexelPosition.X, NewTexelPosition.Y));
@@ -81,16 +82,18 @@ void AEnemy::Tick(float DeltaTime) {
 
 bool AEnemy::IsAlive() const { return Alive; }
 
-void AEnemy::Kill() {
+void AEnemy::Kill(bool IsForcedKill) {
 	Alive = false;
 	GraphicNodes->SetVisibility(false, true);
 
 	Collider->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
-	SpawnBlastTrail();
+	if (!IsForcedKill) {
+		SpawnBlastTrail();
+	}
 
 	int32 PointsGivenRandomId = FMath::RandRange(0, PointsThatCouldGive.Num() - 1);
-	int32 PointsGiven = PointsThatCouldGive[PointsGivenRandomId];
+	int32 PointsGiven = IsForcedKill ? 0 : PointsThatCouldGive[PointsGivenRandomId];
 
 	OnDie.Broadcast(this, PointsGiven);
 }

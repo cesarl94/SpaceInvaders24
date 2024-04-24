@@ -55,11 +55,30 @@ void AGS_SpaceInvaders24::SpawnBunkers() {
 	}
 }
 
+void AGS_SpaceInvaders24::SpawnUFO() {
+	if (UFOClass == nullptr) {
+		return;
+	}
+
+	FActorSpawnParameters ActorSpawnParams;
+	ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	FVector UFOWorldPosition = TexelToWorldPos(UFOSpawnPosition);
+	UFO = GetWorld()->SpawnActor<AEnemy>(UFOClass, UFOWorldPosition, GetGameObjectOrientation(), ActorSpawnParams);
+	UFO->ManualInitialize(FIntPoint(-1, -1));
+
+	UFO->OnTouchLimit.AddUniqueDynamic(this, &AGS_SpaceInvaders24::OnUFOTouchBorder);
+	UFO->OnDie.AddUniqueDynamic(this, &AGS_SpaceInvaders24::OnEnemyDiedEvent);
+}
+
 void AGS_SpaceInvaders24::ResetGame() {
 	Level = 0;
 	Lives = 3;
 	Points = 0;
 
+	LastUFOAppearance = 0;
+
+	SpawnUFO();
 	SpawnPlayer();
 	SpawnBunkers();
 
@@ -74,6 +93,11 @@ void AGS_SpaceInvaders24::ResetGame() {
 
 
 void AGS_SpaceInvaders24::SetNewState(EGameState NewGameState) { GameState = NewGameState; }
+
+void AGS_SpaceInvaders24::UFOAppear() {
+	UFO->ManualReset(UFOSpawnPosition);
+	UFO->SetTexelVelocity(FVector2D(UFOMovementSpeed * 60.f, 0));
+}
 
 void AGS_SpaceInvaders24::OnTimeStateFinished() { UKismetSystemLibrary::PrintString(GetWorld(), "On Time State Finished", true, true, FColor::Yellow, 5); }
 
@@ -95,6 +119,12 @@ void AGS_SpaceInvaders24::OnKilledAllEnemies() {
 
 void AGS_SpaceInvaders24::OnShotHit(AShot *Shot) { Shots.Remove(Shot); }
 
+void AGS_SpaceInvaders24::OnUFOTouchBorder(EDirection Direction) {
+	if (Direction == EDirection::RIGHT) {
+		UFO->Kill(true);
+	}
+}
+
 void AGS_SpaceInvaders24::BeginPlay() {
 	Super::BeginPlay();
 
@@ -114,6 +144,15 @@ void AGS_SpaceInvaders24::Tick(float DeltaTime) {
 	Player->ManualTick(GetLastDeltaTime());
 
 	SwarmMind->ManualTick(GetLastCrystalDeltaTime(), GetCrystalTotalSeconds());
+
+	if ((GameState == EGameState::PLAYING_FORWARD || GameState == EGameState::PLAYING_SLOW_TIME_DOWN) && GetCrystalTotalSeconds() - LastUFOAppearance > UFOSecondsPerAppearance) {
+		LastUFOAppearance += UFOSecondsPerAppearance;
+		UFOAppear();
+	}
+	if (UFO->IsAlive()) {
+		UFO->ApplyVelocity(GetLastCrystalDeltaTime());
+	}
+
 
 	// I need to iterate a copy because this ManualTick could make that shot dissapear and the iteration will be wrong
 	TArray<AShot *> ShotsCopy = Shots;

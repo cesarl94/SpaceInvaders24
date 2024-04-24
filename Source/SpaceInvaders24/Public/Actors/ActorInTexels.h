@@ -38,9 +38,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Actor In Texels")
 	bool ClampPosition{false};
 
-	virtual void ApplyVelocity(float DeltaTime);
 
 public:
+	// TODO: comentar esto
+	virtual void ApplyVelocity(float DeltaTime);
+
 	// TODO: comentar esto
 	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: Actor In Texels")
 	virtual FVector2D GetFloatTexelPosition() const;

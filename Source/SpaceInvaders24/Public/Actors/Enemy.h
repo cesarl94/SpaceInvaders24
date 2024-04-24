@@ -89,7 +89,7 @@ public:
 	bool IsAlive() const;
 
 	UFUNCTION()
-	void Kill();
+	void Kill(bool IsForcedKill = false);
 
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
 	FOnEnemyDie OnDie;
