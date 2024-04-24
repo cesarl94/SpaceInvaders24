@@ -9,6 +9,7 @@
 #include "Engine/EngineTypes.h"
 #include "Math/IntVector.h"
 #include "Math/Vector2D.h"
+#include "Structs/BlastTrailData.h"
 #include "Utils/Enums.h"
 
 #include "Shot.generated.h"
@@ -62,9 +63,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SpaceInvaders24: Shot Stats")
 	float AnimationPlayRate{2.5};
 
-
-	// UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SpaceInvaders24: Shot Stats")
-	// TArray<TSubclassOf<AActor>> AnimationPlayRate{2.5};
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SpaceInvaders24: Blast Trace Data")
+	FBlastTrailData BlastTrailData;
 
 public:
 	AShot();

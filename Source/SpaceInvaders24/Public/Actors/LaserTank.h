@@ -9,6 +9,7 @@
 #include "GameplayTagContainer.h"
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
+#include "Structs/BlastTrailData.h"
 #include "Structs/GunData.h"
 #include "Utils/Enums.h"
 
@@ -65,6 +66,20 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: GAS")
 	TArray<TSubclassOf<class UCustomGameplayAbility>> DefaultAbilities;
+
+	// TODO: Comentar esto
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Laser Tank Data")
+	FBlastTrailData BlastTrailDataA;
+
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Laser Tank Data")
+	FBlastTrailData BlastTrailDataB;
+
+	// In seconds
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Laser Tank Data")
+	float SwapBlastTrailFrequence{0.05f};
+
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Laser Tank Data")
+	float TotalBlastTrailDuration{0.5f};
 
 	// for binding the enhanced input system with GAS
 	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;

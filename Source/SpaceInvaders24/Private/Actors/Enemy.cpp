@@ -3,12 +3,35 @@
 
 #include "Actors/Enemy.h"
 
+#include "Actors/BlastTrail.h"
 #include "Components/BoxComponent.h"
+#include "Core/GS_SpaceInvaders24.h"
 #include "Engine/EngineTypes.h"
+#include "Engine/World.h"
+#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Math/IntPoint.h"
+#include "Math/Vector.h"
 #include "Math/Vector2D.h"
+#include "Structs/BlastTrailData.h"
 
+
+void AEnemy::SpawnBlastTrail() {
+	if (BlastTrailData.BlastTrailActorClass == nullptr) {
+		return;
+	}
+
+	AGS_SpaceInvaders24 *GameState = Cast<AGS_SpaceInvaders24>(UGameplayStatics::GetGameState(this));
+
+	FIntPoint TexelIntPoint = GetIntTexelPosition() + BlastTrailData.Offset;
+	FVector BlastTrailWorldPosition = GameState->TexelToWorldPos(TexelIntPoint);
+
+	FActorSpawnParameters ActorSpawnParams;
+	ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	ABlastTrail *BlastTrail = GetWorld()->SpawnActor<ABlastTrail>(BlastTrailData.BlastTrailActorClass, BlastTrailWorldPosition, GameState->GetGameObjectOrientation(), ActorSpawnParams);
+	BlastTrail->ManualInitialize(BlastTrailData.Duration);
+}
 
 // Sets default values
 AEnemy::AEnemy() {
@@ -63,6 +86,8 @@ void AEnemy::Kill() {
 	GraphicNodes->SetVisibility(false, true);
 
 	Collider->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	SpawnBlastTrail();
 
 	int32 PointsGivenRandomId = FMath::RandRange(0, PointsThatCouldGive.Num() - 1);
 	int32 PointsGiven = PointsThatCouldGive[PointsGivenRandomId];

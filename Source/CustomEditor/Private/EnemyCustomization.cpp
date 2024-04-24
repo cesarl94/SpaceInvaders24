@@ -22,7 +22,7 @@ void FEnemyDetailsCustomization::CustomizeDetails(IDetailLayoutBuilder &DetailBu
 TSharedRef<IDetailCustomization> FEnemyDetailsCustomization::MakeInstance() { return MakeShareable(new FEnemyDetailsCustomization); }
 
 void FEnemyDetailsCustomization::SortCustomDetailsCategories(const TMap<FName, IDetailCategoryBuilder *> &AllCategoryMap) {
-	TArray<FString> CategoriesInOrder = {"SpaceInvaders24: Enemy Stats"};
+	TArray<FString> CategoriesInOrder = {"SpaceInvaders24: Enemy Stats", "SpaceInvaders24: Blast Trace Data"};
 
 	for (int32 i = 0, limit = CategoriesInOrder.Num(); i < limit; i++) {
 		FName CategoryName = FName(CategoriesInOrder[i]);

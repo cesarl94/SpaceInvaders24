@@ -21,7 +21,7 @@ void FShotDetailsCustomization::CustomizeDetails(IDetailLayoutBuilder &DetailBui
 TSharedRef<IDetailCustomization> FShotDetailsCustomization::MakeInstance() { return MakeShareable(new FShotDetailsCustomization); }
 
 void FShotDetailsCustomization::SortCustomDetailsCategories(const TMap<FName, IDetailCategoryBuilder *> &AllCategoryMap) {
-	TArray<FString> CategoriesInOrder = {"SpaceInvaders24: Shot Stats"};
+	TArray<FString> CategoriesInOrder = {"SpaceInvaders24: Shot Stats", "SpaceInvaders24: Blast Trace Data"};
 
 	for (int32 i = 0, limit = CategoriesInOrder.Num(); i < limit; i++) {
 		FName CategoryName = FName(CategoriesInOrder[i]);

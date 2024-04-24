@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Actors/ActorInTexels.h"
-#include "Components/BunkerBrick.h"
+#include "Components/SimpleVoxel.h"
 #include "CoreMinimal.h"
 #include "Math/IntPoint.h"
 
@@ -18,13 +18,13 @@ private:
 	// CAUTION: Ultra-private variable
 	// Since Unreal doesn't allow 2-dimensional-arrays, we'll use a 1D array indexed :(
 	// Use with the functions: "GetBrickInCoordinate" and "SetBrickInCoordinate"
-	// CAUTION2: Double reference array togheter with the another array of bricks, "TArray<UBunkerBrick *> Bricks".
+	// CAUTION2: Double reference array togheter with the another array of bricks, "TArray<USimpleVoxel *> Bricks".
 	UPROPERTY()
-	TArray<UBunkerBrick *> _BricksGrid;
+	TArray<USimpleVoxel *> _BricksGrid;
 
 	// TODO: Comentar
 	UPROPERTY()
-	TArray<UBunkerBrick *> Bricks;
+	TArray<USimpleVoxel *> Bricks;
 
 	// TODO: Comentar esto
 	UPROPERTY()
@@ -36,7 +36,7 @@ private:
 
 	// TODO: comentar que hace esto
 	UFUNCTION()
-	void SetBrickInCoordinate(int32 RelativeX, int32 RelativeY, UBunkerBrick *Brick);
+	void SetBrickInCoordinate(int32 RelativeX, int32 RelativeY, USimpleVoxel *Brick);
 
 	// TODO: comentar que hace esto
 	UFUNCTION()
@@ -73,9 +73,9 @@ public:
 
 	// TODO: comentar que hace esto
 	UFUNCTION()
-	const UBunkerBrick *GetBrickInCoordinate(int32 RelativeX, int32 RelativeY) const;
+	const USimpleVoxel *GetBrickInCoordinate(int32 RelativeX, int32 RelativeY) const;
 
 	// Returns all the bricks. CAUTION: Enabled and disabled bricks.
 	UFUNCTION()
-	const TArray<UBunkerBrick *> &GetAllBricks() const;
+	const TArray<USimpleVoxel *> &GetAllBricks() const;
 };

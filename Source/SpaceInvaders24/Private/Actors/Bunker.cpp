@@ -3,7 +3,7 @@
 
 #include "Actors/Bunker.h"
 
-#include "Components/BunkerBrick.h"
+#include "Components/SimpleVoxel.h"
 #include "Math/IntPoint.h"
 #include "Utils/MathUtils.h"
 
@@ -27,7 +27,7 @@ ABunker::ABunker() {
 	SceneInMaxRelativePos->SetupAttachment(SceneComponent);
 }
 
-void ABunker::SetBrickInCoordinate(int32 RelativeX, int32 RelativeY, UBunkerBrick *Brick) {
+void ABunker::SetBrickInCoordinate(int32 RelativeX, int32 RelativeY, USimpleVoxel *Brick) {
 	int32 Index1D = RelativeY * ActorLocalBounds.Z + RelativeX;
 	_BricksGrid[Index1D] = Brick;
 }
@@ -49,23 +49,23 @@ void ABunker::ManualInitialize() {
 	MinRelativeLocation = SceneInMinRelativePos->GetRelativeLocation();
 	MaxRelativeLocation = SceneInMaxRelativePos->GetRelativeLocation();
 
-	GetComponents<UBunkerBrick>(Bricks);
+	GetComponents<USimpleVoxel>(Bricks);
 
 	// We need to storage a reference of each brick in a 2D grid, but since Unreal doesn't allow 2D arrays, we create 1D indexed array
 	// We set the size of the "Grid" of bricks, and fill it will nullptr
 	_BricksGrid.SetNumUninitialized(ActorLocalBounds.Z * ActorLocalBounds.W);
 
 	for (int32 i = 0; i < Bricks.Num(); i++) {
-		UBunkerBrick *Brick = Bricks[i];
+		USimpleVoxel *Brick = Bricks[i];
 		FVector BrickRelativePosition = Brick->GetRelativeLocation();
 		FIntPoint BrickRelativeTexelPosition = Relative3DToRelativeTexelPos(BrickRelativePosition);
 		SetBrickInCoordinate(BrickRelativeTexelPosition.X, BrickRelativeTexelPosition.Y, Brick);
 	}
 }
 
-const UBunkerBrick *ABunker::GetBrickInCoordinate(int32 RelativeX, int32 RelativeY) const {
+const USimpleVoxel *ABunker::GetBrickInCoordinate(int32 RelativeX, int32 RelativeY) const {
 	int32 Index1D = RelativeY * ActorLocalBounds.Z + RelativeX;
 	return _BricksGrid[Index1D];
 }
 
-const TArray<UBunkerBrick *> &ABunker::GetAllBricks() const { return Bricks; }
+const TArray<USimpleVoxel *> &ABunker::GetAllBricks() const { return Bricks; }

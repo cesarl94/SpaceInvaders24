@@ -8,6 +8,7 @@
 #include "Math/IntPoint.h"
 #include "Math/IntVector.h"
 #include "Math/Vector2D.h"
+#include "Structs/BlastTrailData.h"
 #include "Utils/Enums.h"
 
 #include "Enemy.generated.h"
@@ -31,6 +32,9 @@ private:
 
 	UPROPERTY()
 	bool Alive{false};
+
+	UFUNCTION()
+	void SpawnBlastTrail();
 
 
 protected:
@@ -56,6 +60,9 @@ protected:
 	// In percentage
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemy Stats")
 	int32 CrystalDropProbability;
+
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Blast Trace Data")
+	FBlastTrailData BlastTrailData;
 
 	UFUNCTION(BlueprintNativeEvent, Category = "SpaceInvaders24: Native Events")
 	void Animate(bool Forward, float Rate) const;

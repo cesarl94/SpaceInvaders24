@@ -8,11 +8,11 @@
 #include "CoreMinimal.h"
 #include "Utils/Enums.h"
 
-#include "BunkerBrick.generated.h"
+#include "SimpleVoxel.generated.h"
 
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class SPACEINVADERS24_API UBunkerBrick : public UStaticMeshComponent {
+class SPACEINVADERS24_API USimpleVoxel : public UStaticMeshComponent {
 	GENERATED_BODY()
 
 private:
@@ -20,7 +20,7 @@ private:
 	bool Enabled{true};
 
 public:
-	UBunkerBrick();
+	USimpleVoxel();
 
 	UFUNCTION()
 	void SetEnabled(bool NewEnabled);
