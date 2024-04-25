@@ -1,4 +1,4 @@
-## Ongoing Technical Assesment
+## Finished Technical Assesment
 
 Start date: April 17th, 2024<br>
 Deadline: April 25th, 2024<br>
