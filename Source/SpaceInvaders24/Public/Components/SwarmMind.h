@@ -65,7 +65,7 @@ private:
 	float AccumulatedDeltaTime{0};
 
 	UPROPERTY()
-	int32 LiveEnemiesCount;
+	int32 AliveEnemiesCount;
 
 	/**
 	 * Since all enemies move as a group and perform the same action, we need to wait for the last living enemy tobe updated before
@@ -110,6 +110,9 @@ private:
 	void OnEnemyDied(AEnemy *EnemyDied, int32 Points);
 
 protected:
+	// Serialized Data:
+
+	// The classes of enemies according to each EnemyType enum
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemies Data")
 	TMap<EEnemyType, TSubclassOf<AEnemy>> EnemyClasses;
 

@@ -84,7 +84,7 @@ void AGS_SpaceInvaders24::ResetGame() {
 
 	SpawnUFO();
 	SpawnPlayer();
-	SpawnBunkers();
+	// SpawnBunkers();
 
 	GameState = EGameState::PLAYING_FORWARD;
 	GameTimeManager->SetNewState(ETimeState::FORWARD);

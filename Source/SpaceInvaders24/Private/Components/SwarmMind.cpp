@@ -19,22 +19,51 @@ USwarmMind::USwarmMind() { PrimaryComponentTick.bCanEverTick = false; }
 FIntPoint USwarmMind::GetNextEnemyGridIDToUpdate(FIntPoint LastGridID) const {
 	FIntPoint RetornedValue;
 
-	if (LastGridID.X == EnemiesPerRow - 1) {
-		RetornedValue.X = 0;
-		if (LastGridID.Y == 0) {
-			RetornedValue.Y = EnemyTypesByRow.Num() - 1;
+	if (OnBackwards) {
+		if (LastGridID.X == 0) {
+			RetornedValue = EnemiesPerRow - 1;
+			if (LastGridID.Y == EnemyTypesByRow.Num() - 1) {
+				RetornedValue.Y = 0;
+			} else {
+				RetornedValue.Y = LastGridID.Y + 1;
+			}
 		} else {
-			RetornedValue.Y = LastGridID.Y - 1;
+			RetornedValue.X = LastGridID.X - 1;
+			RetornedValue.Y = LastGridID.Y;
 		}
+
 	} else {
-		RetornedValue.X = LastGridID.X + 1;
-		RetornedValue.Y = LastGridID.Y;
+		if (LastGridID.X == EnemiesPerRow - 1) {
+			RetornedValue.X = 0;
+			if (LastGridID.Y == 0) {
+				RetornedValue.Y = EnemyTypesByRow.Num() - 1;
+			} else {
+				RetornedValue.Y = LastGridID.Y - 1;
+			}
+		} else {
+			RetornedValue.X = LastGridID.X + 1;
+			RetornedValue.Y = LastGridID.Y;
+		}
 	}
 
 	return RetornedValue;
 }
 
 FIntPoint USwarmMind::GetCoordinateOfLastAliveEnemyToUpdate() const {
+
+	if (OnBackwards) {
+		for (int32 x = 0; x < EnemiesPerRow; x++) {
+			for (int32 y = EnemyTypesByRow.Num() - 1; y >= 0; y--) {
+				AEnemy *EnemyInThatPos = GetEnemyInIndexed2DArray(x, y);
+				if (EnemyInThatPos->IsAlive()) {
+					return EnemyInThatPos->GetCoordinateInEnemyGrid();
+				}
+			}
+		}
+
+		return FIntPoint(-1, -1);
+	}
+
 	for (int32 x = EnemiesPerRow - 1; x >= 0; x--) {
 		for (int32 y = 0; y < EnemyTypesByRow.Num(); y++) {
 			AEnemy *EnemyInThatPos = GetEnemyInIndexed2DArray(x, y);
@@ -61,7 +90,8 @@ void USwarmMind::FixedUpdate() {
 	bool CanMove = true;
 	if (AlreadyUpdatedLastOne) {
 		if (!DirectionBlocked) {
-			bool CanGoLower = CanEnemiesGoLower();
+			// if we are on backwards we go Upper, so, always we can
+			bool CanGoLower = OnBackwards || CanEnemiesGoLower();
 
 			if (CanGoLower) {
 				MovingToRight = !MovingToRight;
@@ -83,11 +113,16 @@ void USwarmMind::FixedUpdate() {
 			return;
 		}
 
+		// Since MovingToRight is when time goes forward, when we're OnBackwards, that "right" means left, so, both variables cancel each other
+		float HorizontalMovement = (MovingToRight ? 1 : -1) * (OnBackwards ? -1 : 1) * SwarmVelocity;
+		// The same with the vertical movement
+		float VerticalMovement = (MovingDown ? SeparationBetweenEnemies.Y / 2 : 0) * (OnBackwards ? -1 : 1);
+
 		FVector2D EnemyTexelPosition = NextEnemyToUpdate->GetFloatTexelPosition();
-		EnemyTexelPosition += FVector2D((MovingToRight ? 1 : -1) * SwarmVelocity, (MovingDown ? SeparationBetweenEnemies.Y / 2 : 0));
+		EnemyTexelPosition += FVector2D(HorizontalMovement, VerticalMovement);
 		NextEnemyToUpdate->SetTexelPosition(EnemyTexelPosition, !MovingDown);
 
-		NextEnemyToUpdate->TriggerMoveAnimation(static_cast<float>(EnemiesPerRow * EnemyTypesByRow.Num()) / static_cast<float>(LiveEnemiesCount));
+		NextEnemyToUpdate->TriggerMoveAnimation(static_cast<float>(EnemiesPerRow * EnemyTypesByRow.Num()) / static_cast<float>(AliveEnemiesCount));
 
 		LastUpdatedEnemyGridID = NextEnemyToUpdate->GetCoordinateInEnemyGrid();
 	}
@@ -116,17 +151,17 @@ void USwarmMind::SetEnemyInIndexed2DArray(int32 X, int32 Y, class AEnemy *Enemy)
 }
 
 void USwarmMind::OnEnemyTouchBorder(EDirection Direction) {
-	if (Direction == EDirection::LEFT || Direction == EDirection::RIGHT) {
+	if ((Direction == EDirection::LEFT || Direction == EDirection::RIGHT) && !MovingDown) {
 		DirectionBlocked = false;
 	}
 }
 
 void USwarmMind::OnEnemyDied(class AEnemy *EnemyDied, int32 Points) {
 
-	LiveEnemiesCount--;
+	AliveEnemiesCount--;
 
 	EnemyDiedEvent.Broadcast(EnemyDied, Points);
-	if (LiveEnemiesCount == 0) {
+	if (AliveEnemiesCount == 0) {
 		KilledAllEnemies.Broadcast();
 	}
 }
@@ -155,16 +190,25 @@ void USwarmMind::OnNewGameState(EGameState NewGameState) {
 	switch (NewGameState) {
 	case EGameState::IN_MENU:
 	case EGameState::READY_SET_GO:
-	// case EGameState::PASSING_LEVEL:
 	case EGameState::DYING:
 	case EGameState::GAME_OVER:
 		break;
+	case EGameState::PASSING_LEVEL:
 	case EGameState::PLAYING_FORWARD:
 	case EGameState::PLAYING_SLOW_TIME_DOWN:
 	case EGameState::PLAYING_PAUSED_TIME:
+		if (OnBackwards) {
 
+			LastUpdatedEnemyGridID = GetNextEnemyGridIDToUpdate(LastUpdatedEnemyGridID);
+			OnBackwards = false;
+		}
 		break;
 	case EGameState::PLAYING_REVERSE:
+		if (!OnBackwards) {
+			UKismetSystemLibrary::PrintString(GetWorld(), "PLAYING_REVERSE", true, true, FColor::Yellow, 5);
+			LastUpdatedEnemyGridID = GetNextEnemyGridIDToUpdate(LastUpdatedEnemyGridID);
+			OnBackwards = true;
+		}
 		break;
 	}
 }
@@ -207,12 +251,12 @@ void USwarmMind::ManualReset(int32 Level) {
 
 	MovingToRight = true;
 	DirectionBlocked = true;
-	OnBackwards = true;
+	OnBackwards = false;
 	MovingDown = false;
 	GameOverWasDispatched = false;
 
 	AccumulatedDeltaTime = 0;
-	LiveEnemiesCount = EnemiesPerRow * EnemyTypesByRow.Num();
+	AliveEnemiesCount = EnemiesPerRow * EnemyTypesByRow.Num();
 
 	LastUpdatedEnemyGridID = FIntPoint(EnemiesPerRow - 1, 0);
 
@@ -235,6 +279,7 @@ void USwarmMind::ManualReset(int32 Level) {
 void USwarmMind::ManualTick(float CrystalDeltaTime, float CrystalTotalSeconds) {
 	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
 
+	// Very ugly FSM
 	switch (GameState->GetGameState()) {
 	case EGameState::IN_MENU:
 	case EGameState::READY_SET_GO:
@@ -245,6 +290,7 @@ void USwarmMind::ManualTick(float CrystalDeltaTime, float CrystalTotalSeconds) {
 	case EGameState::PLAYING_FORWARD:
 	case EGameState::PLAYING_SLOW_TIME_DOWN:
 	case EGameState::PLAYING_PAUSED_TIME:
+	case EGameState::PLAYING_REVERSE:
 		{
 			AccumulatedDeltaTime += CrystalDeltaTime;
 
@@ -256,9 +302,6 @@ void USwarmMind::ManualTick(float CrystalDeltaTime, float CrystalTotalSeconds) {
 			}
 		}
 
-
-		break;
-	case EGameState::PLAYING_REVERSE:
 		break;
 	}
 }
