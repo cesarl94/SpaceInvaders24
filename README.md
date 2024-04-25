@@ -1,7 +1,7 @@
-## Finished Technical Assesment
+## Ongoing Technical Assesment
 
 Start date: April 17th, 2024<br>
-Deadline: April 25th, 2024<br>
+Deadline: May 1st, 2024<br>
 
 ### Evaluation challenge details:
 
