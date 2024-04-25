@@ -110,6 +110,8 @@ bool ALaserTank::CanShot() const {
 	return true;
 }
 
+void ALaserTank::Kill(bool IsForcedKill) { OnDie.Broadcast(); }
+
 UAbilitySystemComponent *ALaserTank::GetAbilitySystemComponent() const { return AbilitySystemComponent; }
 
 UCustomAbilitySystemComponent *ALaserTank::GetCustomAbilitySystemComponent() const { return Cast<UCustomAbilitySystemComponent>(AbilitySystemComponent); }

@@ -33,8 +33,7 @@ bool UCustomAbilitySystemComponent::HasTagByString(FString TagString, bool Conta
 
 void UCustomAbilitySystemComponent::OnAttributeChanged(EPlayerAttribute AttributeEnum, float OldValue, float NewValue) {
 	OnAttributeChange.Broadcast(AttributeEnum, OldValue, NewValue);
-	UKismetSystemLibrary::PrintString(GetWorld(), FString::Printf(TEXT("AttributeEnum: %d, OldValue: %f, NewValue: %f"), static_cast<int32>(AttributeEnum), OldValue, NewValue), true, true,
-									  FColor::Yellow, 5);
+	UKismetSystemLibrary::PrintString(GetWorld(), FString::Printf(TEXT("New Crystal count: %d"), static_cast<int32>(AttributeEnum), OldValue, NewValue), true, true, FColor::Yellow, 5);
 }
 
 void UCustomAbilitySystemComponent::OnTagUpdated(const FGameplayTag &Tag, bool TagExists) { OnTagUpdateEvt.Broadcast(Tag, TagExists); }

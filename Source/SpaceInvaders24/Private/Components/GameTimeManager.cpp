@@ -3,13 +3,10 @@
 
 #include "Core/GS_SpaceInvaders24.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Structs/TimeStateData.h"
 #include "Utils/Enums.h"
 
-// void UGameTimeManager::BeginPlay() {
-// 	Super::BeginPlay();
-// 	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
-// }
 
 UGameTimeManager::UGameTimeManager() { PrimaryComponentTick.bCanEverTick = false; }
 
@@ -48,6 +45,9 @@ ETimeState UGameTimeManager::GetTimeState() { return TimeState; }
 
 void UGameTimeManager::SetNewState(ETimeState NewTimeState) {
 	TimeState = NewTimeState;
+
+	UKismetSystemLibrary::PrintString(GetWorld(), FString::Printf(TEXT("New time state: %d. (0:Idle, 1:Forward, 2:Slow, 3:Paused, 4:Reverse)"), static_cast<int32>(TimeState)), true, true,
+									  FColor::Yellow, 5);
 
 	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
 	GlobalTimeAtLastStateChange = GameState->GetServerWorldTimeSeconds();

@@ -37,6 +37,7 @@ void AGS_SpaceInvaders24::SpawnPlayer() {
 
 	FVector PlayerWorldPosition = TexelToWorldPos(PlayerSpawnPosition);
 	Player = GetWorld()->SpawnActor<ALaserTank>(PlayerClass, PlayerWorldPosition, GetGameObjectOrientation(), ActorSpawnParams);
+	Player->OnDie.AddUniqueDynamic(this, &AGS_SpaceInvaders24::OnPlayerDie);
 
 	if (PlayerArray.Num() > 0) {
 		APlayerController *PC = PlayerArray[0]->GetPlayerController();
@@ -84,7 +85,7 @@ void AGS_SpaceInvaders24::ResetGame() {
 
 	SpawnUFO();
 	SpawnPlayer();
-	// SpawnBunkers();
+	SpawnBunkers();
 
 	GameState = EGameState::PLAYING_FORWARD;
 	GameTimeManager->SetNewState(ETimeState::FORWARD);
@@ -101,28 +102,24 @@ void AGS_SpaceInvaders24::UFOAppear() {
 	UFO->SetTexelVelocity(FVector2D(UFOMovementSpeed * 60.f, 0));
 }
 
-void AGS_SpaceInvaders24::OnTimeStateFinished() {
-	UKismetSystemLibrary::PrintString(GetWorld(), "On Time State Finished", true, true, FColor::Yellow, 5);
-	SetNewState(EGameState::PLAYING_FORWARD);
-}
+void AGS_SpaceInvaders24::OnTimeStateFinished() { SetNewState(EGameState::PLAYING_FORWARD); }
 
 void AGS_SpaceInvaders24::OnEnemyDiedEvent(AEnemy *EnemyDied, int32 PointsGiven) {
 	Points += PointsGiven;
-	UKismetSystemLibrary::PrintString(GetWorld(), FString::Printf(TEXT("Enemy Died. Points: %d"), Points), true, true, FColor::Green, 5);
+	UKismetSystemLibrary::PrintString(GetWorld(), FString::Printf(TEXT("Enemy Died. New points: %d"), Points), true, true, FColor::Green, 5);
 }
 
 void AGS_SpaceInvaders24::OnEnemiesCantGoLower() {
-	UKismetSystemLibrary::PrintString(GetWorld(), "GAME OVER", true, true, FColor::Red, 5);
+	UKismetSystemLibrary::PrintString(GetWorld(), "GAME OVER. Press Alt+F4 to close this window", true, true, FColor::Red, 5);
 
 	SetNewState(EGameState::GAME_OVER);
 }
 
 void AGS_SpaceInvaders24::OnKilledAllEnemies() {
-	UKismetSystemLibrary::PrintString(GetWorld(), "OnKilledAllEnemies", true, true, FColor::Red, 5);
+	UKismetSystemLibrary::PrintString(GetWorld(), "On Killed All Enemies. You win! Press Alt+F4 to close this window", true, true, FColor::Green, 5);
 
 	// GetWorld()->GetTimerManager().SetTimer(
 	// 	InputTimeHandle, [&]() { Destroy(); }, Duration, false);
-
 
 	SetNewState(EGameState::PASSING_LEVEL);
 }
@@ -141,6 +138,11 @@ void AGS_SpaceInvaders24::OnUFOTouchBorder(EDirection Direction) {
 	if (Direction == EDirection::RIGHT) {
 		UFO->Kill(true);
 	}
+}
+
+void AGS_SpaceInvaders24::OnPlayerDie() {
+	UKismetSystemLibrary::PrintString(GetWorld(), "GAME OVER", true, true, FColor::Red, 5);
+	SetNewState(EGameState::GAME_OVER);
 }
 
 void AGS_SpaceInvaders24::BeginPlay() {

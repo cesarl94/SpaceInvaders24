@@ -25,7 +25,9 @@ AActorInTexels::AActorInTexels() {
 	PrimaryActorTick.bCanEverTick = false;
 
 	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Scene Component"));
-	SceneComponent->SetupAttachment(RootComponent);
+	// SceneComponent->SetupAttachment(RootComponent);
+	SetRootComponent(SceneComponent);
+
 
 	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Box Collider"));
 	Collider->SetupAttachment(SceneComponent);

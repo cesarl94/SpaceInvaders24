@@ -15,6 +15,9 @@
 
 #include "LaserTank.generated.h"
 
+class ALaserTank;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlayerDie);
 
 UCLASS()
 class SPACEINVADERS24_API ALaserTank : public AActorInTexels, public IAbilitySystemInterface {
@@ -93,6 +96,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Laser Tank", DisplayName = "LaserTank CanShoot", Meta = (CompactNodeTitle = "Can Shoot?"))
 	bool CanShot() const;
 
+	UFUNCTION(BlueprintCallable, Category = "Laser Tank", DisplayName = "LaserTank Kill")
+	void Kill(bool IsForcedKill = false);
+
 	// Inherited from interface
 	virtual UAbilitySystemComponent *GetAbilitySystemComponent() const override;
 
@@ -108,4 +114,8 @@ public:
 	// Temporal function until I activate the Enhanced input system
 	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: GAS", DisplayName = "LaserTank SetAbilityInput")
 	void SetAbilityInput(EGASAbilityInput input, bool pressed);
+
+	// Events:
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
+	FOnPlayerDie OnDie;
 };

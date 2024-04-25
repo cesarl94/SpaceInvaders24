@@ -5,6 +5,7 @@
 
 #include "Actors/Crystal.h"
 #include "Actors/Enemy.h"
+#include "Actors/LaserTank.h"
 #include "Components/BoxComponent.h"
 #include "Components/PrimitiveComponent.h"
 #include "Core/GS_SpaceInvaders24.h"
@@ -25,6 +26,14 @@ void AShot::OnBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *
 
 		if (ACrystal *HitCrystal = Cast<ACrystal>(OtherActor)) {
 			HitCrystal->Kill(false);
+		}
+	} else {
+		if (ALaserTank *HitPlayer = Cast<ALaserTank>(OtherActor)) {
+			// I need to disable collision before kill enemy because if the enemy drop any crystal, I could collide it also before call Dissapear()
+			Collider->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			HitPlayer->Kill(false);
+			Dissapear();
+			return;
 		}
 	}
 }

@@ -88,6 +88,10 @@ private:
 	UFUNCTION()
 	void OnUFOTouchBorder(EDirection Direction);
 
+	// Called from LaserTank's event
+	UFUNCTION()
+	void OnPlayerDie();
+
 protected:
 	virtual void BeginPlay() override;
 
