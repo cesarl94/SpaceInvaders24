@@ -18,7 +18,6 @@
 #include "Structs/GunData.h"
 
 
-
 void AEnemy::SpawnBlastTrail() {
 	if (BlastTrailData.BlastTrailActorClass == nullptr) {
 		return;
