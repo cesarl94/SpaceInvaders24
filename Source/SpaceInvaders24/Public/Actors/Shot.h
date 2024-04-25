@@ -62,6 +62,9 @@ public:
 	void ManualTick(float DeltaTime);
 
 	UFUNCTION()
+	float GetMovementSpeed() const;
+
+	UFUNCTION()
 	EShotType GetType() const;
 
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")

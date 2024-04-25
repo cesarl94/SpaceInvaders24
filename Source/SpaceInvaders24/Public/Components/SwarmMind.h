@@ -62,10 +62,20 @@ private:
 	 * necessary to update one or more enemies and so that the game is not affected by frame drops
 	 */
 	UPROPERTY()
-	float AccumulatedDeltaTime{0};
+	float DeltaTimeStack{0};
+
+	UPROPERTY()
+	float LastTimeAnEnemyShootted{0};
 
 	UPROPERTY()
 	int32 AliveEnemiesCount;
+
+	UPROPERTY()
+	TArray<int32> ColumnIdsWithAliveEnemies;
+
+	UFUNCTION()
+	void Shoot();
+
 
 	/**
 	 * Since all enemies move as a group and perform the same action, we need to wait for the last living enemy tobe updated before
@@ -144,6 +154,10 @@ protected:
 	// In the original game, it's 2 texels per frame.
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemies Data")
 	float SwarmVelocity{2};
+
+	// In seconds
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemies Data")
+	float EnemyShotFrequency{1};
 
 public:
 	USwarmMind();

@@ -125,7 +125,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Game Data|UFO")
 	float UFOSecondsPerAppearance{20.f};
 
-	// References to the shot classes, mapped according to the ShotType enum.
+	// References to the shot classes, mapped according to the ShotType enum. Public because SwarmMind needs this also
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SpaceInvaders24: Game Data|Shots")
 	TMap<EShotType, TSubclassOf<class AShot>> ShotsClasses;
 
@@ -139,7 +139,13 @@ protected:
 	int32 Lives{3};
 
 public:
+	// Public methods:
+
 	AGS_SpaceInvaders24();
+
+	// Called from SwarmMind
+	UFUNCTION()
+	TMap<EShotType, TSubclassOf<class AShot>> GetShotClasses() const;
 
 	UFUNCTION(BlueprintCallable)
 	void SetNewState(EGameState NewGameState);

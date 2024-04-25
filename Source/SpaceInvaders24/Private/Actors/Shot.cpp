@@ -56,4 +56,6 @@ AShot::AShot() : Super() {
 
 void AShot::ManualTick(float DeltaTime) { ApplyVelocity(DeltaTime); }
 
+float AShot::GetMovementSpeed() const { return MovementSpeed; }
+
 EShotType AShot::GetType() const { return Type; }

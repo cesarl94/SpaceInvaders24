@@ -4,13 +4,16 @@
 #include "Components/SwarmMind.h"
 
 #include "Actors/Enemy.h"
+#include "Actors/Shot.h"
 #include "Components/GameTimeManager.h"
 #include "Core/GS_SpaceInvaders24.h"
+#include "Engine/World.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Math/IntPoint.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
+#include "Structs/GunData.h"
 #include "Utils/Enums.h"
 
 
@@ -47,6 +50,50 @@ FIntPoint USwarmMind::GetNextEnemyGridIDToUpdate(FIntPoint LastGridID) const {
 	}
 
 	return RetornedValue;
+}
+
+void USwarmMind::Shoot() {
+	if (AliveEnemiesCount == 0) {
+		return;
+	}
+
+	int32 ChosenRandomColumnId = FMath::RandRange(0, ColumnIdsWithAliveEnemies.Num() - 1);
+	int32 ChosenRandomColumn = ColumnIdsWithAliveEnemies[ChosenRandomColumnId];
+
+	AEnemy *LowestEnemyInThatColumn = nullptr;
+
+	for (int32 i = EnemyTypesByRow.Num() - 1; i >= 0; i--) {
+		AEnemy *Enemy = GetEnemyInIndexed2DArray(ChosenRandomColumn, i);
+		if (Enemy->IsAlive()) {
+			LowestEnemyInThatColumn = Enemy;
+			break;
+		}
+	}
+
+	FGunData GunData = LowestEnemyInThatColumn->GetGunData();
+
+	if (!GunData.FromUpToDown || GunData.AvailableShotTypes.Num() == 0) {
+		return;
+	}
+
+	int32 ChosenRandomGunId = FMath::RandRange(0, GunData.AvailableShotTypes.Num() - 1);
+	EShotType ChosenRandomGun = GunData.AvailableShotTypes[ChosenRandomGunId];
+
+	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
+
+	TSubclassOf<AShot> *ShotClass = GameState->GetShotClasses().Find(ChosenRandomGun);
+	if (ShotClass == nullptr) {
+		return;
+	}
+
+	FIntPoint ShotSpawnTexelIntPoint = LowestEnemyInThatColumn->GetIntTexelPosition() + GunData.Offset;
+	FVector ShotSpawnWorldPosition = GameState->TexelToWorldPos(ShotSpawnTexelIntPoint);
+
+	FActorSpawnParameters ActorSpawnParams;
+	ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	AShot *Shot = GetWorld()->SpawnActor<AShot>(*ShotClass, ShotSpawnWorldPosition, GameState->GetGameObjectOrientation(), ActorSpawnParams);
+	Shot->SetTexelVelocity(FVector2D(0, Shot->GetMovementSpeed() * 60.f));
 }
 
 FIntPoint USwarmMind::GetCoordinateOfLastAliveEnemyToUpdate() const {
@@ -160,6 +207,18 @@ void USwarmMind::OnEnemyDied(class AEnemy *EnemyDied, int32 Points) {
 
 	AliveEnemiesCount--;
 
+	ColumnIdsWithAliveEnemies.Empty();
+
+	for (int32 i = 0; i < EnemiesPerRow; i++) {
+		for (int32 j = 0; j < EnemyTypesByRow.Num(); j++) {
+			AEnemy *Enemy = GetEnemyInIndexed2DArray(i, j);
+			if (Enemy->IsAlive()) {
+				ColumnIdsWithAliveEnemies.Add(i);
+				break;
+			}
+		}
+	}
+
 	EnemyDiedEvent.Broadcast(EnemyDied, Points);
 	if (AliveEnemiesCount == 0) {
 		KilledAllEnemies.Broadcast();
@@ -205,7 +264,6 @@ void USwarmMind::OnNewGameState(EGameState NewGameState) {
 		break;
 	case EGameState::PLAYING_REVERSE:
 		if (!OnBackwards) {
-			UKismetSystemLibrary::PrintString(GetWorld(), "PLAYING_REVERSE", true, true, FColor::Yellow, 5);
 			LastUpdatedEnemyGridID = GetNextEnemyGridIDToUpdate(LastUpdatedEnemyGridID);
 			OnBackwards = true;
 		}
@@ -255,7 +313,8 @@ void USwarmMind::ManualReset(int32 Level) {
 	MovingDown = false;
 	GameOverWasDispatched = false;
 
-	AccumulatedDeltaTime = 0;
+	DeltaTimeStack = 0;
+	LastTimeAnEnemyShootted = 0;
 	AliveEnemiesCount = EnemiesPerRow * EnemyTypesByRow.Num();
 
 	LastUpdatedEnemyGridID = FIntPoint(EnemiesPerRow - 1, 0);
@@ -273,6 +332,10 @@ void USwarmMind::ManualReset(int32 Level) {
 		}
 		PositionDelta.X -= SeparationBetweenEnemies.X * EnemiesPerRow;
 		PositionDelta.Y += SeparationBetweenEnemies.Y;
+	}
+
+	for (int32 i = 0; i < EnemiesPerRow; i++) {
+		ColumnIdsWithAliveEnemies.Add(i);
 	}
 }
 
@@ -292,13 +355,18 @@ void USwarmMind::ManualTick(float CrystalDeltaTime, float CrystalTotalSeconds) {
 	case EGameState::PLAYING_PAUSED_TIME:
 	case EGameState::PLAYING_REVERSE:
 		{
-			AccumulatedDeltaTime += CrystalDeltaTime;
+			DeltaTimeStack += CrystalDeltaTime;
 
 			float IdealFrameDelta = 1.f / 60.f;
 
-			while (AccumulatedDeltaTime >= IdealFrameDelta) {
-				AccumulatedDeltaTime -= IdealFrameDelta;
+			while (DeltaTimeStack >= IdealFrameDelta) {
+				DeltaTimeStack -= IdealFrameDelta;
 				FixedUpdate();
+			}
+
+			if (CrystalTotalSeconds - LastTimeAnEnemyShootted >= EnemyShotFrequency) {
+				LastTimeAnEnemyShootted += EnemyShotFrequency;
+				Shoot();
 			}
 		}
 

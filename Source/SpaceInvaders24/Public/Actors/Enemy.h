@@ -8,6 +8,7 @@
 #include "Math/IntPoint.h"
 #include "Structs/BlastTrailData.h"
 #include "Structs/CrystalDropData.h"
+#include "Structs/GunData.h"
 #include "Utils/Enums.h"
 
 #include "Enemy.generated.h"
@@ -52,6 +53,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemy Stats")
 	TArray<int32> PointsThatCouldGive;
 
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemy Gun Data")
+	FGunData GunData;
+
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Crystal Drop Data")
 	FCrystalDropData CrystalDropData;
 
@@ -81,6 +85,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, DisplayName = "Enemy IsAlive")
 	bool IsAlive() const;
+
+	UFUNCTION(BlueprintCallable, DisplayName = "Enemy GetGunData", Meta = (CompactNodeTitle = "GUN Data"))
+	FGunData GetGunData() const;
 
 	UFUNCTION()
 	void Kill(bool IsForcedKill = false);

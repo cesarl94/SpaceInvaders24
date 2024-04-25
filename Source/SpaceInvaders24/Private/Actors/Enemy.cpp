@@ -15,6 +15,8 @@
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
 #include "Structs/BlastTrailData.h"
+#include "Structs/GunData.h"
+
 
 
 void AEnemy::SpawnBlastTrail() {
@@ -81,6 +83,8 @@ void AEnemy::ManualReset(FIntPoint NewTexelPosition) {
 }
 
 FIntPoint AEnemy::GetCoordinateInEnemyGrid() const { return EnemyCoordinateInGrid; }
+
+FGunData AEnemy::GetGunData() const { return GunData; }
 
 bool AEnemy::IsAlive() const { return Alive; }
 
