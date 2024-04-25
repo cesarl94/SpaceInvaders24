@@ -181,7 +181,13 @@ void AGS_SpaceInvaders24::Tick(float DeltaTime) {
 	}
 }
 
-TMap<EShotType, TSubclassOf<AShot>> AGS_SpaceInvaders24::GetShotClasses() const { return ShotsClasses; }
+TSubclassOf<AShot> AGS_SpaceInvaders24::GetShotClass(EShotType ShotClassEnum) const {
+	const TSubclassOf<AShot> *ShotClass = ShotsClasses.Find(ShotClassEnum);
+	if (ShotClass == nullptr) {
+		return nullptr;
+	}
+	return *ShotClass;
+}
 
 void AGS_SpaceInvaders24::SetNewState(EGameState NewGameState) {
 	GameState = NewGameState;

@@ -81,7 +81,7 @@ void USwarmMind::Shoot() {
 
 	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
 
-	TSubclassOf<AShot> *ShotClass = GameState->GetShotClasses().Find(ChosenRandomGun);
+	TSubclassOf<AShot> ShotClass = GameState->GetShotClass(ChosenRandomGun);
 	if (ShotClass == nullptr) {
 		return;
 	}
@@ -284,7 +284,7 @@ void USwarmMind::ManualInitialize() {
 
 	for (int32 i = 0; i < EnemyTypesByRow.Num(); i++) {
 		for (int32 j = 0; j < EnemiesPerRow; j++) {
-			TSubclassOf<AEnemy> *EnemySubclass = EnemyClasses.Find(EnemyTypesByRow[i]);
+			const TSubclassOf<AEnemy> *EnemySubclass = EnemyClasses.Find(EnemyTypesByRow[i]);
 			if (EnemySubclass == nullptr) {
 				continue;
 			}
