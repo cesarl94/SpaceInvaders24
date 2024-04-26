@@ -7,6 +7,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Math/IntVector.h"
+#include "Math/Vector4.h"
 #include "Utils/Enums.h"
 
 #include "ActorInTexels.generated.h"
@@ -65,8 +66,9 @@ protected:
 	USceneComponent *SceneInMaxRelativePos;
 
 	// A 2D box that covers the actor, in texels. Like a collider. Offset in X, offset in Y, width, height
-	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Actor In Texels")
-	FIntVector4 ActorLocalBounds;
+	// IMPORTANT: This is a float-based vector to animate, but only integers values are allowed!!
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Actor In Texels", Interp)
+	FVector4 ActorLocalBoundsFloat;
 
 	// A 2D box that is the playable zone for this actor, in texels. Offset in X, offset in Y, width, height
 	// CAUTION: If the width of the map is 224, and your character is 13 pixels width, stay calm and put 224, don't substract the width!

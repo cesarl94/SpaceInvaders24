@@ -9,6 +9,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Math/IntVector.h"
 #include "Math/Vector2D.h"
+#include "Math/Vector4.h"
 #include "Utils/Enums.h"
 #include "Utils/MathUtils.h"
 
@@ -56,8 +57,9 @@ FIntPoint AActorInTexels::GetIntTexelPosition() const { return FIntPoint(FMath::
 void AActorInTexels::SetTexelPosition(FVector2D NewTexelPosition, bool Sweep) {
 	FIntPoint PrevIntTexelPosition = GetIntTexelPosition();
 
-	FIntVector4 PositionLimits = FIntVector4(ActorLimits.X - ActorLocalBounds.X, ActorLimits.Y - ActorLocalBounds.Y, ActorLimits.X + ActorLimits.Z - ActorLocalBounds.X - ActorLocalBounds.Z,
-											 ActorLimits.Y + ActorLimits.W - ActorLocalBounds.Y - ActorLocalBounds.W);
+	FIntVector4 PositionLimits = FIntVector4(ActorLimits.X - FMath::RoundToInt(ActorLocalBoundsFloat.X), ActorLimits.Y - FMath::RoundToInt(ActorLocalBoundsFloat.Y),
+											 ActorLimits.X + ActorLimits.Z - FMath::RoundToInt(ActorLocalBoundsFloat.X) - FMath::RoundToInt(ActorLocalBoundsFloat.Z),
+											 ActorLimits.Y + ActorLimits.W - FMath::RoundToInt(ActorLocalBoundsFloat.Y) - FMath::RoundToInt(ActorLocalBoundsFloat.W));
 
 	if (ClampPosition) {
 		NewTexelPosition.X = FMath::Clamp(NewTexelPosition.X, PositionLimits.X, PositionLimits.X + PositionLimits.Z);
@@ -95,5 +97,6 @@ void AActorInTexels::SetTexelVelocity(FVector2D NewTexelVelocity) { TexelVelocit
 FIntVector4 AActorInTexels::GetIntTexelBoundingBox() const {
 	FIntPoint IntTexelPosition = GetIntTexelPosition();
 
-	return FIntVector4(IntTexelPosition.X + ActorLocalBounds.X, IntTexelPosition.Y + ActorLocalBounds.Y, ActorLocalBounds.Z, ActorLocalBounds.W);
+	return FIntVector4(IntTexelPosition.X + FMath::RoundToInt(ActorLocalBoundsFloat.X), IntTexelPosition.Y + FMath::RoundToInt(ActorLocalBoundsFloat.Y), FMath::RoundToInt(ActorLocalBoundsFloat.Z),
+					   FMath::RoundToInt(ActorLocalBoundsFloat.W));
 }
