@@ -61,7 +61,7 @@ Poor aliens, I still haven't given them the power to defend themselves.<br>
 ![Gameplay](RawContent/Gameplay.gif)
 
 ---
-### 24/04/24 Time!
+### 24/04/24 Alpha Time!
 
 Well, it's time, and I managed to complete a large part of the challenge. I prioritized maintaining clean and scalable code over finishing with a project full of patches. Some of the tasks couldn't be completed, not due to lack of ability but due to lack of time. I estimate that with two more days, I could complete the remaining points, which include making the bunkers able to receive shots and erode, game flow and scenes, and of course, a UI to assist us.
 
@@ -92,3 +92,11 @@ If you want to try the playable version of this project, [the following link](ht
 * To exit the game press Alt + F4
 
 ---
+
+### 25/04/24 Thursday night update:
+
+I found the error that was preventing the game from being playable. Almost undetectable, but I found it by debugging using the elimination method. The culprit? This simple and almost harmless ``const`` that had slipped my attention, and neither VSCode nor Unreal could tell me it was needed there. The most curious thing is that you can play from the editor without any issues, but not from the executable.
+
+![error3](RawContent/error/error3.png)
+
+Now, if you'd like, you can download the [latest playable version of this game here](https://drive.google.com/file/d/1vzxFHMdYkiYCXqNVAkuTV51b_oH3GZkf/view?usp=drive_link).
