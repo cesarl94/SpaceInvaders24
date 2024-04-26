@@ -41,7 +41,7 @@ void AGS_SpaceInvaders24::SpawnPlayer() {
 
 	if (PlayerArray.Num() > 0) {
 		APlayerController *PC = PlayerArray[0]->GetPlayerController();
-		if (PC->GetPawn() == nullptr) {
+		if (PC->GetPawn<ALaserTank>() == nullptr) {
 			PC->Possess(Player);
 		}
 	}
@@ -217,7 +217,7 @@ void AGS_SpaceInvaders24::SetNewState(EGameState NewGameState) {
 EGameState AGS_SpaceInvaders24::GetGameState() const { return GameState; }
 
 void AGS_SpaceInvaders24::OnPlayerControllerConnected(APlayerController *PC) {
-	if (Player != nullptr && PC->GetPawn() == nullptr) {
+	if (Player != nullptr && PC->GetPawn<ALaserTank>() == nullptr) {
 		PC->Possess(Player);
 	}
 }
