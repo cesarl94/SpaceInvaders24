@@ -24,4 +24,7 @@ public:
 
 	UFUNCTION()
 	void SetEnabled(bool NewEnabled);
+
+	UFUNCTION()
+	bool IsEnabled() const;
 };

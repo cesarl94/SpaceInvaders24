@@ -52,7 +52,8 @@ FIntPoint AGamePreviewActor::WorldToTexelPos(FVector WorldPos) const {
 	FVector RelativePosition = GetActorTransform().InverseTransformPosition(WorldPos);
 	float TexelXAprox = UMathUtils::RuleOfFive(MinRelativeLocation.X, 0, MaxRelativeLocation.X, MapSize.X - 1, RelativePosition.X, false);
 	float TexelYAprox = UMathUtils::RuleOfFive(MinRelativeLocation.Y, 0, MaxRelativeLocation.Y, MapSize.Y - 1, RelativePosition.Y, false);
-	return FIntPoint(FMath::RoundToInt(TexelXAprox), FMath::RoundToInt(TexelYAprox));
+	// We subtract 0.01 to each number because we want to round to floor texels and half (E.g.  4 -> 3.99 = 4 or 4.5 -> 4.49 = 4)
+	return FIntPoint(FMath::RoundToInt(TexelXAprox - 0.01f), FMath::RoundToInt(TexelYAprox - 0.01f));
 }
 
 FVector AGamePreviewActor::TexelToWorldPos(FIntPoint TexelPos) const {

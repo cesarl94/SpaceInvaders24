@@ -25,8 +25,30 @@ class SPACEINVADERS24_API AActorInTexels : public APawn {
 	UPROPERTY()
 	FVector2D TexelVelocity;
 
+	// Cached value stored to facilitate calculations for position transformation. Takes the relative position of the SceneInMinRelativePos node.
+	UPROPERTY()
+	FVector MinRelativeLocation;
+
+	// Cached value stored to facilitate calculations for position transformation. Takes the relative position of the SceneInMaxRelativePos node.
+	UPROPERTY()
+	FVector MaxRelativeLocation;
+
 protected:
 	virtual void BeginPlay() override;
+
+	/**
+	 * This function is responsible for transforming a relative 3D position within the actor into 2D grid coordinates. For it to work
+	 * correctly, the relative position of the SceneInMinRelativePos and SceneInMaxRelativePos components must be set correctly.
+	 */
+	UFUNCTION()
+	FIntPoint Relative3DToRelativeTexelPos(FVector Relative3DPos) const;
+
+	/**
+	 * This function is responsible for transforming 2D grid coordinates into relative 3D position within the actor. For it to work
+	 * correctly, the relative position of the SceneInMinRelativePos and SceneInMaxRelativePos components must be set correctly.
+	 */
+	UFUNCTION()
+	FVector RelativeTexelToRelative3DPos(FIntPoint RelativeTexelPos) const;
 
 	// Components:
 
@@ -78,7 +100,6 @@ protected:
 	// Avoids move the actor outside the actor limits, respect its ActorLocalBounds
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Actor In Texels")
 	bool ClampPosition{false};
-
 
 public:
 	AActorInTexels();

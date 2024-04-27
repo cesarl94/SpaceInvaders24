@@ -17,16 +17,30 @@
 void AActorInTexels::BeginPlay() {
 	Super::BeginPlay();
 
+	MinRelativeLocation = SceneInMinRelativePos->GetRelativeLocation();
+	MaxRelativeLocation = SceneInMaxRelativePos->GetRelativeLocation();
+
 	AGS_SpaceInvaders24 *GameState = Cast<AGS_SpaceInvaders24>(UGameplayStatics::GetGameState(this));
 	CurrentTexelPosition = GameState->WorldToTexelPos(RootComponent->GetComponentLocation());
 	TexelVelocity = FVector2D(0, 0);
+}
+
+FIntPoint AActorInTexels::Relative3DToRelativeTexelPos(FVector Relative3DPos) const {
+	float RelativeTexelXAprox = UMathUtils::RuleOfFive(MinRelativeLocation.Y, 0, MaxRelativeLocation.Y, FMath::RoundToInt(ActorLocalBoundsFloat.Z) - 1, Relative3DPos.Y, false);
+	float RelativeTexelYAprox = UMathUtils::RuleOfFive(MinRelativeLocation.Z, 0, MaxRelativeLocation.Z, FMath::RoundToInt(ActorLocalBoundsFloat.W) - 1, Relative3DPos.Z, false);
+	return FIntPoint(FMath::RoundToInt(RelativeTexelXAprox), FMath::RoundToInt(RelativeTexelYAprox));
+}
+
+FVector AActorInTexels::RelativeTexelToRelative3DPos(FIntPoint RelativeTexelPos) const {
+	float Relative3DPosY = UMathUtils::RuleOfFive(0, MinRelativeLocation.Y, FMath::RoundToInt(ActorLocalBoundsFloat.Z) - 1, MaxRelativeLocation.Y, RelativeTexelPos.X, false);
+	float Relative3DPosZ = UMathUtils::RuleOfFive(0, MinRelativeLocation.Z, FMath::RoundToInt(ActorLocalBoundsFloat.W) - 1, MaxRelativeLocation.Z, RelativeTexelPos.Y, false);
+	return FVector(0, Relative3DPosY, Relative3DPosZ);
 }
 
 AActorInTexels::AActorInTexels() {
 	PrimaryActorTick.bCanEverTick = false;
 
 	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Scene Component"));
-	// SceneComponent->SetupAttachment(RootComponent);
 	SetRootComponent(SceneComponent);
 
 

@@ -4,19 +4,36 @@
 #include "Actors/Enemy.h"
 
 #include "Actors/BlastTrail.h"
+#include "Actors/Bunker.h"
 #include "Actors/Crystal.h"
 #include "Components/BoxComponent.h"
+#include "Components/PrimitiveComponent.h"
+#include "Components/SimpleVoxel.h"
 #include "Core/GS_SpaceInvaders24.h"
 #include "Engine/EngineTypes.h"
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Math/IntPoint.h"
+#include "Math/IntVector.h"
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
 #include "Structs/BlastTrailData.h"
 #include "Structs/GunData.h"
 
+
+void AEnemy::OnBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool FromSweep, const FHitResult &SweepResult) {
+	if (ABunker *HitBunker = Cast<ABunker>(OtherActor)) {
+		OverlappedBunker = HitBunker;
+	}
+}
+
+
+void AEnemy::OnBoxEndOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex) {
+	if (OtherActor == OverlappedBunker) {
+		OverlappedBunker = nullptr;
+	}
+}
 
 void AEnemy::SpawnBlastTrail() {
 	if (BlastTrailData.BlastTrailActorClass == nullptr) {
@@ -63,6 +80,49 @@ void AEnemy::Animate_Implementation(bool Forward, float Rate) const {}
 void AEnemy::ManualInitialize(FIntPoint CoordinateInGrid) {
 	EnemyCoordinateInGrid = CoordinateInGrid;
 	GraphicNodes->SetVisibility(false, true);
+
+	Collider->OnComponentBeginOverlap.AddUniqueDynamic(this, &AEnemy::OnBoxBeginOverlap);
+	Collider->OnComponentEndOverlap.AddUniqueDynamic(this, &AEnemy::OnBoxEndOverlap);
+}
+
+void AEnemy::ManualTick() {
+	if (OverlappedBunker == nullptr) {
+		return;
+	}
+
+	// TODO: comentar esto
+
+	FIntVector4 EnemyBounds = GetIntTexelBoundingBox();
+	FIntVector4 BunkerBounds = OverlappedBunker->GetIntTexelBoundingBox();
+
+	if (EnemyBounds.X + EnemyBounds.Z <= BunkerBounds.X || BunkerBounds.X + BunkerBounds.Z <= EnemyBounds.X || EnemyBounds.Y + EnemyBounds.W <= BunkerBounds.Y ||
+		BunkerBounds.Y + BunkerBounds.W <= EnemyBounds.Y) {
+		// No overlap
+		return;
+	}
+
+	// Calculate the coordinates of the new bounding box representing the overlapping area
+	int32 NewLeft = FMath::Max(EnemyBounds.X, BunkerBounds.X);
+	int32 NewTop = FMath::Max(EnemyBounds.Y, BunkerBounds.Y);
+	int32 NewRight = FMath::Min(EnemyBounds.X + EnemyBounds.Z, BunkerBounds.X + BunkerBounds.Z);
+	int32 NewBottom = FMath::Min(EnemyBounds.Y + EnemyBounds.W, BunkerBounds.Y + BunkerBounds.W);
+	int32 NewWidth = NewRight - NewLeft;
+	int32 NewHeight = NewBottom - NewTop;
+
+	// Create the new overlapping bounding box
+	FIntVector4 OverlappingBounds = FIntVector4(NewLeft, NewTop, NewWidth, NewHeight);
+	FIntPoint BunkerIntTexelPosition = OverlappedBunker->GetIntTexelPosition();
+
+	for (int32 x = 0; x < OverlappingBounds.Z; x++) {
+		for (int32 y = 0; y < OverlappingBounds.W; y++) {
+			int32 BunkerLocalVoxelX = OverlappingBounds.X + x - BunkerIntTexelPosition.X;
+			int32 BunkerLocalVoxelY = OverlappingBounds.Y + y - BunkerIntTexelPosition.Y;
+			USimpleVoxel *BunkerBrick = OverlappedBunker->GetBrickInCoordinate(BunkerLocalVoxelX, BunkerLocalVoxelY);
+			if (BunkerBrick != nullptr && BunkerBrick->IsEnabled()) {
+				BunkerBrick->SetEnabled(false);
+			}
+		}
+	}
 }
 
 void AEnemy::TriggerMoveAnimation(float PlayRate) {

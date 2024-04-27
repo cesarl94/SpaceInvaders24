@@ -93,7 +93,12 @@ void USwarmMind::Shoot() {
 	ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
 	AShot *Shot = GetWorld()->SpawnActor<AShot>(*ShotClass, ShotSpawnWorldPosition, GameState->GetGameObjectOrientation(), ActorSpawnParams);
-	Shot->SetTexelVelocity(FVector2D(0, Shot->GetMovementSpeed() * 60.f));
+
+	// Yes... Shot can be null. WHY ?? well... if the show is spawned in front of a bunker or the player.
+	// It will trigger the overlap instantly after spawn and that can destroy the actor
+	if (Shot != nullptr) {
+		Shot->SetTexelVelocity(FVector2D(0, Shot->GetMovementSpeed() * 60.f));
+	}
 }
 
 FIntPoint USwarmMind::GetCoordinateOfLastAliveEnemyToUpdate() const {
@@ -168,6 +173,7 @@ void USwarmMind::FixedUpdate() {
 		FVector2D EnemyTexelPosition = NextEnemyToUpdate->GetFloatTexelPosition();
 		EnemyTexelPosition += FVector2D(HorizontalMovement, VerticalMovement);
 		NextEnemyToUpdate->SetTexelPosition(EnemyTexelPosition, !MovingDown);
+		NextEnemyToUpdate->ManualTick();
 
 		NextEnemyToUpdate->TriggerMoveAnimation(static_cast<float>(EnemiesPerRow * EnemyTypesByRow.Num()) / static_cast<float>(AliveEnemiesCount));
 
@@ -274,7 +280,7 @@ void USwarmMind::OnNewGameState(EGameState NewGameState) {
 void USwarmMind::ManualInitialize() {
 	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
 
-	_Enemies2D.SetNumUninitialized(EnemiesPerRow * EnemyTypesByRow.Num());
+	_Enemies2D.SetNum(EnemiesPerRow * EnemyTypesByRow.Num());
 
 	FActorSpawnParameters ActorSpawnParams;
 	ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;

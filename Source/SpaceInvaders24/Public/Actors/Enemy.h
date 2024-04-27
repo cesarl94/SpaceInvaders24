@@ -25,6 +25,9 @@ class SPACEINVADERS24_API AEnemy : public AActorInTexels {
 
 private:
 	UPROPERTY()
+	class ABunker *OverlappedBunker;
+
+	UPROPERTY()
 	EEnemyState State{EEnemyState::IDLE};
 
 	UPROPERTY()
@@ -35,6 +38,12 @@ private:
 
 	UPROPERTY()
 	bool LastAnimationWasForward{false};
+
+	UFUNCTION()
+	void OnBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool FromSweep, const FHitResult &SweepResult);
+
+	UFUNCTION()
+	void OnBoxEndOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex);
 
 	UFUNCTION()
 	void SpawnBlastTrail();
@@ -70,6 +79,8 @@ protected:
 public:
 	// Called from GS_SpaceInvaders24 after create
 	void ManualInitialize(FIntPoint CoordinateInGrid);
+
+	void ManualTick();
 
 	UPROPERTY()
 	float AnimationPlayRate{1};

@@ -5,6 +5,7 @@
 #include "Actors/ActorInTexels.h"
 #include "Components/BoxComponent.h"
 #include "Components/PrimitiveComponent.h"
+#include "Components/StaticMeshComponent.h"
 #include "CoreMinimal.h"
 #include "Engine/EngineTypes.h"
 #include "Math/IntVector.h"
@@ -25,6 +26,12 @@ class SPACEINVADERS24_API AShot : public AActorInTexels {
 	GENERATED_BODY()
 
 private:
+	UPROPERTY()
+	class ABunker *OverlappedBunker;
+
+	UPROPERTY()
+	TArray<UStaticMeshComponent *> Voxels;
+
 	UFUNCTION()
 	void OnBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool FromSweep, const FHitResult &SweepResult);
 
@@ -34,6 +41,9 @@ private:
 	// Called from an event of ActorInTexels
 	UFUNCTION()
 	void TouchLimit(EDirection Direction);
+
+	UFUNCTION()
+	bool IsTouchingBunkerBrick();
 
 	UFUNCTION()
 	void Dissapear();
