@@ -81,9 +81,11 @@ Because of this, I record a video of the updated gameplay from the Unreal editor
 
 [![VideoGameplay](RawContent/video_thumbnail.png)](https://youtu.be/685fZSb53ho)
 
+You can download the [latest playable version of this game here](https://drive.google.com/file/d/1vzxFHMdYkiYCXqNVAkuTV51b_oH3GZkf/view?usp=drive_link).
+
 ---
 
-If you want to try the playable version of this project, [the following link](https://drive.google.com/file/d/1vzxFHMdYkiYCXqNVAkuTV51b_oH3GZkf/view?usp=drive_link) will provide you with an executable for Windows. The game controls are as follows:<br>
+The game controls are as follows:<br>
 * Move sideways: ←→ (arrow keys)<br>
 * Shoot: Spacebar<br>
 * Slow time: 1 (requires at least 1 crystal)<br>
@@ -99,4 +101,20 @@ I found the error that was preventing the game from being playable. Almost undet
 
 ![error3](RawContent/error/error3.png)
 
-Now, if you'd like, you can download the [latest playable version of this game here](https://drive.google.com/file/d/1vzxFHMdYkiYCXqNVAkuTV51b_oH3GZkf/view?usp=drive_link).
+You can download the [latest playable version of this game here](https://drive.google.com/file/d/1vzxFHMdYkiYCXqNVAkuTV51b_oH3GZkf/view?usp=drive_link).
+
+---
+
+### 27/04/24 Saturday of coding!
+
+Still tackling the Space Invaders challenge. Today I finished bringing the shots to life. Since the last video I uploaded until today, I added several things, among them, crystals that are dropped by enemies, and when shot at, they are collected. These crystals allow us to manipulate time. With 1, I make time run slower, with 2 I can stop time, and with 3 the enemies will rewind 3 seconds back in time. In addition to that, the enemies now have something to defend themselves with! They shoot back, and those shots can kill the player or erode the bunkers. They even collide with each other, just like in the original arcade game.
+
+Now, I'm going to work on giving this game a UI to inform us of what's happening in the game.
+
+There's new gameplay video!
+
+[![VideoGameplay2](RawContent/video_thumbnail2.png)](https://www.youtube.com/watch?v=U96QdHXcFZc)
+
+You can download the [latest playable version of this game here](https://drive.google.com/file/d/1vzxFHMdYkiYCXqNVAkuTV51b_oH3GZkf/view?usp=drive_link).
+
+---
