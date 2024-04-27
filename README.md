@@ -81,7 +81,7 @@ Because of this, I record a video of the updated gameplay from the Unreal editor
 
 [![VideoGameplay](RawContent/video_thumbnail.png)](https://youtu.be/685fZSb53ho)
 
-You can download the [latest playable version of this game here](https://drive.google.com/file/d/1vzxFHMdYkiYCXqNVAkuTV51b_oH3GZkf/view?usp=drive_link).
+You can download the [latest playable version of the game here](https://github.com/cesarl94/SpaceInvaders24/releases/tag/0.1.0) (Version 0.1.0)
 
 ---
 
@@ -101,7 +101,7 @@ I found the error that was preventing the game from being playable. Almost undet
 
 ![error3](RawContent/error/error3.png)
 
-You can download the [latest playable version of this game here](https://drive.google.com/file/d/1vzxFHMdYkiYCXqNVAkuTV51b_oH3GZkf/view?usp=drive_link).
+You can download [this version of the game here](https://github.com/cesarl94/SpaceInvaders24/releases/tag/0.1.1) (Version 0.1.1).
 
 ---
 
@@ -115,6 +115,6 @@ There's new gameplay video!
 
 [![VideoGameplay2](RawContent/video_thumbnail2.png)](https://www.youtube.com/watch?v=U96QdHXcFZc)
 
-You can download the [latest playable version of this game here](https://drive.google.com/file/d/1vzxFHMdYkiYCXqNVAkuTV51b_oH3GZkf/view?usp=drive_link).
+You can download [this version of the game here](https://github.com/cesarl94/SpaceInvaders24/releases/tag/0.1.2) (Version 0.1.2)
 
 ---
