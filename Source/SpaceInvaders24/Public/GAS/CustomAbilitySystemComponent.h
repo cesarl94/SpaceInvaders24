@@ -13,6 +13,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnTagUpdated, const FGameplayTag &, Tag, bool, TagExists);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FAttributeChanged2, EPlayerAttribute, AttributeEnum, float, OldValue, float, NewValue);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FActivateAbility, UGameplayAbility *, Ability);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FCommitedAbility, UGameplayAbility *, Ability);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FEndAbility, UGameplayAbility *, Ability, bool, WasCancelled);
 
 
@@ -38,7 +39,7 @@ protected:
 
 public:
 	virtual void NotifyAbilityActivated(const FGameplayAbilitySpecHandle Handle, UGameplayAbility *Ability) override;
-
+	virtual void NotifyAbilityCommit(UGameplayAbility *Ability) override;
 	virtual void NotifyAbilityEnded(FGameplayAbilitySpecHandle Handle, UGameplayAbility *Ability, bool bWasCancelled) override;
 
 	// This is ugly, and seems innecesary, but is an exception for get the GameState in a place where I haven't world context but I have a reference to an object of this class
@@ -93,6 +94,9 @@ public:
 
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
 	FActivateAbility OnAbilityActivated;
+
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
+	FCommitedAbility OnAbilityCommited;
 
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
 	FEndAbility OnAbilityEnded;

@@ -5,6 +5,7 @@
 UENUM(BlueprintType, DisplayName = "Player Attribute")
 enum class EPlayerAttribute : uint8 {
 	Crystals UMETA(DisplayName = "Crystals"),
+	MaxCrystals UMETA(DisplayName = "Max Crystals"),
 	Points UMETA(DisplayName = "Points"),
 	Lives UMETA(DisplayName = "Lives"),
 	Level UMETA(DisplayName = "Level"),

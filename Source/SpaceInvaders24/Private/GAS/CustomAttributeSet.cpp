@@ -6,6 +6,8 @@ FGameplayAttribute UCustomAttributeSet::GetAttributeByEnum(EPlayerAttribute Attr
 	switch (AttributeEnum) {
 	case EPlayerAttribute::Crystals:
 		return GetCrystalsAttribute();
+	case EPlayerAttribute::MaxCrystals:
+		return GetMaxCrystalsAttribute();
 	case EPlayerAttribute::Points:
 		return GetPointsAttribute();
 	case EPlayerAttribute::Lives:
@@ -42,6 +44,8 @@ void UCustomAttributeSet::PostAttributeChange(const FGameplayAttribute &Attribut
 	EPlayerAttribute AttributeEnum;
 	if (Attribute == GetCrystalsAttribute()) {
 		AttributeEnum = EPlayerAttribute::Crystals;
+	} else if (Attribute == GetMaxCrystalsAttribute()) {
+		AttributeEnum = EPlayerAttribute::MaxCrystals;
 	} else if (Attribute == GetPointsAttribute()) {
 		AttributeEnum = EPlayerAttribute::Points;
 	} else if (Attribute == GetLivesAttribute()) {

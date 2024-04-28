@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameStateBase.h"
+#include "Internationalization/StringTable.h"
 #include "Math/IntPoint.h"
 #include "Math/Rotator.h"
 #include "Utils/Enums.h"
@@ -133,6 +134,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SpaceInvaders24: Game Data|Shots")
 	TMap<EShotType, TSubclassOf<class AShot>> ShotsClasses;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SpaceInvaders24: Game Data|Localization")
+	UStringTable *ChosenLanguage;
+
 	UPROPERTY(BlueprintReadOnly, Transient)
 	int32 Level{0};
 
@@ -141,6 +145,9 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, Transient)
 	int32 Lives{3};
+
+	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: Game State", DisplayName = "GS_SpaceInvaders24 GetLocalizatedString")
+	FString GetLocalizatedString(FString Key) const;
 
 public:
 	// Public methods:

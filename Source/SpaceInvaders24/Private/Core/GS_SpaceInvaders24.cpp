@@ -12,11 +12,29 @@
 #include "GAS/CustomAbilitySystemComponent.h"
 #include "GAS/GASEnums.h"
 #include "GameFramework/PlayerState.h"
+#include "Internationalization/StringTable.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Kismet/KismetTextLibrary.h"
 #include "Math/IntPoint.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
+
+FString AGS_SpaceInvaders24::GetLocalizatedString(FString Key) const {
+	if (ChosenLanguage == nullptr) {
+		return Key;
+	}
+
+	FName StringTableId = ChosenLanguage->GetStringTableId();
+	FText LocalizatedText = UKismetTextLibrary::TextFromStringTable(StringTableId, Key);
+	FString LocalizatedString = LocalizatedText.ToString();
+
+	if (LocalizatedString == "<MISSING STRING TABLE ENTRY>") {
+		return Key;
+	}
+
+	return LocalizatedString;
+}
 
 
 AGS_SpaceInvaders24::AGS_SpaceInvaders24() {
