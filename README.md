@@ -118,3 +118,16 @@ There's new gameplay video!
 You can download [this version of the game here](https://github.com/cesarl94/SpaceInvaders24/releases/tag/0.1.2) (Version 0.1.2)
 
 ---
+
+28/04/24 Sunday night report
+
+Today I finished the first part of the UI. I started with the most difficult part, which is the skills section, as everything is almost animated, and everything depends on each other. The result looks quite good, feels good, and I think it's very easy for the user to understand.
+
+Next up is the rest of the UI, life indicators, points, etc. And signs for level, game over, etc. I've already made two String Tables to have the game in both Spanish and English; implementation is the only thing left.
+
+Along with that, the scene flow will also need to be addressed.
+
+Here you can see a new video about the progress of the game
+[![VideoGameplay3](RawContent/video_thumbnail3.png)](https://www.youtube.com/watch?v=xv49vm1mIrs)
+
+You can download [this version of the game here](https://github.com/cesarl94/SpaceInvaders24/releases/tag/0.1.3) (Version 0.1.3)
