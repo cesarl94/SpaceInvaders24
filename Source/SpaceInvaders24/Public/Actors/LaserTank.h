@@ -6,6 +6,7 @@
 #include "Actors/ActorInTexels.h"
 #include "Components/BoxComponent.h"
 #include "CoreMinimal.h"
+#include "Engine/EngineTypes.h"
 #include "GameplayTagContainer.h"
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
@@ -15,19 +16,16 @@
 
 #include "LaserTank.generated.h"
 
+
 class ALaserTank;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlayerDie);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlayerSimpleEvent);
 
 UCLASS()
 class SPACEINVADERS24_API ALaserTank : public AActorInTexels, public IAbilitySystemInterface {
 	GENERATED_BODY()
 
 private:
-	UPROPERTY()
-	float CurrentHorizontalMovement{0};
-
-
 #pragma region // GAS
 	UPROPERTY()
 	bool bIsInputBound{false};
@@ -35,14 +33,33 @@ private:
 	UFUNCTION()
 	void InitializeGAS();
 
+	UFUNCTION()
+	void InitializeAbilities();
+
+	UFUNCTION()
+	void ApplyDefaultEffects();
+
 	// To add mapping context to GAS
 	UFUNCTION()
 	void BindInput();
 #pragma endregion
 
-protected:
-	virtual void BeginPlay() override;
+	UPROPERTY()
+	float CurrentHorizontalMovement{0};
 
+	UPROPERTY()
+	FTimerHandle InputTimeHandle;
+
+	UPROPERTY()
+	class ABlastTrail *BlastTrailA;
+
+	UPROPERTY()
+	class ABlastTrail *BlastTrailB;
+
+	UFUNCTION()
+	void SpawnBlastTrails();
+
+protected:
 	// Components:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	class UAbilitySystemComponent *AbilitySystemComponent;
@@ -61,6 +78,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: GAS")
 	TArray<TSubclassOf<class UCustomGameplayAbility>> DefaultAbilities;
 
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: GAS")
+	TArray<TSubclassOf<class UGameplayEffect>> DefaultEffects;
+
 	// Since LaserTank has a death animation of 2 frames, BlastTrailDataA and B represent each frame. Ignore Duration, as there is a new Duration below.
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Laser Tank Blast Trail Data")
 	FBlastTrailData BlastTrailDataA;
@@ -73,9 +93,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Laser Tank Blast Trail Data")
 	float SwapBlastTrailFrequence{0.05f};
 
-	// Total duration of death animation. In seconds
+	// Total times that we'll see blast trail changes
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Laser Tank Blast Trail Data")
-	float TotalBlastTrailDuration{0.5f};
+	int32 SwapBlastTrailCount = 11;
 
 	// for binding the enhanced input system with GAS
 	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
@@ -83,9 +103,17 @@ protected:
 public:
 	ALaserTank();
 
-	void StartGame();
+	void ManualInitialize();
+
+	void ManualReset();
 
 	void ManualTick(float DeltaTime);
+
+	bool CanRevive() const;
+
+	void Revive();
+
+	void PassLevel(FIntPoint NewTexelPosition);
 
 	UFUNCTION(BlueprintCallable, Category = "Laser Tank", DisplayName = "LaserTank IsAlive", Meta = (CompactNodeTitle = "Is alive?"))
 	bool IsAlive() const;
@@ -117,5 +145,8 @@ public:
 
 	// Events:
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
-	FOnPlayerDie OnDie;
+	FOnPlayerSimpleEvent OnStartDying;
+
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
+	FOnPlayerSimpleEvent OnFinallyDie;
 };

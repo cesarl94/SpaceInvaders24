@@ -83,6 +83,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: GAS")
 	void SetAttributeValueByEnum(EPlayerAttribute AttributeEnum, float Value);
 
+	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: GAS")
+	void AddToAttributeValueByEnum(EPlayerAttribute AttributeEnum, float ValueToAdd);
+
 	void SetAttributeSetReference(class UCustomAttributeSet *AttributeSet);
 
 	// Events:

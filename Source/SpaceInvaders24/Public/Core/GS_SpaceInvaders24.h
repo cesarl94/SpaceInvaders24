@@ -11,6 +11,8 @@
 
 #include "GS_SpaceInvaders24.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnNewGameState, EGameState, NewState);
+
 
 UCLASS()
 class SPACEINVADERS24_API AGS_SpaceInvaders24 : public AGameStateBase {
@@ -91,7 +93,11 @@ private:
 
 	// Called from LaserTank's event
 	UFUNCTION()
-	void OnPlayerDie();
+	void OnPlayerStartDying();
+
+	// Called from LaserTank's event
+	UFUNCTION()
+	void OnPlayerFinallyDie();
 
 protected:
 	virtual void BeginPlay() override;
@@ -136,15 +142,6 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SpaceInvaders24: Game Data|Localization")
 	UStringTable *ChosenLanguage;
-
-	UPROPERTY(BlueprintReadOnly, Transient)
-	int32 Level{0};
-
-	UPROPERTY(BlueprintReadOnly, Transient)
-	int32 Points{0};
-
-	UPROPERTY(BlueprintReadOnly, Transient)
-	int32 Lives{3};
 
 	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: Game State", DisplayName = "GS_SpaceInvaders24 GetLocalizatedString")
 	FString GetLocalizatedString(FString Key) const;
@@ -235,4 +232,8 @@ public:
 	float GetLastCrystalDeltaTime();
 
 #pragma endregion
+
+	// Events:
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
+	FOnNewGameState OnNewGameState;
 };

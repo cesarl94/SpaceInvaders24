@@ -89,6 +89,11 @@ void UCustomAbilitySystemComponent::SetAttributeValueByEnum(EPlayerAttribute Att
 	SetNumericAttributeBase(Attribute, Value);
 }
 
+void UCustomAbilitySystemComponent::AddToAttributeValueByEnum(EPlayerAttribute AttributeEnum, float ValueToAdd) {
+	float AttributeValue = GetAttributeValueByEnum(AttributeEnum);
+	SetAttributeValueByEnum(AttributeEnum, AttributeValue + ValueToAdd);
+}
+
 void UCustomAbilitySystemComponent::SetAttributeSetReference(UCustomAttributeSet *AttributeSet) {
 	CustomAttributeSet = AttributeSet;
 	CustomAttributeSet->OnAttributeChange.AddUniqueDynamic(this, &UCustomAbilitySystemComponent::OnAttributeChanged);

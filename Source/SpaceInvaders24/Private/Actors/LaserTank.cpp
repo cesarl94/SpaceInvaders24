@@ -3,8 +3,12 @@
 #include "Actors/LaserTank.h"
 
 #include "AbilitySystemComponent.h"
+#include "Actors/BlastTrail.h"
 #include "Actors/Shot.h"
 #include "Core/GS_SpaceInvaders24.h"
+#include "Engine/EngineTypes.h"
+#include "FCTween.h"
+#include "FCTweenInstance.h"
 #include "GAS/CustomAbilitySystemComponent.h"
 #include "GAS/CustomAttributeSet.h"
 #include "GAS/CustomGameplayAbility.h"
@@ -25,6 +29,12 @@ void ALaserTank::InitializeGAS() {
 	ASC->SetAttributeSetReference(AttributeSet);
 	ASC->InitAbilityActorInfo(this, this);
 
+	InitializeAbilities();
+
+	BindInput();
+}
+
+void ALaserTank::InitializeAbilities() {
 	for (TSubclassOf<UCustomGameplayAbility> &Ability : DefaultAbilities) {
 		const EGASAbilityInput AbilityInputID = Ability.GetDefaultObject()->AbilityInputID;
 
@@ -34,8 +44,18 @@ void ALaserTank::InitializeGAS() {
 			AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(Ability, 1, static_cast<int32>(AbilityInputID), this));
 		}
 	}
+}
 
-	BindInput();
+void ALaserTank::ApplyDefaultEffects() {
+	FGameplayEffectContextHandle EffectContext = AbilitySystemComponent->MakeEffectContext();
+	EffectContext.AddSourceObject(this);
+
+	for (TSubclassOf<UGameplayEffect> &Effect : DefaultEffects) {
+		FGameplayEffectSpecHandle SpecHandle = AbilitySystemComponent->MakeOutgoingSpec(Effect, 1, EffectContext);
+		if (SpecHandle.IsValid()) {
+			FActiveGameplayEffectHandle GEHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+		}
+	}
 }
 
 void ALaserTank::BindInput() {
@@ -50,12 +70,21 @@ void ALaserTank::BindInput() {
 	bIsInputBound = true;
 }
 
-void ALaserTank::BeginPlay() {
-	Super::BeginPlay();
+void ALaserTank::SpawnBlastTrails() {
+	if (BlastTrailDataA.BlastTrailActorClass == nullptr || BlastTrailDataB.BlastTrailActorClass == nullptr) {
+		return;
+	}
 
-	GraphicNodes->SetVisibility(false, true);
+	AGS_SpaceInvaders24 *GameState = Cast<AGS_SpaceInvaders24>(UGameplayStatics::GetGameState(this));
 
-	InitializeGAS();
+	FActorSpawnParameters ActorSpawnParams;
+	ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	BlastTrailA = GetWorld()->SpawnActor<ABlastTrail>(BlastTrailDataA.BlastTrailActorClass, FVector(0, 0, 0), GameState->GetGameObjectOrientation(), ActorSpawnParams);
+	BlastTrailB = GetWorld()->SpawnActor<ABlastTrail>(BlastTrailDataB.BlastTrailActorClass, FVector(0, 0, 0), GameState->GetGameObjectOrientation(), ActorSpawnParams);
+
+	BlastTrailA->SetVisibility(false);
+	BlastTrailB->SetVisibility(false);
 }
 
 void ALaserTank::SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) {
@@ -74,14 +103,22 @@ void ALaserTank::SetupPlayerInputComponent(class UInputComponent *PlayerInputCom
 }
 
 ALaserTank::ALaserTank() : Super() {
-	// GAS
+	// GAS Components:
 	AbilitySystemComponent = CreateDefaultSubobject<UCustomAbilitySystemComponent>("Ability System Component");
 	AttributeSet = CreateDefaultSubobject<UCustomAttributeSet>("Attribute Set");
 }
 
-void ALaserTank::StartGame() {
-	GetCustomAbilitySystemComponent()->AddTagByString("Player.IsAlive");
-	GraphicNodes->SetVisibility(true, true);
+void ALaserTank::ManualInitialize() {
+	SetVisibility(false);
+
+	InitializeGAS();
+
+	SpawnBlastTrails();
+}
+
+void ALaserTank::ManualReset() {
+	ApplyDefaultEffects();
+	Revive();
 }
 
 void ALaserTank::ManualTick(float DeltaTime) {
@@ -89,6 +126,27 @@ void ALaserTank::ManualTick(float DeltaTime) {
 		ApplyVelocity(DeltaTime);
 	}
 }
+
+bool ALaserTank::CanRevive() const {
+	int32 PlayerLives = GetCustomAbilitySystemComponent()->GetAttributeValueByEnum(EPlayerAttribute::Lives);
+
+	return PlayerLives - 1 >= 0;
+}
+
+void ALaserTank::Revive() {
+	if (!CanRevive()) {
+		return;
+	}
+	GetCustomAbilitySystemComponent()->AddTagByString("Player.IsAlive");
+
+	Collider->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+
+	SetVisibility(true);
+
+	GetCustomAbilitySystemComponent()->AddToAttributeValueByEnum(EPlayerAttribute::Lives, -1);
+}
+
+void ALaserTank::PassLevel(FIntPoint NewTexelPosition) { SetTexelPosition(NewTexelPosition, false); }
 
 bool ALaserTank::IsAlive() const { return GetCustomAbilitySystemComponent()->HasTagByString("Player.IsAlive"); }
 
@@ -110,7 +168,40 @@ bool ALaserTank::CanShot() const {
 	return true;
 }
 
-void ALaserTank::Kill(bool IsForcedKill) { OnDie.Broadcast(); }
+void ALaserTank::Kill(bool IsForcedKill) {
+	if (!IsAlive()) {
+		return;
+	}
+	if (IsForcedKill) {
+
+		return;
+	}
+	Collider->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	SetVisibility(false);
+	BlastTrailA->SetVisibility(true);
+
+	GetCustomAbilitySystemComponent()->RemoveTagByString("Player.IsAlive");
+
+	BlastTrailA->SetTexelPosition(GetFloatTexelPosition());
+	BlastTrailB->SetTexelPosition(GetFloatTexelPosition());
+
+	FCTween::Play(
+		0, 1, [&](float t) {}, SwapBlastTrailFrequence, EFCEase::Linear)
+		->SetLoops(SwapBlastTrailCount)
+		->SetOnLoop([&]() {
+			BlastTrailA->ToggleVisibility();
+			BlastTrailB->ToggleVisibility();
+		})
+		->SetOnComplete([&]() {
+			BlastTrailA->SetVisibility(false);
+			BlastTrailB->SetVisibility(false);
+			GetWorld()->GetTimerManager().SetTimer(
+				InputTimeHandle, [&]() { OnFinallyDie.Broadcast(); }, 0.5f, false);
+		});
+
+	OnStartDying.Broadcast();
+}
 
 UAbilitySystemComponent *ALaserTank::GetAbilitySystemComponent() const { return AbilitySystemComponent; }
 

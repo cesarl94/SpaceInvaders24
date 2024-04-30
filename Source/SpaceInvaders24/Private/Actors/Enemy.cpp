@@ -79,7 +79,8 @@ void AEnemy::Animate_Implementation(bool Forward, float Rate) const {}
 
 void AEnemy::ManualInitialize(FIntPoint CoordinateInGrid) {
 	EnemyCoordinateInGrid = CoordinateInGrid;
-	GraphicNodes->SetVisibility(false, true);
+
+	SetVisibility(false);
 
 	Collider->OnComponentBeginOverlap.AddUniqueDynamic(this, &AEnemy::OnBoxBeginOverlap);
 	Collider->OnComponentEndOverlap.AddUniqueDynamic(this, &AEnemy::OnBoxEndOverlap);
@@ -136,7 +137,7 @@ void AEnemy::ManualReset(FIntPoint NewTexelPosition) {
 	// we need to set to the first frame inmediatly
 	Animate(false, 1000000.f);
 
-	GraphicNodes->SetVisibility(true, true);
+	SetVisibility(true);
 	Collider->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	Alive = true;
 }
@@ -149,7 +150,7 @@ bool AEnemy::IsAlive() const { return Alive; }
 
 void AEnemy::Kill(bool IsForcedKill) {
 	Alive = false;
-	GraphicNodes->SetVisibility(false, true);
+	SetVisibility(false);
 
 	Collider->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 

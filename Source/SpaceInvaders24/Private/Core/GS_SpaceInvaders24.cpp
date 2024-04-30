@@ -55,7 +55,9 @@ void AGS_SpaceInvaders24::SpawnPlayer() {
 
 	FVector PlayerWorldPosition = TexelToWorldPos(PlayerSpawnPosition);
 	Player = GetWorld()->SpawnActor<ALaserTank>(PlayerClass, PlayerWorldPosition, GetGameObjectOrientation(), ActorSpawnParams);
-	Player->OnDie.AddUniqueDynamic(this, &AGS_SpaceInvaders24::OnPlayerDie);
+	Player->ManualInitialize();
+	Player->OnStartDying.AddUniqueDynamic(this, &AGS_SpaceInvaders24::OnPlayerStartDying);
+	Player->OnFinallyDie.AddUniqueDynamic(this, &AGS_SpaceInvaders24::OnPlayerFinallyDie);
 
 	if (PlayerArray.Num() > 0) {
 		APlayerController *PC = PlayerArray[0]->GetPlayerController();
@@ -95,23 +97,13 @@ void AGS_SpaceInvaders24::SpawnUFO() {
 }
 
 void AGS_SpaceInvaders24::ResetGame() {
-	Level = 0;
-	Lives = 3;
-	Points = 0;
-
 	LastUFOAppearance = 0;
-
-	SpawnUFO();
-	SpawnPlayer();
-	SpawnBunkers();
-
-	GameState = EGameState::PLAYING_FORWARD;
-	GameTimeManager->SetNewState(ETimeState::FORWARD);
 
 	SwarmMind->ManualReset(0);
 
+	Player->ManualReset();
 
-	Player->StartGame();
+	SetNewState(EGameState::PLAYING_FORWARD);
 }
 
 
@@ -122,10 +114,7 @@ void AGS_SpaceInvaders24::UFOAppear() {
 
 void AGS_SpaceInvaders24::OnTimeStateFinished() { SetNewState(EGameState::PLAYING_FORWARD); }
 
-void AGS_SpaceInvaders24::OnEnemyDiedEvent(AEnemy *EnemyDied, int32 PointsGiven) {
-	Points += PointsGiven;
-	UKismetSystemLibrary::PrintString(GetWorld(), FString::Printf(TEXT("Enemy Died. New points: %d"), Points), true, true, FColor::Green, 5);
-}
+void AGS_SpaceInvaders24::OnEnemyDiedEvent(AEnemy *EnemyDied, int32 PointsGiven) { Player->GetCustomAbilitySystemComponent()->AddToAttributeValueByEnum(EPlayerAttribute::Points, PointsGiven); }
 
 void AGS_SpaceInvaders24::OnEnemiesCantGoLower() {
 	UKismetSystemLibrary::PrintString(GetWorld(), "GAME OVER. Press Alt+F4 to close this window", true, true, FColor::Red, 5);
@@ -146,8 +135,7 @@ void AGS_SpaceInvaders24::OnShotHit(AShot *Shot) { Shots.Remove(Shot); }
 
 void AGS_SpaceInvaders24::OnCrystalHit(ACrystal *Crystal, bool AddCrystalCount) {
 	if (AddCrystalCount) {
-		int32 CurrentCrystalCount = Player->GetCustomAbilitySystemComponent()->GetAttributeValueByEnum(EPlayerAttribute::Crystals);
-		Player->GetCustomAbilitySystemComponent()->SetAttributeValueByEnum(EPlayerAttribute::Crystals, CurrentCrystalCount + 1);
+		Player->GetCustomAbilitySystemComponent()->AddToAttributeValueByEnum(EPlayerAttribute::Crystals, 1);
 	}
 	Crystals.Remove(Crystal);
 }
@@ -158,9 +146,23 @@ void AGS_SpaceInvaders24::OnUFOTouchBorder(EDirection Direction) {
 	}
 }
 
-void AGS_SpaceInvaders24::OnPlayerDie() {
-	UKismetSystemLibrary::PrintString(GetWorld(), "GAME OVER", true, true, FColor::Red, 5);
-	SetNewState(EGameState::GAME_OVER);
+void AGS_SpaceInvaders24::OnPlayerStartDying() {
+	for (int32 i = 0; i < Shots.Num(); i++) {
+		Shots[i]->Destroy();
+	}
+	Shots.Empty();
+
+	SetNewState(EGameState::DYING);
+}
+
+void AGS_SpaceInvaders24::OnPlayerFinallyDie() {
+	if (Player->CanRevive()) {
+		Player->Revive();
+		SetNewState(EGameState::PLAYING_FORWARD);
+	} else {
+		UKismetSystemLibrary::PrintString(GetWorld(), "GAME OVER. Press Alt+F4 to close this window", true, true, FColor::Red, 5);
+		SetNewState(EGameState::GAME_OVER);
+	}
 }
 
 void AGS_SpaceInvaders24::BeginPlay() {
@@ -169,7 +171,12 @@ void AGS_SpaceInvaders24::BeginPlay() {
 	GamePreviewActor = Cast<AGamePreviewActor>(UGameplayStatics::GetActorOfClass(this, AGamePreviewActor::StaticClass()));
 	GamePreviewActor->ManualInitialize();
 
+	// Initialize Swarm and spawns all enemies
 	SwarmMind->ManualInitialize();
+
+	SpawnUFO();
+	SpawnPlayer();
+	SpawnBunkers();
 
 	ResetGame();
 }
@@ -183,12 +190,13 @@ void AGS_SpaceInvaders24::Tick(float DeltaTime) {
 
 	SwarmMind->ManualTick(GetLastCrystalDeltaTime(), GetCrystalTotalSeconds());
 
-	if ((GameState == EGameState::PLAYING_FORWARD || GameState == EGameState::PLAYING_SLOW_TIME_DOWN) && GetCrystalTotalSeconds() - LastUFOAppearance > UFOSecondsPerAppearance) {
-		LastUFOAppearance += UFOSecondsPerAppearance;
-		UFOAppear();
-	}
-	if (UFO->IsAlive()) {
-		UFO->ApplyVelocity(GetLastCrystalDeltaTime());
+	if (GameState == EGameState::PLAYING_FORWARD || GameState == EGameState::PLAYING_SLOW_TIME_DOWN) {
+		if (GetCrystalTotalSeconds() - LastUFOAppearance > UFOSecondsPerAppearance) {
+			LastUFOAppearance += UFOSecondsPerAppearance;
+			UFOAppear();
+		} else if (UFO->IsAlive()) {
+			UFO->ApplyVelocity(GetLastCrystalDeltaTime());
+		}
 	}
 
 
@@ -210,26 +218,10 @@ TSubclassOf<AShot> AGS_SpaceInvaders24::GetShotClass(EShotType ShotClassEnum) co
 void AGS_SpaceInvaders24::SetNewState(EGameState NewGameState) {
 	GameState = NewGameState;
 
-	switch (NewGameState) {
-	case EGameState::PLAYING_FORWARD:
-	case EGameState::PASSING_LEVEL:
-		GameTimeManager->SetNewState(ETimeState::FORWARD);
-		break;
-	case EGameState::PLAYING_SLOW_TIME_DOWN:
-		GameTimeManager->SetNewState(ETimeState::SLOW);
-		break;
-	case EGameState::PLAYING_PAUSED_TIME:
-		GameTimeManager->SetNewState(ETimeState::PAUSED);
-		break;
-	case EGameState::PLAYING_REVERSE:
-		GameTimeManager->SetNewState(ETimeState::BACKWARD);
-		break;
-	default:
-		GameTimeManager->SetNewState(ETimeState::IDLE);
-		break;
-	}
-
+	GameTimeManager->OnNewGameState(NewGameState);
 	SwarmMind->OnNewGameState(NewGameState);
+
+	OnNewGameState.Broadcast(NewGameState);
 }
 
 EGameState AGS_SpaceInvaders24::GetGameState() const { return GameState; }

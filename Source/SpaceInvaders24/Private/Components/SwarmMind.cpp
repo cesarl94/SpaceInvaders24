@@ -372,7 +372,9 @@ void USwarmMind::ManualTick(float CrystalDeltaTime, float CrystalTotalSeconds) {
 
 			if (CrystalTotalSeconds - LastTimeAnEnemyShootted >= EnemyShotFrequency) {
 				LastTimeAnEnemyShootted += EnemyShotFrequency;
-				Shoot();
+				if (!OnBackwards) {
+					Shoot();
+				}
 			}
 		}
 

@@ -57,6 +57,12 @@ AActorInTexels::AActorInTexels() {
 	SceneInMaxRelativePos->SetupAttachment(SceneComponent);
 }
 
+void AActorInTexels::SetVisibility(bool Visible) { GraphicNodes->SetVisibility(Visible, true); }
+
+void AActorInTexels::ToggleVisibility() { SetVisibility(!GetVisibility()); }
+
+bool AActorInTexels::GetVisibility() const { return GraphicNodes->GetVisibleFlag(); }
+
 void AActorInTexels::ApplyVelocity(float DeltaTime) {
 	FVector2D PrevTexelPosition = GetFloatTexelPosition();
 	FVector2D NewTexelPosition = PrevTexelPosition + GetTexelVelocity() * DeltaTime;

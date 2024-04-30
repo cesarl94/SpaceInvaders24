@@ -16,39 +16,34 @@ void UGameTimeManager::ManualReset() {
 }
 
 void UGameTimeManager::ManualTick(float DeltaTime) {
-	FTimeStateData *CurrentTimeStateData = TimeStateData.Find(TimeState);
+	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
+
+	FTimeStateData *CurrentTimeStateData = TimeStateData.Find(GameState->GetGameState());
 	if (CurrentTimeStateData != nullptr) {
 		if (CurrentTimeStateData->Duration > 0) {
-			AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
 			float GlobalTimeSeconds = GameState->GetServerWorldTimeSeconds();
 			float TimeSinceLastStateChange = GlobalTimeSeconds - GlobalTimeAtLastStateChange;
 
 			if (TimeSinceLastStateChange > CurrentTimeStateData->Duration) {
 				// I emit this event that will be heared by the GS
 				OnTimeStateFinished.Broadcast();
-				// after emit that event, the GS calls SetNewState so now I have another state and I need to read my StateData again
-				CurrentTimeStateData = TimeStateData.Find(TimeState);
+				// probably after emit that event, the GS has a new state, so I need to read my StateData again
+				CurrentTimeStateData = TimeStateData.Find(GameState->GetGameState());
 			}
 		}
 		LastDeltaTime = DeltaTime * CurrentTimeStateData->DeltaTimeDilation;
 		LastCrystalDeltaTime = DeltaTime * CurrentTimeStateData->DeltaTimeDilationByCrystal;
 	} else {
-		LastDeltaTime = DeltaTime;
-		LastCrystalDeltaTime = DeltaTime;
+		LastDeltaTime = 0;
+		LastCrystalDeltaTime = 0;
 	}
 
 	NormalGameTotalSeconds += LastDeltaTime;
 	CrystalTotalSeconds += LastCrystalDeltaTime;
 }
 
-ETimeState UGameTimeManager::GetTimeState() { return TimeState; }
 
-void UGameTimeManager::SetNewState(ETimeState NewTimeState) {
-	TimeState = NewTimeState;
-
-	UKismetSystemLibrary::PrintString(GetWorld(), FString::Printf(TEXT("New time state: %d. (0:Idle, 1:Forward, 2:Slow, 3:Paused, 4:Reverse)"), static_cast<int32>(TimeState)), true, true,
-									  FColor::Yellow, 5);
-
+void UGameTimeManager::OnNewGameState(EGameState NewGameState) {
 	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
 	GlobalTimeAtLastStateChange = GameState->GetServerWorldTimeSeconds();
 }
@@ -56,7 +51,7 @@ void UGameTimeManager::SetNewState(ETimeState NewTimeState) {
 float UGameTimeManager::GetDurationOfLongestTimeState() {
 	float RetornedValue = -1;
 
-	for (const TPair<ETimeState, FTimeStateData> &Pair : TimeStateData) {
+	for (const TPair<EGameState, FTimeStateData> &Pair : TimeStateData) {
 		if (RetornedValue < Pair.Value.Duration) {
 			RetornedValue = Pair.Value.Duration;
 		}

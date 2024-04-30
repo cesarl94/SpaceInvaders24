@@ -18,9 +18,6 @@ class SPACEINVADERS24_API UGameTimeManager : public UActorComponent {
 
 private:
 	UPROPERTY()
-	ETimeState TimeState{ETimeState::IDLE};
-
-	UPROPERTY()
 	float GlobalTimeAtLastStateChange{0};
 
 	UPROPERTY()
@@ -37,7 +34,7 @@ private:
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Time Manager")
-	TMap<ETimeState, FTimeStateData> TimeStateData;
+	TMap<EGameState, FTimeStateData> TimeStateData;
 
 public:
 	UGameTimeManager();
@@ -49,11 +46,9 @@ public:
 	UFUNCTION()
 	void ManualTick(float DeltaTime);
 
-	UFUNCTION(BlueprintCallable)
-	ETimeState GetTimeState();
-
-	UFUNCTION(BlueprintCallable)
-	void SetNewState(ETimeState NewTimeState);
+	// Called from GS
+	UFUNCTION()
+	void OnNewGameState(EGameState NewGameState);
 
 	// Returns the maximum time that we could pass in another time state (only special states count)
 	UFUNCTION()

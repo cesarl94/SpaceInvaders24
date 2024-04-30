@@ -107,6 +107,15 @@ public:
 	// Call this function to move an object that has velocity in texels. The delta time it receives can be either the normal delta time or the CrystalDeltaTime from the GameTimeManager
 	virtual void ApplyVelocity(float DeltaTime);
 
+	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: Actor In Texels")
+	void SetVisibility(bool Visible);
+
+	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: Actor In Texels")
+	void ToggleVisibility();
+
+	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: Actor In Texels")
+	bool GetVisibility() const;
+
 	/**
 	 * Returns the internal texel position of the object. While it is not the visible texel position, it is floating-point and
 	 * includes intermediate positions between each texel. This texel position is affected by the TexelVelocity.
