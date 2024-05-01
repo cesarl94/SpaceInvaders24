@@ -131,3 +131,25 @@ Here you can see a new video about the progress of the game
 [![VideoGameplay3](RawContent/video_thumbnail3.png)](https://www.youtube.com/watch?v=xv49vm1mIrs)
 
 You can download [this version of the game here](https://github.com/cesarl94/SpaceInvaders24/releases/tag/0.1.3) (Version 0.1.3)
+
+---
+
+29/04/24 Tuesday night update!
+
+The entire UI and scene flow are now ready. Now, we don't need to close the program every time we want to start over, as we can revive upon death (if we have enough lives, of course), or we can move on to the next level.
+
+We can also reach game over if we lose enough lives and start over from the beginning if we wish from the new menu.
+
+Additionally, the UI will now display our points, lives, and the level we're on, as well as show messages about the game state.
+
+The game is almost ready! Even though tomorrow is the deadline, I'm confident that the only thing I'm missing will be ready by morning, which is data persistence for the high score.
+
+![GameScreenshot3](RawContent/GameScreenshot3.png)
+![GameScreenshot4](RawContent/GameScreenshot4.png)
+![GameScreenshot5](RawContent/GameScreenshot5.png)
+
+Now I'll leave you with a video of the new gameplay. It's amazing how much has changed from the last version with just a few hours of work.
+
+[![VideoGameplay4](RawContent/video_thumbnail4.png)](https://www.youtube.com/watch?v=ADIVV2KrXtY)
+
+You can download [this version of the game here](https://github.com/cesarl94/SpaceInvaders24/releases/tag/0.1.5) (Version 0.1.5)
