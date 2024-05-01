@@ -119,7 +119,7 @@ You can download [this version of the game here](https://github.com/cesarl94/Spa
 
 ---
 
-28/04/24 Sunday night report
+### 28/04/24 Sunday night report
 
 Today I finished the first part of the UI. I started with the most difficult part, which is the skills section, as everything is almost animated, and everything depends on each other. The result looks quite good, feels good, and I think it's very easy for the user to understand.
 
@@ -134,7 +134,7 @@ You can download [this version of the game here](https://github.com/cesarl94/Spa
 
 ---
 
-29/04/24 Tuesday night update!
+### 29/04/24 Tuesday night update!
 
 The entire UI and scene flow are now ready. Now, we don't need to close the program every time we want to start over, as we can revive upon death (if we have enough lives, of course), or we can move on to the next level.
 
@@ -153,3 +153,13 @@ Now I'll leave you with a video of the new gameplay. It's amazing how much has c
 [![VideoGameplay4](RawContent/video_thumbnail4.png)](https://www.youtube.com/watch?v=ADIVV2KrXtY)
 
 You can download [this version of the game here](https://github.com/cesarl94/SpaceInvaders24/releases/tag/0.1.5) (Version 0.1.5)
+
+---
+
+### 01/05/24 Happy Workers' Day!
+
+Today is the deadline. I've just uploaded the final change as requested to be evaluated, which is to achieve the maximum score and have it saved between sessions. So, I can relax now (a bit).
+
+Although I won't be judged on the visual aspect of the game in this project, I would like to spend the rest of the day making it look nicer.
+
+You can download [this version of the game here](https://github.com/cesarl94/SpaceInvaders24/releases/tag/0.1.6) (Version 0.1.6)
