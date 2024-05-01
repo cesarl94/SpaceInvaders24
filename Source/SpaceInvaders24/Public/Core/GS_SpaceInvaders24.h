@@ -12,6 +12,7 @@
 #include "GS_SpaceInvaders24.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnNewGameState, EGameState, NewState);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnNewHighScore, int32, NewHighScore);
 
 
 UCLASS()
@@ -54,6 +55,12 @@ private:
 
 	UPROPERTY()
 	bool MoveEnemiesToUp{false};
+
+	UPROPERTY()
+	int32 HighScore{1000};
+
+	UPROPERTY()
+	bool AlreadyEmittedNewHighScore{false};
 
 	UFUNCTION()
 	void SpawnPlayer();
@@ -198,6 +205,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 	EGameState GetGameState() const;
 
+	UFUNCTION(BlueprintCallable)
+	int32 GetHighScore() const;
+
+	// Returns true if the player scored the high score
+	UFUNCTION(BlueprintCallable)
+	bool IsHighScoredPlay() const;
+
 	virtual void Tick(float DeltaTime) override;
 
 	// This function is called from the PlayerController, and here we will link the player's pawn to the PlayerController.
@@ -273,4 +287,7 @@ public:
 	// Events:
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
 	FOnNewGameState OnNewGameState;
+
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
+	FOnNewHighScore OnNewHighScore;
 };

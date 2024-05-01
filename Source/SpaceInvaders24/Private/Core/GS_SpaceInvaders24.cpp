@@ -20,6 +20,8 @@
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "UI/GUI.h"
+#include "Utils/HighScoreSaveGame.h"
+
 
 FString AGS_SpaceInvaders24::GetLocalizatedString(FString Key) const {
 	if (ChosenLanguage == nullptr) {
@@ -110,6 +112,10 @@ void AGS_SpaceInvaders24::ResetGame(bool HardReset, int32 LevelToLoad) {
 	LastUFOAppearance = 0;
 	UFO->Kill(true);
 
+	if (HardReset) {
+		AlreadyEmittedNewHighScore = false;
+	}
+
 	GameTimeManager->ManualReset();
 	SwarmMind->ManualReset(LevelToLoad);
 
@@ -149,7 +155,18 @@ void AGS_SpaceInvaders24::InitNewLevel() {
 
 void AGS_SpaceInvaders24::OnTimeStateFinished() { SetNewState(EGameState::PLAYING_FORWARD); }
 
-void AGS_SpaceInvaders24::OnEnemyDiedEvent(AEnemy *EnemyDied, int32 PointsGiven) { Player->GetCustomAbilitySystemComponent()->AddToAttributeValueByEnum(EPlayerAttribute::Points, PointsGiven); }
+void AGS_SpaceInvaders24::OnEnemyDiedEvent(AEnemy *EnemyDied, int32 PointsGiven) {
+	Player->GetCustomAbilitySystemComponent()->AddToAttributeValueByEnum(EPlayerAttribute::Points, PointsGiven);
+	int32 CurrentPlayerPoints = static_cast<int32>(Player->GetCustomAbilitySystemComponent()->GetAttributeValueByEnum(EPlayerAttribute::Points));
+	if (CurrentPlayerPoints > HighScore) {
+		HighScore = CurrentPlayerPoints;
+		OnNewHighScore.Broadcast(HighScore);
+		if (!AlreadyEmittedNewHighScore) {
+			AlreadyEmittedNewHighScore = true;
+			GUI->K2_ShowNewHIghScoreSign();
+		}
+	}
+}
 
 void AGS_SpaceInvaders24::OnEnemiesCantGoLower() {
 	if (Player->CanRevive()) {
@@ -202,7 +219,13 @@ void AGS_SpaceInvaders24::OnPlayerFinallyDie() {
 		SetNewState(EGameState::READY_SET_GO);
 
 	} else {
-		UKismetSystemLibrary::PrintString(GetWorld(), "GAME OVER. Press Alt+F4 to close this window", true, true, FColor::Red, 5);
+
+		if (IsHighScoredPlay()) {
+			UHighScoreSaveGame *HighScoreSaveGame = Cast<UHighScoreSaveGame>(UGameplayStatics::CreateSaveGameObject(UHighScoreSaveGame::StaticClass()));
+			HighScoreSaveGame->HighScore = HighScore;
+			UGameplayStatics::SaveGameToSlot(HighScoreSaveGame, "SaveGame", 0);
+		}
+
 		SetNewState(EGameState::GAME_OVER);
 	}
 }
@@ -223,6 +246,13 @@ void AGS_SpaceInvaders24::OnLevelClearFinished() { InitNewLevel(); }
 
 void AGS_SpaceInvaders24::BeginPlay() {
 	Super::BeginPlay();
+
+	if (UGameplayStatics::DoesSaveGameExist("SaveGame", 0)) {
+		UHighScoreSaveGame *HighScoreSaveGame = Cast<UHighScoreSaveGame>(UGameplayStatics::LoadGameFromSlot("SaveGame", 0));
+		if (HighScoreSaveGame != nullptr) {
+			HighScore = HighScoreSaveGame->HighScore;
+		}
+	}
 
 	GamePreviewActor = Cast<AGamePreviewActor>(UGameplayStatics::GetActorOfClass(this, AGamePreviewActor::StaticClass()));
 	GamePreviewActor->ManualInitialize();
@@ -283,6 +313,10 @@ void AGS_SpaceInvaders24::SetNewState(EGameState NewGameState) {
 }
 
 EGameState AGS_SpaceInvaders24::GetGameState() const { return GameState; }
+
+int32 AGS_SpaceInvaders24::GetHighScore() const { return HighScore; }
+
+bool AGS_SpaceInvaders24::IsHighScoredPlay() const { return AlreadyEmittedNewHighScore; }
 
 void AGS_SpaceInvaders24::OnPlayerControllerConnected(APlayerController *PC) {
 	if (Player != nullptr && PC->GetPawn<ALaserTank>() == nullptr) {

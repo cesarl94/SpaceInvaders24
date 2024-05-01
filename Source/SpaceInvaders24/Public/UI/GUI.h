@@ -16,6 +16,10 @@ class SPACEINVADERS24_API UGUI : public UUserWidget {
 	GENERATED_BODY()
 
 public:
+	// Called from GS_SpaceInvaders24
+	UFUNCTION(BlueprintImplementableEvent, DisplayName = "GUI ShowNewHighScoreSign")
+	void K2_ShowNewHIghScoreSign();
+
 	// Events:
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, VisibleAnywhere, Category = "SpaceInvaders24 Events")
 	FGUIEvent OnClickPlay;
