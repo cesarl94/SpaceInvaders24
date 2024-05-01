@@ -172,6 +172,10 @@ public:
 	UFUNCTION()
 	void ManualTick(float CrystalDeltaTime, float CrystalTotalSeconds);
 
+	// This function is to move the enemies 3 rows up after they have reached the bottom of the map and killed the character. This gives the player some time to attack the enemies.
+	UFUNCTION()
+	void MoveEnemiesToUp();
+
 	UFUNCTION()
 	FIntPoint GetEnemyArraySize() const;
 

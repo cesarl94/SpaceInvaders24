@@ -19,6 +19,7 @@
 #include "Math/IntPoint.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
+#include "UI/GUI.h"
 
 FString AGS_SpaceInvaders24::GetLocalizatedString(FString Key) const {
 	if (ChosenLanguage == nullptr) {
@@ -36,6 +37,15 @@ FString AGS_SpaceInvaders24::GetLocalizatedString(FString Key) const {
 	return LocalizatedString;
 }
 
+void AGS_SpaceInvaders24::SetGUIReference(UGUI *GUIReference) {
+	GUI = GUIReference;
+
+	GUI->OnClickPlay.AddUniqueDynamic(this, &AGS_SpaceInvaders24::OnGUIClickPlay);
+	GUI->OnReadySetGoFinished.AddUniqueDynamic(this, &AGS_SpaceInvaders24::OnReadySetGoFinished);
+	GUI->OnPassLevelFinished.AddUniqueDynamic(this, &AGS_SpaceInvaders24::OnPassLevelFinished);
+	GUI->OnGameOverFinished.AddUniqueDynamic(this, &AGS_SpaceInvaders24::OnGameOverFinished);
+	GUI->OnLevelClearFinished.AddUniqueDynamic(this, &AGS_SpaceInvaders24::OnLevelClearFinished);
+}
 
 AGS_SpaceInvaders24::AGS_SpaceInvaders24() {
 	PrimaryActorTick.bCanEverTick = true;
@@ -96,14 +106,30 @@ void AGS_SpaceInvaders24::SpawnUFO() {
 	UFO->OnDie.AddUniqueDynamic(this, &AGS_SpaceInvaders24::OnEnemyDiedEvent);
 }
 
-void AGS_SpaceInvaders24::ResetGame() {
+void AGS_SpaceInvaders24::ResetGame(bool HardReset, int32 LevelToLoad) {
 	LastUFOAppearance = 0;
+	UFO->Kill(true);
 
-	SwarmMind->ManualReset(0);
+	GameTimeManager->ManualReset();
+	SwarmMind->ManualReset(LevelToLoad);
 
-	Player->ManualReset();
+	Player->ManualReset(HardReset);
+	Player->SetTexelPosition(PlayerSpawnPosition, false);
 
-	SetNewState(EGameState::PLAYING_FORWARD);
+	for (int32 i = 0; i < Bunkers.Num(); i++) {
+		ABunker *Bunker = Bunkers[i];
+		Bunker->ManualReset();
+	}
+
+	for (int32 i = 0; i < Crystals.Num(); i++) {
+		Crystals[i]->Destroy();
+	}
+	Crystals.Empty();
+
+	for (int32 i = 0; i < Shots.Num(); i++) {
+		Shots[i]->Destroy();
+	}
+	Shots.Empty();
 }
 
 
@@ -112,23 +138,33 @@ void AGS_SpaceInvaders24::UFOAppear() {
 	UFO->SetTexelVelocity(FVector2D(UFOMovementSpeed * 60.f, 0));
 }
 
+void AGS_SpaceInvaders24::InitNewLevel() {
+	Player->GetCustomAbilitySystemComponent()->AddToAttributeValueByEnum(EPlayerAttribute::Level, 1);
+	Player->GetCustomAbilitySystemComponent()->SetAttributeValueByEnum(EPlayerAttribute::Crystals, 0);
+	int32 NewLevel = FMath::RoundToInt(Player->GetCustomAbilitySystemComponent()->GetAttributeValueByEnum(EPlayerAttribute::Level));
+
+	ResetGame(false, NewLevel);
+	SetNewState(EGameState::PASSING_LEVEL);
+}
+
 void AGS_SpaceInvaders24::OnTimeStateFinished() { SetNewState(EGameState::PLAYING_FORWARD); }
 
 void AGS_SpaceInvaders24::OnEnemyDiedEvent(AEnemy *EnemyDied, int32 PointsGiven) { Player->GetCustomAbilitySystemComponent()->AddToAttributeValueByEnum(EPlayerAttribute::Points, PointsGiven); }
 
 void AGS_SpaceInvaders24::OnEnemiesCantGoLower() {
-	UKismetSystemLibrary::PrintString(GetWorld(), "GAME OVER. Press Alt+F4 to close this window", true, true, FColor::Red, 5);
-
-	SetNewState(EGameState::GAME_OVER);
+	if (Player->CanRevive()) {
+		MoveEnemiesToUp = true;
+	}
+	Player->Kill(false);
 }
 
 void AGS_SpaceInvaders24::OnKilledAllEnemies() {
-	UKismetSystemLibrary::PrintString(GetWorld(), "On Killed All Enemies. You win! Press Alt+F4 to close this window", true, true, FColor::Green, 5);
+	for (int32 i = 0; i < Shots.Num(); i++) {
+		Shots[i]->Destroy();
+	}
+	Shots.Empty();
 
-	// GetWorld()->GetTimerManager().SetTimer(
-	// 	InputTimeHandle, [&]() { Destroy(); }, Duration, false);
-
-	SetNewState(EGameState::PASSING_LEVEL);
+	SetNewState(EGameState::LEVEL_CLEAR);
 }
 
 void AGS_SpaceInvaders24::OnShotHit(AShot *Shot) { Shots.Remove(Shot); }
@@ -157,13 +193,33 @@ void AGS_SpaceInvaders24::OnPlayerStartDying() {
 
 void AGS_SpaceInvaders24::OnPlayerFinallyDie() {
 	if (Player->CanRevive()) {
-		Player->Revive();
-		SetNewState(EGameState::PLAYING_FORWARD);
+		Player->Revive(true);
+		if (MoveEnemiesToUp) {
+			MoveEnemiesToUp = false;
+			SwarmMind->MoveEnemiesToUp();
+		}
+
+		SetNewState(EGameState::READY_SET_GO);
+
 	} else {
 		UKismetSystemLibrary::PrintString(GetWorld(), "GAME OVER. Press Alt+F4 to close this window", true, true, FColor::Red, 5);
 		SetNewState(EGameState::GAME_OVER);
 	}
 }
+
+
+void AGS_SpaceInvaders24::OnGUIClickPlay() { SetNewState(EGameState::PASSING_LEVEL); }
+
+void AGS_SpaceInvaders24::OnReadySetGoFinished() { SetNewState(EGameState::PLAYING_FORWARD); }
+
+void AGS_SpaceInvaders24::OnPassLevelFinished() { SetNewState(EGameState::READY_SET_GO); }
+
+void AGS_SpaceInvaders24::OnGameOverFinished() {
+	ResetGame(true);
+	SetNewState(EGameState::IN_MENU);
+}
+
+void AGS_SpaceInvaders24::OnLevelClearFinished() { InitNewLevel(); }
 
 void AGS_SpaceInvaders24::BeginPlay() {
 	Super::BeginPlay();
@@ -178,7 +234,9 @@ void AGS_SpaceInvaders24::BeginPlay() {
 	SpawnPlayer();
 	SpawnBunkers();
 
-	ResetGame();
+	ResetGame(true);
+
+	SetNewState(EGameState::IN_MENU);
 }
 
 void AGS_SpaceInvaders24::Tick(float DeltaTime) {

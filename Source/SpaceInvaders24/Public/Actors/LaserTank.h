@@ -105,13 +105,15 @@ public:
 
 	void ManualInitialize();
 
-	void ManualReset();
+	// TODO: inprove this comment.
+	// HardReset means: true for new games, false for new levels. If you die and want revive, use Revive() instead this
+	void ManualReset(bool HardReset);
 
 	void ManualTick(float DeltaTime);
 
 	bool CanRevive() const;
 
-	void Revive();
+	void Revive(bool RemoveLife);
 
 	void PassLevel(FIntPoint NewTexelPosition);
 

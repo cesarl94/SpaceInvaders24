@@ -13,6 +13,8 @@ UGameTimeManager::UGameTimeManager() { PrimaryComponentTick.bCanEverTick = false
 void UGameTimeManager::ManualReset() {
 	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
 	GlobalTimeAtLastStateChange = GameState->GetServerWorldTimeSeconds();
+	NormalGameTotalSeconds = 0;
+	CrystalTotalSeconds = 0;
 }
 
 void UGameTimeManager::ManualTick(float DeltaTime) {
@@ -41,7 +43,6 @@ void UGameTimeManager::ManualTick(float DeltaTime) {
 	NormalGameTotalSeconds += LastDeltaTime;
 	CrystalTotalSeconds += LastCrystalDeltaTime;
 }
-
 
 void UGameTimeManager::OnNewGameState(EGameState NewGameState) {
 	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();

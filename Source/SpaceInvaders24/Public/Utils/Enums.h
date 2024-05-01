@@ -47,6 +47,7 @@ enum class EGameState : uint8 {
 	PLAYING_SLOW_TIME_DOWN UMETA(DisplayName = "Playing Slow Time Down"),
 	PLAYING_PAUSED_TIME UMETA(DisplayName = "Playing Paused Time"),
 	PLAYING_REVERSE UMETA(DisplayName = "Playing Reverse"),
+	LEVEL_CLEAR UMETA(DisplayName = "Level Clear"),
 	DYING UMETA(DisplayName = "Dying"),
 	GAME_OVER UMETA(DisplayName = "Game Over"),
 };

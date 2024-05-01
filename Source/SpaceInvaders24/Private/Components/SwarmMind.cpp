@@ -70,6 +70,10 @@ void USwarmMind::Shoot() {
 		}
 	}
 
+	if (LowestEnemyInThatColumn == nullptr) {
+		return;
+	}
+
 	FGunData GunData = LowestEnemyInThatColumn->GetGunData();
 
 	if (!GunData.FromUpToDown || GunData.AvailableShotTypes.Num() == 0) {
@@ -159,26 +163,28 @@ void USwarmMind::FixedUpdate() {
 		}
 	}
 
-	if (CanMove) {
-		AEnemy *NextEnemyToUpdate = GetNextEnemyToUpdate();
-		if (NextEnemyToUpdate == nullptr) {
-			return;
-		}
-
-		// Since MovingToRight is when time goes forward, when we're OnBackwards, that "right" means left, so, both variables cancel each other
-		float HorizontalMovement = (MovingToRight ? 1 : -1) * (OnBackwards ? -1 : 1) * SwarmVelocity;
-		// The same with the vertical movement
-		float VerticalMovement = (MovingDown ? SeparationBetweenEnemies.Y / 2 : 0) * (OnBackwards ? -1 : 1);
-
-		FVector2D EnemyTexelPosition = NextEnemyToUpdate->GetFloatTexelPosition();
-		EnemyTexelPosition += FVector2D(HorizontalMovement, VerticalMovement);
-		NextEnemyToUpdate->SetTexelPosition(EnemyTexelPosition, !MovingDown);
-		NextEnemyToUpdate->ManualTick();
-
-		NextEnemyToUpdate->TriggerMoveAnimation(static_cast<float>(EnemiesPerRow * EnemyTypesByRow.Num()) / static_cast<float>(AliveEnemiesCount));
-
-		LastUpdatedEnemyGridID = NextEnemyToUpdate->GetCoordinateInEnemyGrid();
+	if (!CanMove) {
+		return;
 	}
+
+	AEnemy *NextEnemyToUpdate = GetNextEnemyToUpdate();
+	if (NextEnemyToUpdate == nullptr) {
+		return;
+	}
+
+	// Since MovingToRight is when time goes forward, when we're OnBackwards, that "right" means left, so, both variables cancel each other
+	float HorizontalMovement = (MovingToRight ? 1 : -1) * (OnBackwards ? -1 : 1) * SwarmVelocity;
+	// The same with the vertical movement. Each row is Separation.Y / 2
+	float VerticalMovement = (MovingDown ? SeparationBetweenEnemies.Y / 2 : 0) * (OnBackwards ? -1 : 1);
+
+	FVector2D EnemyTexelPosition = NextEnemyToUpdate->GetFloatTexelPosition();
+	EnemyTexelPosition += FVector2D(HorizontalMovement, VerticalMovement);
+	NextEnemyToUpdate->SetTexelPosition(EnemyTexelPosition, !MovingDown);
+	NextEnemyToUpdate->ManualTick();
+
+	NextEnemyToUpdate->TriggerMoveAnimation(static_cast<float>(EnemiesPerRow * EnemyTypesByRow.Num()) / static_cast<float>(AliveEnemiesCount));
+
+	LastUpdatedEnemyGridID = NextEnemyToUpdate->GetCoordinateInEnemyGrid();
 }
 
 AEnemy *USwarmMind::GetNextEnemyToUpdate() const {
@@ -325,7 +331,7 @@ void USwarmMind::ManualReset(int32 Level) {
 
 	LastUpdatedEnemyGridID = FIntPoint(EnemiesPerRow - 1, 0);
 
-	FIntPoint PositionDelta = TexelCoordOfTopLeftEnemyInFirstLevel + Level * (SeparationBetweenEnemies.Y / 2);
+	FIntPoint PositionDelta = TexelCoordOfTopLeftEnemyInFirstLevel + FIntPoint(0, Level * (SeparationBetweenEnemies.Y / 2));
 	if (PositionDelta.Y > TexelCoordOfTopLeftEnemyInLastLevel.Y) {
 		PositionDelta.Y = TexelCoordOfTopLeftEnemyInLastLevel.Y;
 	}
@@ -350,12 +356,6 @@ void USwarmMind::ManualTick(float CrystalDeltaTime, float CrystalTotalSeconds) {
 
 	// Very ugly FSM
 	switch (GameState->GetGameState()) {
-	case EGameState::IN_MENU:
-	case EGameState::READY_SET_GO:
-	case EGameState::DYING:
-	case EGameState::GAME_OVER:
-	case EGameState::PASSING_LEVEL:
-		break;
 	case EGameState::PLAYING_FORWARD:
 	case EGameState::PLAYING_SLOW_TIME_DOWN:
 	case EGameState::PLAYING_PAUSED_TIME:
@@ -377,8 +377,24 @@ void USwarmMind::ManualTick(float CrystalDeltaTime, float CrystalTotalSeconds) {
 				}
 			}
 		}
-
 		break;
+	}
+}
+
+void USwarmMind::MoveEnemiesToUp() {
+	GameOverWasDispatched = false;
+
+	for (int32 i = 0; i < EnemyTypesByRow.Num(); i++) {
+		for (int32 j = 0; j < EnemiesPerRow; j++) {
+			AEnemy *EnemyInThisPosition = GetEnemyInIndexed2DArray(j, i);
+
+			// Move this 3 rows up (each row is Separation.Y / 2)
+			float VerticalMovement = (SeparationBetweenEnemies.Y / 2.f) * -3.f;
+
+			FVector2D EnemyTexelPosition = EnemyInThisPosition->GetFloatTexelPosition();
+			EnemyTexelPosition += FVector2D(0, VerticalMovement);
+			EnemyInThisPosition->SetTexelPosition(EnemyTexelPosition, false);
+		}
 	}
 }
 

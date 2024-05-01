@@ -116,9 +116,11 @@ void ALaserTank::ManualInitialize() {
 	SpawnBlastTrails();
 }
 
-void ALaserTank::ManualReset() {
-	ApplyDefaultEffects();
-	Revive();
+void ALaserTank::ManualReset(bool HardReset) {
+	if (HardReset) {
+		ApplyDefaultEffects();
+	}
+	Revive(HardReset);
 }
 
 void ALaserTank::ManualTick(float DeltaTime) {
@@ -133,17 +135,18 @@ bool ALaserTank::CanRevive() const {
 	return PlayerLives - 1 >= 0;
 }
 
-void ALaserTank::Revive() {
-	if (!CanRevive()) {
+void ALaserTank::Revive(bool RemoveLife) {
+	if (RemoveLife && !CanRevive()) {
 		return;
 	}
+
 	GetCustomAbilitySystemComponent()->AddTagByString("Player.IsAlive");
-
 	Collider->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-
 	SetVisibility(true);
 
-	GetCustomAbilitySystemComponent()->AddToAttributeValueByEnum(EPlayerAttribute::Lives, -1);
+	if (RemoveLife) {
+		GetCustomAbilitySystemComponent()->AddToAttributeValueByEnum(EPlayerAttribute::Lives, -1);
+	}
 }
 
 void ALaserTank::PassLevel(FIntPoint NewTexelPosition) { SetTexelPosition(NewTexelPosition, false); }
@@ -159,6 +162,19 @@ bool ALaserTank::CanShot() const {
 
 	AGS_SpaceInvaders24 *GameState = Cast<AGS_SpaceInvaders24>(UGameplayStatics::GetGameState(this));
 
+
+	// Yes, this is weird, but works. Above, the valid GameStates, wherever else will return false
+	switch (GameState->GetGameState()) {
+	case EGameState::PLAYING_FORWARD:
+	case EGameState::PLAYING_SLOW_TIME_DOWN:
+	case EGameState::PLAYING_PAUSED_TIME:
+	case EGameState::PLAYING_REVERSE:
+		break;
+	default:
+		return false;
+	}
+
+	// If exists any other shot that is SIMPLE_LINE, we'll return false
 	for (AShot *Shot : GameState->GetShots()) {
 		if (Shot->GetType() == EShotType::SIMPLE_LINE) {
 			return false;
@@ -182,6 +198,7 @@ void ALaserTank::Kill(bool IsForcedKill) {
 	BlastTrailA->SetVisibility(true);
 
 	GetCustomAbilitySystemComponent()->RemoveTagByString("Player.IsAlive");
+	GetCustomAbilitySystemComponent()->SetAttributeValueByEnum(EPlayerAttribute::Crystals, 0);
 
 	BlastTrailA->SetTexelPosition(GetFloatTexelPosition());
 	BlastTrailB->SetTexelPosition(GetFloatTexelPosition());

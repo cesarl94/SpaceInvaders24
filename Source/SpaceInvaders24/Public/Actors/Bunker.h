@@ -39,6 +39,8 @@ public:
 	// Called from GameState's BeginPlay after creation
 	void ManualInitialize();
 
+	void ManualReset();
+
 	// This function is for get bricks from the _BricksGrid array without directly accessing the variable.
 	UFUNCTION()
 	USimpleVoxel *GetBrickInCoordinate(int32 RelativeX, int32 RelativeY) const;

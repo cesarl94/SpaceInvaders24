@@ -28,6 +28,13 @@ void ABunker::ManualInitialize() {
 	}
 }
 
+void ABunker::ManualReset() {
+	for (int32 i = 0; i < Bricks.Num(); i++) {
+		USimpleVoxel *Brick = Bricks[i];
+		Brick->SetEnabled(true);
+	}
+}
+
 USimpleVoxel *ABunker::GetBrickInCoordinate(int32 RelativeX, int32 RelativeY) const {
 	int32 Index1D = RelativeY * FMath::RoundToInt(ActorLocalBoundsFloat.Z) + RelativeX;
 	return _BricksGrid[Index1D];

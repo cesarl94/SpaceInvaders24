@@ -41,10 +41,19 @@ private:
 	class AEnemy *UFO;
 
 	UPROPERTY()
+	class UGUI *GUI;
+
+	UPROPERTY()
 	EGameState GameState{EGameState::IN_MENU};
 
 	UPROPERTY()
 	float LastUFOAppearance{0};
+
+	UPROPERTY()
+	FTimerHandle InputTimeHandle;
+
+	UPROPERTY()
+	bool MoveEnemiesToUp{false};
 
 	UFUNCTION()
 	void SpawnPlayer();
@@ -55,11 +64,15 @@ private:
 	UFUNCTION()
 	void SpawnUFO();
 
+	// HardReset means: true for new games, false for new levels
 	UFUNCTION()
-	void ResetGame();
+	void ResetGame(bool HardReset, int32 LevelToLoad = 0);
 
 	UFUNCTION()
 	void UFOAppear();
+
+	UFUNCTION()
+	void InitNewLevel();
 
 	// Functions binded to events:
 
@@ -98,6 +111,26 @@ private:
 	// Called from LaserTank's event
 	UFUNCTION()
 	void OnPlayerFinallyDie();
+
+	// Called from UI
+	UFUNCTION()
+	void OnGUIClickPlay();
+
+	// Called from UI
+	UFUNCTION()
+	void OnReadySetGoFinished();
+
+	// Called from UI
+	UFUNCTION()
+	void OnPassLevelFinished();
+
+	// Called from UI
+	UFUNCTION()
+	void OnGameOverFinished();
+
+	// Called from UI
+	UFUNCTION()
+	void OnLevelClearFinished();
 
 protected:
 	virtual void BeginPlay() override;
@@ -143,8 +176,12 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SpaceInvaders24: Game Data|Localization")
 	UStringTable *ChosenLanguage;
 
+	// Private but blueprint callable functions:
 	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: Game State", DisplayName = "GS_SpaceInvaders24 GetLocalizatedString")
 	FString GetLocalizatedString(FString Key) const;
+
+	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: Game State", DisplayName = "GS_SpaceInvaders24 SetGUIReference")
+	void SetGUIReference(class UGUI *GUIReference);
 
 public:
 	// Public methods:
