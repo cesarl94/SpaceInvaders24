@@ -10,9 +10,9 @@
 #include "FCTween.h"
 #include "FCTweenInstance.h"
 #include "GAS/CustomAbilitySystemComponent.h"
-#include "GAS/CustomAttributeSet.h"
 #include "GAS/CustomGameplayAbility.h"
 #include "GAS/GASEnums.h"
+#include "GAS/LaserTankAttributeSet.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Math/Vector.h"
@@ -28,6 +28,7 @@ void ALaserTank::InitializeGAS() {
 
 	ASC->SetAttributeSetReference(AttributeSet);
 	ASC->InitAbilityActorInfo(this, this);
+	ASC->OnAttributeChange.AddUniqueDynamic(this, &ALaserTank::OnAttributeChanged);
 
 	InitializeAbilities();
 
@@ -70,6 +71,12 @@ void ALaserTank::BindInput() {
 	bIsInputBound = true;
 }
 
+void ALaserTank::OnAttributeChanged(EPlayerAttribute AttributeEnum, float OldValue, float NewValue) {
+	if (AttributeEnum == EPlayerAttribute::Health && FMath::RoundToInt(NewValue) == 0) {
+		Kill(false);
+	}
+}
+
 void ALaserTank::SpawnBlastTrails() {
 	if (BlastTrailDataA.BlastTrailActorClass == nullptr || BlastTrailDataB.BlastTrailActorClass == nullptr) {
 		return;
@@ -105,7 +112,7 @@ void ALaserTank::SetupPlayerInputComponent(class UInputComponent *PlayerInputCom
 ALaserTank::ALaserTank() : Super() {
 	// GAS Components:
 	AbilitySystemComponent = CreateDefaultSubobject<UCustomAbilitySystemComponent>("Ability System Component");
-	AttributeSet = CreateDefaultSubobject<UCustomAttributeSet>("Attribute Set");
+	AttributeSet = CreateDefaultSubobject<ULaserTankAttributeSet>("Attribute Set");
 }
 
 void ALaserTank::ManualInitialize() {
@@ -143,6 +150,9 @@ void ALaserTank::Revive(bool RemoveLife) {
 	GetCustomAbilitySystemComponent()->AddTagByString("Player.IsAlive");
 	Collider->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	SetVisibility(true);
+
+	// TODO: Improve this.
+	GetCustomAbilitySystemComponent()->SetAttributeValueByEnum(EPlayerAttribute::Health, 1);
 
 	if (RemoveLife) {
 		GetCustomAbilitySystemComponent()->AddToAttributeValueByEnum(EPlayerAttribute::Lives, -1);

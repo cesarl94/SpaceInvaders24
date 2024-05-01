@@ -3,6 +3,8 @@
 
 #include "Actors/Shot.h"
 
+#include "AbilitySystemComponent.h"
+#include "AbilitySystemInterface.h"
 #include "Actors/BlastTrail.h"
 #include "Actors/Bunker.h"
 #include "Actors/Crystal.h"
@@ -22,6 +24,7 @@
 
 
 void AShot::OnBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool FromSweep, const FHitResult &SweepResult) {
+
 	if (GetType() == EShotType::SIMPLE_LINE) {
 		if (ACrystal *HitCrystal = Cast<ACrystal>(OtherActor)) {
 			HitCrystal->Kill(false);
@@ -30,7 +33,8 @@ void AShot::OnBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *
 		if (AEnemy *HitEnemy = Cast<AEnemy>(OtherActor)) {
 			// I need to disable collision before kill enemy because if the enemy drop any crystal, I could collide it also before call Dissapear()
 			Collider->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-			HitEnemy->Kill(false);
+			IAbilitySystemInterface *ActorInstigator = Cast<IAbilitySystemInterface>(GetInstigator());
+			ActorInstigator->GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get(), HitEnemy->GetAbilitySystemComponent());
 			Dissapear();
 			return;
 		}
@@ -49,7 +53,8 @@ void AShot::OnBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *
 	} else {
 		if (ALaserTank *HitPlayer = Cast<ALaserTank>(OtherActor)) {
 			Collider->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-			HitPlayer->Kill(false);
+			IAbilitySystemInterface *ActorInstigator = Cast<IAbilitySystemInterface>(GetInstigator());
+			ActorInstigator->GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get(), HitPlayer->GetAbilitySystemComponent());
 			Dissapear();
 			return;
 		}

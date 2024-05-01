@@ -4,11 +4,15 @@
 
 UENUM(BlueprintType, DisplayName = "Player Attribute")
 enum class EPlayerAttribute : uint8 {
+	// LaserTank Attributes:
 	Crystals UMETA(DisplayName = "Crystals"),
 	MaxCrystals UMETA(DisplayName = "Max Crystals"),
 	Points UMETA(DisplayName = "Points"),
 	Lives UMETA(DisplayName = "Lives"),
 	Level UMETA(DisplayName = "Level"),
+	// LaserTank && Enemy attributes:
+	Health UMETA(DisplayName = "Health"),
+
 };
 
 // Enum: Gameplay Ability System, Ability Input

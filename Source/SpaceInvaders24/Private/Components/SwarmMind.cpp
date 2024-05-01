@@ -8,6 +8,7 @@
 #include "Components/GameTimeManager.h"
 #include "Core/GS_SpaceInvaders24.h"
 #include "Engine/World.h"
+#include "GAS/GASEnums.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Math/IntPoint.h"
 #include "Math/Rotator.h"
@@ -74,35 +75,37 @@ void USwarmMind::Shoot() {
 		return;
 	}
 
-	FGunData GunData = LowestEnemyInThatColumn->GetGunData();
+	LowestEnemyInThatColumn->SetAbilityInput(EGASAbilityInput::Shoot, true);
 
-	if (!GunData.FromUpToDown || GunData.AvailableShotTypes.Num() == 0) {
-		return;
-	}
+	// FGunData GunData = LowestEnemyInThatColumn->GetGunData();
 
-	int32 ChosenRandomGunId = FMath::RandRange(0, GunData.AvailableShotTypes.Num() - 1);
-	EShotType ChosenRandomGun = GunData.AvailableShotTypes[ChosenRandomGunId];
+	// if (!GunData.FromUpToDown || GunData.AvailableShotTypes.Num() == 0) {
+	// 	return;
+	// }
 
-	AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
+	// int32 ChosenRandomGunId = FMath::RandRange(0, GunData.AvailableShotTypes.Num() - 1);
+	// EShotType ChosenRandomGun = GunData.AvailableShotTypes[ChosenRandomGunId];
 
-	TSubclassOf<AShot> ShotClass = GameState->GetShotClass(ChosenRandomGun);
-	if (ShotClass == nullptr) {
-		return;
-	}
+	// AGS_SpaceInvaders24 *GameState = GetOwner<AGS_SpaceInvaders24>();
 
-	FIntPoint ShotSpawnTexelIntPoint = LowestEnemyInThatColumn->GetIntTexelPosition() + GunData.Offset;
-	FVector ShotSpawnWorldPosition = GameState->TexelToWorldPos(ShotSpawnTexelIntPoint);
+	// TSubclassOf<AShot> ShotClass = GameState->GetShotClass(ChosenRandomGun);
+	// if (ShotClass == nullptr) {
+	// 	return;
+	// }
 
-	FActorSpawnParameters ActorSpawnParams;
-	ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	// FIntPoint ShotSpawnTexelIntPoint = LowestEnemyInThatColumn->GetIntTexelPosition() + GunData.Offset;
+	// FVector ShotSpawnWorldPosition = GameState->TexelToWorldPos(ShotSpawnTexelIntPoint);
 
-	AShot *Shot = GetWorld()->SpawnActor<AShot>(*ShotClass, ShotSpawnWorldPosition, GameState->GetGameObjectOrientation(), ActorSpawnParams);
+	// FActorSpawnParameters ActorSpawnParams;
+	// ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-	// Yes... Shot can be null. WHY ?? well... if the show is spawned in front of a bunker or the player.
-	// It will trigger the overlap instantly after spawn and that can destroy the actor
-	if (Shot != nullptr) {
-		Shot->SetTexelVelocity(FVector2D(0, Shot->GetMovementSpeed() * 60.f));
-	}
+	// AShot *Shot = GetWorld()->SpawnActor<AShot>(*ShotClass, ShotSpawnWorldPosition, GameState->GetGameObjectOrientation(), ActorSpawnParams);
+
+	// // Yes... Shot can be null. WHY ?? well... if the show is spawned in front of a bunker or the player.
+	// // It will trigger the overlap instantly after spawn and that can destroy the actor
+	// if (Shot != nullptr) {
+	// 	Shot->SetTexelVelocity(FVector2D(0, Shot->GetMovementSpeed() * 60.f));
+	// }
 }
 
 FIntPoint USwarmMind::GetCoordinateOfLastAliveEnemyToUpdate() const {
@@ -290,6 +293,7 @@ void USwarmMind::ManualInitialize() {
 
 	FActorSpawnParameters ActorSpawnParams;
 	ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
 	FRotator GameObjectOrientation = GameState->GetGameObjectOrientation();
 
 	FIntPoint PositionDelta = TexelCoordOfTopLeftEnemyInFirstLevel;

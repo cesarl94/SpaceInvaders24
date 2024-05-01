@@ -12,6 +12,10 @@
 #include "Core/GS_SpaceInvaders24.h"
 #include "Engine/EngineTypes.h"
 #include "Engine/World.h"
+#include "GAS/CustomAbilitySystemComponent.h"
+#include "GAS/CustomAttributeSet.h"
+#include "GAS/CustomGameplayAbility.h"
+#include "GAS/GASEnums.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Math/IntPoint.h"
@@ -21,6 +25,69 @@
 #include "Structs/BlastTrailData.h"
 #include "Structs/GunData.h"
 
+
+void AEnemy::InitializeGAS() {
+	UCustomAbilitySystemComponent *ASC = GetCustomAbilitySystemComponent();
+	if (ASC == nullptr) {
+		return;
+	}
+
+	if (AttributeSet == nullptr) {
+		UGameplayStatics::GetGameState(this);
+		return;
+	}
+
+	ASC->SetAttributeSetReference(AttributeSet);
+	ASC->InitAbilityActorInfo(this, this);
+	ASC->OnAttributeChange.AddUniqueDynamic(this, &AEnemy::OnAttributeChanged);
+
+
+	InitializeAbilities();
+
+	BindInput();
+}
+
+void AEnemy::InitializeAbilities() {
+	for (TSubclassOf<UCustomGameplayAbility> &Ability : DefaultAbilities) {
+		const EGASAbilityInput AbilityInputID = Ability.GetDefaultObject()->AbilityInputID;
+
+		if (AbilityInputID == EGASAbilityInput::None) {
+			UKismetSystemLibrary::PrintString(GetWorld(), "You're trying to set a Default Ability with \"None\" as Ability Input ID. This ability was canceled.", true, true, FColor::Red, 5);
+		} else {
+			AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(Ability, 1, static_cast<int32>(AbilityInputID), this));
+		}
+	}
+}
+
+void AEnemy::ApplyDefaultEffects() {
+	FGameplayEffectContextHandle EffectContext = AbilitySystemComponent->MakeEffectContext();
+	EffectContext.AddSourceObject(this);
+
+	for (TSubclassOf<UGameplayEffect> &Effect : DefaultEffects) {
+		FGameplayEffectSpecHandle SpecHandle = AbilitySystemComponent->MakeOutgoingSpec(Effect, 1, EffectContext);
+		if (SpecHandle.IsValid()) {
+			FActiveGameplayEffectHandle GEHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+		}
+	}
+}
+
+void AEnemy::BindInput() {
+	if (bIsInputBound || !AbilitySystemComponent || !IsValid(InputComponent)) {
+		return;
+	}
+
+	FTopLevelAssetPath EnumAssetPath = FTopLevelAssetPath(FName("/Script/SpaceInvaders24"), FName("EGASAbilityInput"));
+	AbilitySystemComponent->BindAbilityActivationToInputComponent(
+		InputComponent, FGameplayAbilityInputBinds(FString("Confirm"), FString("Cancel"), EnumAssetPath, static_cast<int32>(EGASAbilityInput::Confirm), static_cast<int32>(EGASAbilityInput::Cancel)));
+
+	bIsInputBound = true;
+}
+
+void AEnemy::OnAttributeChanged(EPlayerAttribute AttributeEnum, float OldValue, float NewValue) {
+	if (AttributeEnum == EPlayerAttribute::Health && FMath::RoundToInt(NewValue) == 0) {
+		Kill(false);
+	}
+}
 
 void AEnemy::OnBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool FromSweep, const FHitResult &SweepResult) {
 	if (ABunker *HitBunker = Cast<ABunker>(OtherActor)) {
@@ -77,6 +144,12 @@ void AEnemy::SpawnCrystal() {
 // This function will be triggered in BP
 void AEnemy::Animate_Implementation(bool Forward, float Rate) const {}
 
+AEnemy::AEnemy() : Super() {
+	// GAS Components:
+	AbilitySystemComponent = CreateDefaultSubobject<UCustomAbilitySystemComponent>("Ability System Component");
+	AttributeSet = CreateDefaultSubobject<UCustomAttributeSet>("Attribute Set");
+}
+
 void AEnemy::ManualInitialize(FIntPoint CoordinateInGrid) {
 	EnemyCoordinateInGrid = CoordinateInGrid;
 
@@ -84,6 +157,8 @@ void AEnemy::ManualInitialize(FIntPoint CoordinateInGrid) {
 
 	Collider->OnComponentBeginOverlap.AddUniqueDynamic(this, &AEnemy::OnBoxBeginOverlap);
 	Collider->OnComponentEndOverlap.AddUniqueDynamic(this, &AEnemy::OnBoxEndOverlap);
+
+	InitializeGAS();
 }
 
 void AEnemy::ManualTick() {
@@ -137,6 +212,8 @@ void AEnemy::ManualReset(FIntPoint NewTexelPosition) {
 	// we need to set to the first frame inmediatly
 	Animate(false, 1000000.f);
 
+	ApplyDefaultEffects();
+
 	SetVisibility(true);
 	Collider->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	Alive = true;
@@ -165,4 +242,22 @@ void AEnemy::Kill(bool IsForcedKill) {
 	}
 
 	OnDie.Broadcast(this, PointsGiven);
+}
+
+UAbilitySystemComponent *AEnemy::GetAbilitySystemComponent() const { return AbilitySystemComponent; }
+
+UCustomAbilitySystemComponent *AEnemy::GetCustomAbilitySystemComponent() const { return Cast<UCustomAbilitySystemComponent>(AbilitySystemComponent); }
+
+void AEnemy::SetAbilityInput(EGASAbilityInput input, bool pressed) {
+	if (AbilitySystemComponent == nullptr) {
+		return;
+	}
+
+	int32 inputId = static_cast<int32>(input);
+
+	if (pressed) {
+		AbilitySystemComponent->AbilityLocalInputPressed(inputId);
+	} else {
+		AbilitySystemComponent->AbilityLocalInputReleased(inputId);
+	}
 }

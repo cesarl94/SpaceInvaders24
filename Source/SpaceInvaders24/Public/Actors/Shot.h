@@ -8,12 +8,14 @@
 #include "Components/StaticMeshComponent.h"
 #include "CoreMinimal.h"
 #include "Engine/EngineTypes.h"
+#include "GameplayEffectTypes.h"
 #include "Math/IntVector.h"
 #include "Math/Vector2D.h"
 #include "Structs/BlastTrailData.h"
 #include "Utils/Enums.h"
 
 #include "Shot.generated.h"
+
 
 
 class AShot;
@@ -64,6 +66,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SpaceInvaders24: Blast Trace Data")
 	FBlastTrailData BlastTrailData;
+
+	// Data exposed on spawn:
+	UPROPERTY(BlueprintReadOnly, Meta = (ExposeOnSpawn = true));
+	FGameplayEffectSpecHandle SpecHandle;
 
 public:
 	AShot();

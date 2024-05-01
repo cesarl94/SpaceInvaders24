@@ -2,9 +2,11 @@
 
 #pragma once
 
+#include "AbilitySystemInterface.h"
 #include "Actors/ActorInTexels.h"
 #include "Components/BoxComponent.h"
 #include "CoreMinimal.h"
+#include "GAS/GASEnums.h"
 #include "Math/IntPoint.h"
 #include "Structs/BlastTrailData.h"
 #include "Structs/CrystalDropData.h"
@@ -19,11 +21,32 @@ class AEnemy;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnEnemyDie, AEnemy *, DiedEnemy, int32, Points);
 
 UCLASS()
-class SPACEINVADERS24_API AEnemy : public AActorInTexels {
+class SPACEINVADERS24_API AEnemy : public AActorInTexels, public IAbilitySystemInterface {
 	GENERATED_BODY()
 
 
 private:
+#pragma region // GAS
+	UPROPERTY()
+	bool bIsInputBound{false};
+
+	UFUNCTION()
+	void InitializeGAS();
+
+	UFUNCTION()
+	void InitializeAbilities();
+
+	UFUNCTION()
+	void ApplyDefaultEffects();
+
+	// To add mapping context to GAS
+	UFUNCTION()
+	void BindInput();
+
+	UFUNCTION()
+	void OnAttributeChanged(EPlayerAttribute AttributeEnum, float OldValue, float NewValue);
+#pragma endregion
+
 	UPROPERTY()
 	class ABunker *OverlappedBunker;
 
@@ -53,7 +76,20 @@ private:
 
 
 protected:
+	// Components:
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	class UAbilitySystemComponent *AbilitySystemComponent;
+
+	UPROPERTY(VisibleAnywhere, Meta = (AllowPrivateAccess = "true"))
+	class UCustomAttributeSet *AttributeSet;
+
 	// Serialized data:
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: GAS")
+	TArray<TSubclassOf<class UCustomGameplayAbility>> DefaultAbilities;
+
+	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: GAS")
+	TArray<TSubclassOf<class UGameplayEffect>> DefaultEffects;
+
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Enemy Stats")
 	EEnemyType Type;
 
@@ -77,6 +113,8 @@ protected:
 
 
 public:
+	AEnemy();
+
 	// Called from GS_SpaceInvaders24 after create
 	void ManualInitialize(FIntPoint CoordinateInGrid);
 
@@ -102,6 +140,19 @@ public:
 
 	UFUNCTION()
 	void Kill(bool IsForcedKill = false);
+
+	// GAS:
+
+	// Inherited from interface
+	virtual UAbilitySystemComponent *GetAbilitySystemComponent() const override;
+
+	// Gets the Custom Ability System Component
+	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: GAS", DisplayName = "Enemy GetCustomAbilitySystemComponent", Meta = (CompactNodeTitle = "ASC"))
+	class UCustomAbilitySystemComponent *GetCustomAbilitySystemComponent() const;
+
+	// Temporal function until I activate the Enhanced input system
+	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: GAS", DisplayName = "Enemy SetAbilityInput")
+	void SetAbilityInput(EGASAbilityInput input, bool pressed);
 
 	// Events:
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "SpaceInvaders24 Events")

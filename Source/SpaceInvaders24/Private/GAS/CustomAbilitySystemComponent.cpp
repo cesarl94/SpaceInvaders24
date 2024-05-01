@@ -78,16 +78,26 @@ void UCustomAbilitySystemComponent::NotifyAbilityEnded(FGameplayAbilitySpecHandl
 
 float UCustomAbilitySystemComponent::GetAttributeValueByEnum(EPlayerAttribute AttributeEnum) const {
 	FGameplayAttribute Attribute = CustomAttributeSet->GetAttributeByEnum(AttributeEnum);
+	if (Attribute == nullptr) {
+		return 0;
+	}
 	return GetNumericAttribute(Attribute);
 }
 
 void UCustomAbilitySystemComponent::SetAttributeValueByEnum(EPlayerAttribute AttributeEnum, float Value) {
 	FGameplayAttribute Attribute = CustomAttributeSet->GetAttributeByEnum(AttributeEnum);
+	if (Attribute == nullptr) {
+		return;
+	}
 	SetNumericAttributeBase(Attribute, Value);
 }
 
 void UCustomAbilitySystemComponent::AddToAttributeValueByEnum(EPlayerAttribute AttributeEnum, float ValueToAdd) {
-	float AttributeValue = GetAttributeValueByEnum(AttributeEnum);
+	FGameplayAttribute Attribute = CustomAttributeSet->GetAttributeByEnum(AttributeEnum);
+	if (Attribute == nullptr) {
+		return;
+	}
+	float AttributeValue = GetNumericAttribute(Attribute);
 	SetAttributeValueByEnum(AttributeEnum, AttributeValue + ValueToAdd);
 }
 

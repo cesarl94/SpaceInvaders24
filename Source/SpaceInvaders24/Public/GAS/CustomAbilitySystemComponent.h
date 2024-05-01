@@ -38,6 +38,7 @@ protected:
 	virtual void OnRemoveAbility(FGameplayAbilitySpec &AbilitySpec) override;
 
 public:
+	// Overrided inherited functions:
 	virtual void NotifyAbilityActivated(const FGameplayAbilitySpecHandle Handle, UGameplayAbility *Ability) override;
 	virtual void NotifyAbilityCommit(UGameplayAbility *Ability) override;
 	virtual void NotifyAbilityEnded(FGameplayAbilitySpecHandle Handle, UGameplayAbility *Ability, bool bWasCancelled) override;
@@ -77,15 +78,20 @@ public:
 	UFUNCTION()
 	bool HasTagByString(FString TagString, bool Contains = false) const;
 
+	// Gets the current value of an attribute according to passed enum
+	// It can returns 0 if the Attribute doesn't exist in the AttributeSet
 	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: GAS")
 	float GetAttributeValueByEnum(EPlayerAttribute AttributeEnum) const;
 
+	// Sets the new value of an attribute according to passed enum
 	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: GAS")
 	void SetAttributeValueByEnum(EPlayerAttribute AttributeEnum, float Value);
 
+	// Sets the new value in addittion to the current value of an attribute according to passed enum
 	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: GAS")
 	void AddToAttributeValueByEnum(EPlayerAttribute AttributeEnum, float ValueToAdd);
 
+	// Call this on GAS initialization
 	void SetAttributeSetReference(class UCustomAttributeSet *AttributeSet);
 
 	// Events:

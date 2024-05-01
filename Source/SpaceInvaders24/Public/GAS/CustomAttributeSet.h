@@ -22,30 +22,10 @@ class SPACEINVADERS24_API UCustomAttributeSet : public UAttributeSet {
 
 public:
 	UPROPERTY(BlueprintReadOnly, Category = "SpaceInvaders24: GAS", Meta = (AllowPrivateAccess = "true"))
-	FGameplayAttributeData Crystals{0};
-	ATTRIBUTE_ACCESSORS(UCustomAttributeSet, Crystals)
+	FGameplayAttributeData Health{1};
+	ATTRIBUTE_ACCESSORS(UCustomAttributeSet, Health)
 
-	UPROPERTY(BlueprintReadOnly, Category = "SpaceInvaders24: GAS", Meta = (AllowPrivateAccess = "true"))
-	FGameplayAttributeData MaxCrystals{3};
-	ATTRIBUTE_ACCESSORS(UCustomAttributeSet, MaxCrystals)
-
-	UPROPERTY(BlueprintReadOnly, Category = "SpaceInvaders24: GAS", Meta = (AllowPrivateAccess = "true"))
-	FGameplayAttributeData Points{0};
-	ATTRIBUTE_ACCESSORS(UCustomAttributeSet, Points)
-
-	UPROPERTY(BlueprintReadOnly, Category = "SpaceInvaders24: GAS", Meta = (AllowPrivateAccess = "true"))
-	FGameplayAttributeData Lives{3};
-	ATTRIBUTE_ACCESSORS(UCustomAttributeSet, Lives)
-
-	UPROPERTY(BlueprintReadOnly, Category = "SpaceInvaders24: GAS", Meta = (AllowPrivateAccess = "true"))
-	FGameplayAttributeData Level{0};
-	ATTRIBUTE_ACCESSORS(UCustomAttributeSet, Level)
-
-	FGameplayAttribute GetAttributeByEnum(EPlayerAttribute AttributeEnum);
-
-	void ClampAttributeOnChange(const FGameplayAttribute &Attribute, float &NewValue) const;
-	virtual void PreAttributeBaseChange(const FGameplayAttribute &Attribute, float &NewValue) const override;
-	virtual void PreAttributeChange(const FGameplayAttribute &Attribute, float &NewValue) override;
+	virtual FGameplayAttribute GetAttributeByEnum(EPlayerAttribute AttributeEnum);
 
 	virtual void PostAttributeChange(const FGameplayAttribute &Attribute, float OldValue, float NewValue) override;
 

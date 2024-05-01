@@ -7,6 +7,7 @@
 #include "Components/BoxComponent.h"
 #include "CoreMinimal.h"
 #include "Engine/EngineTypes.h"
+#include "GAS/GASEnums.h"
 #include "GameplayTagContainer.h"
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
@@ -15,6 +16,7 @@
 #include "Utils/Enums.h"
 
 #include "LaserTank.generated.h"
+
 
 
 class ALaserTank;
@@ -42,6 +44,9 @@ private:
 	// To add mapping context to GAS
 	UFUNCTION()
 	void BindInput();
+
+	UFUNCTION()
+	void OnAttributeChanged(EPlayerAttribute AttributeEnum, float OldValue, float NewValue);
 #pragma endregion
 
 	UPROPERTY()
@@ -65,7 +70,7 @@ protected:
 	class UAbilitySystemComponent *AbilitySystemComponent;
 
 	UPROPERTY(VisibleAnywhere, Meta = (AllowPrivateAccess = "true"))
-	class UCustomAttributeSet *AttributeSet;
+	class ULaserTankAttributeSet *AttributeSet;
 
 	// Serialized data:
 	UPROPERTY(EditDefaultsOnly, Category = "SpaceInvaders24: Laser Tank Data")
@@ -135,7 +140,6 @@ public:
 	// Gets the Custom Ability System Component
 	UFUNCTION(BlueprintCallable, Category = "SpaceInvaders24: GAS", DisplayName = "LaserTank GetCustomAbilitySystemComponent", Meta = (CompactNodeTitle = "ASC"))
 	class UCustomAbilitySystemComponent *GetCustomAbilitySystemComponent() const;
-
 
 	// Called from Player Controller to move this
 	UFUNCTION(BlueprintCallable, Category = "Laser Tank", DisplayName = "LaserTank SetHorizontalMovement")
