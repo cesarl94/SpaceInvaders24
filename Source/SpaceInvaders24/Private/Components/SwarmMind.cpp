@@ -361,6 +361,14 @@ void USwarmMind::ManualTick(float CrystalDeltaTime, float CrystalTotalSeconds) {
 	case EGameState::PLAYING_PAUSED_TIME:
 	case EGameState::PLAYING_REVERSE:
 		{
+			// as we need the delta time in possitive, on backwards, we change the sign of the delta time
+			if (OnBackwards) {
+				CrystalDeltaTime *= -1;
+
+				// and we subtract from this time these delta times to avoid enemies shooting 3 times after backward skill ends
+				LastTimeAnEnemyShootted -= CrystalDeltaTime;
+			}
+
 			DeltaTimeStack += CrystalDeltaTime;
 
 			float IdealFrameDelta = 1.f / 60.f;

@@ -14,7 +14,8 @@
 		"files.associations": {
 			"*.txt": "plaintext",
 			"*.rh": "cpp",
-			"type_traits": "cpp"
+			"type_traits": "cpp",
+			"xutility": "cpp"
 		}
 	},
 	"extensions": {

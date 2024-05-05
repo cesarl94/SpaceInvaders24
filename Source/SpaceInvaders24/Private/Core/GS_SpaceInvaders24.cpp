@@ -140,6 +140,7 @@ void AGS_SpaceInvaders24::ResetGame(bool HardReset, int32 LevelToLoad) {
 
 
 void AGS_SpaceInvaders24::UFOAppear() {
+	LastUFOAppearance += UFOSecondsPerAppearance;
 	UFO->ManualReset(UFOSpawnPosition);
 	UFO->SetTexelVelocity(FVector2D(UFOMovementSpeed * 60.f, 0));
 }
@@ -194,8 +195,15 @@ void AGS_SpaceInvaders24::OnCrystalHit(ACrystal *Crystal, bool AddCrystalCount) 
 }
 
 void AGS_SpaceInvaders24::OnUFOTouchBorder(EDirection Direction) {
-	if (Direction == EDirection::RIGHT) {
+	if (!UFO->IsAlive()) {
+		return;
+	}
+	if (Direction == EDirection::LEFT || Direction == EDirection::RIGHT) {
 		UFO->Kill(true);
+		// If we touch left side means we are on backwards time
+		if (Direction == EDirection::LEFT) {
+			LastUFOAppearance -= UFOSecondsPerAppearance;
+		}
 	}
 }
 
@@ -278,13 +286,16 @@ void AGS_SpaceInvaders24::Tick(float DeltaTime) {
 
 	SwarmMind->ManualTick(GetLastCrystalDeltaTime(), GetCrystalTotalSeconds());
 
+	if (UFO->IsAlive()) {
+		UFO->ApplyVelocity(GetLastCrystalDeltaTime());
+	}
 	if (GameState == EGameState::PLAYING_FORWARD || GameState == EGameState::PLAYING_SLOW_TIME_DOWN) {
 		if (GetCrystalTotalSeconds() - LastUFOAppearance > UFOSecondsPerAppearance) {
-			LastUFOAppearance += UFOSecondsPerAppearance;
 			UFOAppear();
-		} else if (UFO->IsAlive()) {
-			UFO->ApplyVelocity(GetLastCrystalDeltaTime());
 		}
+	} else if (GameState == EGameState::PLAYING_REVERSE) {
+		// we subtract from this last appareance the delta time in the case we are subtracting time
+		LastUFOAppearance += GetLastCrystalDeltaTime();
 	}
 
 

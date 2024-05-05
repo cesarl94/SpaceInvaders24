@@ -21,9 +21,6 @@ class SPACEINVADERS24_API AGS_SpaceInvaders24 : public AGameStateBase {
 
 private:
 	UPROPERTY()
-	TArray<class ICrystalTickeable *> CrystalTickeables;
-
-	UPROPERTY()
 	class AGamePreviewActor *GamePreviewActor;
 
 	UPROPERTY()
