@@ -1,4 +1,4 @@
-## Finished Technical Assesment
+## Space Invaders: Finished Technical Assesment
 
 Start date: April 17th, 2024<br>
 Deadline: May 1st, 2024<br>
