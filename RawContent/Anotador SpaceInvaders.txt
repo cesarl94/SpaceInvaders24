@@ -1,0 +1,58 @@
+Clases y cosas traídas desde fuera: 
+Utils/MathUtils
+CustomEditor
+GAS -> me lo traje desde el proyecto en el que estoy trabajando. Sólo en player, no en enemigos
+https://github.com/tranek/GASDocumentation
+No puedo hacer función Reset porque es un nombre de función reservada de Unreal
+
+Cosas que no hice como se debería:
+No usar un AI controller para el swarm. Innecesario, ya que ningún estado externo del Swarm debería afectar su comportamiento.
+ENHANCED INPUT SYSTEM
+FSM
+
+
+TODO:
+jugador, añadir player state con Lives. Dejar level en GS
+escenas Tutorial REINICIAR MENU, MUERTE, GAMEOVER
+
+UI:
+	barra cristales
+	slots habilidades
+	escala tiempo
+	puntos
+	vidas
+	level
+	high score
+	
+HIGH SCORES
+
+
+Prioridades:
+Cristales
+Tiempos reversa
+Enemigos atacan
+Bunker
+Escenas jugables
+
+
+Bunkers y UFO tiempo reversa
+ENHANCED INPUT SYSTEM
+OPTIMIZAR MESHES
+ANIMACIONES DESINCRONIZADAS BICHOS
+ENBELLECER EL JUEGO:
+	añadir disparos extras enemigos
+	UI:
+		animar barra cristales
+		animar slots habilidades
+		animar puntos
+	postprocess celofán
+	Planeta al fondo
+	Skybox animado
+	Movimiento de olas
+	agregar inclinación a los bichos según profundidad a lo zelda
+	cámara se inclina
+	al game over se caen todos los voxeles
+	RCT effect
+
+// TODOS
+// Comentar TODAS LAS CLASES
